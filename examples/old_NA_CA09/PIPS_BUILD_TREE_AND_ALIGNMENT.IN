@@ -1,0 +1,120 @@
+# Anything coming after a pound sign is a comment.
+# Typically there may be one or more comment lines explaining the
+# subject matter of the input file.
+#
+# Each line in this file follows a key-value format.  The first word
+# in the line gives the parameter that is being specified, and the subsequent
+# words give the value of this parameter. 
+#
+# The PROTSEQ key specifies the sequence of the protein to be analyzed.  Typically, this
+# will be a FASTA file in which the sequence of interest is the first entry, as shown below.
+PROTSEQ NA_CA09.fasta
+#
+# The OUTPUT_ALIGNMENT key specifies the name of the file to which the aligned protein
+# sequences are written.  This key should therefore be followed by a string giving
+# a valid file name.  If the file already exists, the user will be prompted for confirmation
+# before it is overwritten.  The aligned sequences are written to this file in FASTA format,
+# with the first sequence in the file being the one specified by PROTSEQ.  The sequences
+# are aligned by inserting gap ("-") characters as appropriate.  The sequences that are 
+# aligned include PROTSEQ and all unique sequences specified by HOMOLOGOUS_SEQS
+# that satisfy the criteria established by HOMOLOGY_THRESHOLD.  The headers
+# of these sequences are replaced with short names, that are related to the original headers
+# as described in the file specified by OUTPUT_SEQNAMES.  These names are the ones used
+# in the phylogenetic tree specified by OUTPUT_TREE.
+OUTPUT_ALIGNMENT renamed_alignment.fasta
+#
+# The OUTPUT_TREE key specifies the name of the file to which is written the phylogenetic
+# tree specifying the relationship among the sequences in OUTPUT_ALIGNMENT.  The names
+# of the sequences in this tree match those used in OUTPUT_ALIGNMENT, and are detailed in
+# relation to the original seauence headers by OUTPUT_SEQNAMES.  The tree is
+# in Newick format (http://evolution.gs.washington.edu/phylip/newick_doc.html).  If the
+# specified file already exists, the user is prompted for confirmation before the file
+# is overwritten.
+OUTPUT_TREE tree.newick
+#
+# The OUTPUT_SEQNAMES key specifies the name of a file to which we write the relationship
+# between the new names given to the sequences in OUTPUT_TREE and OUTPUT_ALIGNMENT, and
+# the original sequence names as given in their headers in the FASTA files specified by
+# PROTSEQ and HOMOLOGOUS_SEQS.  The format is simply lines with the new name, a space,
+# and then the original header in the FASTA file. 
+OUTPUT_SEQNAMES seqnames.txt
+#
+# The PHYLIP_PROG key is used to specify information about the PHYLIP program that is
+# used to generate the phylogenetic tree.  This PIPS script is guaranteed to work with 
+# version 3.68 of PHYLIP for Mac OS X, downloaded from 
+# http://evolution.genetics.washington.edu/phylip.html
+# It will probably also work with other versions of PHYLIP on other operating
+# systems, but that has not been actually tested.  There are a number of 
+# strings that are present after the PHYLIP_PROG key.  These strings cannot
+# contain spaces, but can have any other non-whitespace characters.  They are:
+#  * The first string should give the path to which the PHYLIP executables can
+#    be found. 
+#  * The second string is the type of tree that is build.  Currently, the only
+#    supported option is DISTANCE for methods based on pairwise distances
+#    between sequences.  These trees are built using one of the 'fitch',
+#    'kitsch', or 'neighbor' programs of PHYLIP.
+#  * The third string specifies whether or not we are using a molecular clock.
+#    It can have two values, CLOCK or NO_CLOCK depending on whether or not
+#    we assume a molecular clock.  If we are not using a molecular clock,
+#    then the OUTGROUP_SEQ key must be set to a value in order to provide
+#    an outgroup sequence for rooting the tree.
+#  * The fourth string specifies whether or not we use a neighbor joining
+#    method (neighbor joining without a molecular clock, or UPGMA with
+#    a molecular clock).  Neighbor joining is generally faster, but
+#    considered to be less accurate.  The string should be either
+#    NEIGHBOR if we are using neighbor joining / UPGMA or NO_NEIGHBOR
+#    if we are not.  Neighbor joining can lead to negative branch lengths,
+#    so any negative lengths are set to zero.
+PHYLIP_PROG /Users/bloom/phylip-3.68/exe/ DISTANCE NO_CLOCK NEIGHBOR
+#
+# The ALIGNMENT_PROG key is used to specify information about the program used to make
+# the multiple sequence alignment of the protein sequences.  There should be two 
+# strings following the ALIGNMENT_PROG key, specifying the alignment program and a path
+# to the alignment executable.  The two supported alignment programs are
+# MUSCLE (http://www.drive5.com/muscle/index.htm) and PROBCONS
+# (http://probcons.stanford.edu/).  This script has been tested and confirmed to work
+# with version 3.6 of MUSCLE and version 1.12 of PROBCONS.  PROBCONS is the slower
+# program, but in general is considered to be more accurate, so should probably be
+# preferred unless there are time constraints due to the size of the alignment.
+# The specified path should contain executables with the name of either 'muscle'
+# or 'probcons'.  So valid entries would be:
+ALIGNMENT_PROG MUSCLE /Users/bloom/muscle3.6/
+# ALIGNMENT_PROG PROBCONS /Users/bloom/probcons/
+#
+# The HOMOLOGOUS_SEQS key specifies the homologous sequences that are aligned
+# and used to build the phylogenetic tree.  The key should be followed by the
+# names of one or more existing FASTA files.  All of these sequences are read.
+# Any duplicate sequences (identical sequences, NOT necessarily identical headers)
+# have only the first sequence retained, with subsequent duplicates discarded.  These
+# sequences are then screened according to the criteria specified by HOMOLOGY_THRESHOLD,
+# and any sufficiently homologous sequences are retained for the alignment and to 
+# build the phylogenetic tree.  For the alignment, the sequences are renamed
+# as specified by OUTPUT_SEQNAMES
+HOMOLOGOUS_SEQS N1.fasta N4.fasta
+#
+# The HOMOLOGY_THRESHOLD key specifies the screening of the sequences in HOMOLOGOUS_SEQS.
+# It can be used to only include sequences that have a specified degree of identity with
+# PROTSEQ.  You should specify both an identity cutoff and a gap cutoff.  The identity
+# cutoff, which occurs after the string IDENTITY_CUTOFF, means that we only include
+# sequences in which the fractions of identities among alignable residues is greater than
+# or equal to this cutoff.  The gap cutoff, which comes after the string GAP_CUTOFF,
+# means that we only include sequences in which the fraction of graps is less 
+# than or equal to the indicated cutoff.  These values are computed
+# in pairwise alignments of PROTSEQ with each sequence.  For example, if the sequence
+# specified by PROTSEQ is MGCQT and the pairwise aligned homologous sequence is MG-QA,
+# then the identity is 0.75 and the gap fraction is 0.2.  If you don't want to exclude any
+# of the sequences, then set the identity cutoff to 0.0 and the gap cutoff 1.0, which
+# will include all sequences.
+HOMOLOGY_THRESHOLD IDENTITY_CUTOFF 0.6 GAP_CUTOFF 0.2
+#
+# The OUTGROUP_SEQ key specifies an outgroup sequence used to root the phylogenetic
+# tree if the tree is being computed without a molecular clock.  If the tree is being
+# computed without a molecular clock, then we need an outgroup to root the tree.  In general,
+# the outgroup will be more distantly related to the homologous sequences.  In this case,
+# the value should be the name of a FASTA file.  The first sequence listed in this
+# FASTA file is used as the outgroup sequence.  So for example, this line would look like this:
+# OUTGROUP_SEQ outgroup.fasta
+# On the other hand, if we are not using a molecular clock, not outgroup sequence is 
+# needed to root the tree.  In that case, the value should be NONE, as in:
+OUTGROUP_SEQ N5.fasta
+#

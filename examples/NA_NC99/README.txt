@@ -1,0 +1,1 @@
+The FASTA files with prefixes equal to the NA subtypes are the sets of all NA protein sequences of influenza A viruses from any hosts, using only full length sequences, removing identical sequences, and excluding lab strains, Downloaded from the Influenza Virus Resource (http://www.ncbi.nlm.nih.gov/genomes/FLU/FLU.html) on September-8-2009.

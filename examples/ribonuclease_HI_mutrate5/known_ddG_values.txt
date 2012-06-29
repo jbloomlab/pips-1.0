@@ -1,0 +1,106 @@
+# This file lists ddGs for mutations to E coli ribonuclease HI.  The
+# exception to this is that I have excluded ddG values for mutations to active site residues or
+# residues that are known to be crucially involved in function.  The reason is that these mutations
+# may be thermodynamically stabilizing, but selected against by functional pressures.  The
+# ddG values are for free energies of folding, so a positive ddG value indicates a destabilizing
+# mutation.  All ddG values given below are in units of kcal/mol.  Each ddG value is preceded by 
+# the reference from with it was taken. 
+# 
+# [1] S Kimura, Y Oda, T Nakai, K Katayanagi, E Kitakuni, C Nakai, H Nakamura, M Ikehara, and
+#      S Kanaya. "Effect of cavity-modulating mutations on the stability of Escherichia coli
+#      ribonuclease HI." Eur J Biochem, 206:337-343 (1992).
+#      This paper looks at several mutations to Ser 68, a buried residue in ribonuclease HI.
+#      One of the mutations is markedly stabilizing.  All of the mutants have at least 40%
+#      of wildtype activity, although there are drops to 40%.  The ddG values for chemical
+#      denaturation at pH 5.5 are given in Table 3 in kJ/mol for unfolding; I have converted
+#      them to be for folding.  Note that these values are fairly different from ones calculated
+#      by thermal denaturation at pH 3.0 (Table 4).  I have converted them to kcal/mol by multiplying
+#      by 0.24.
+S68V    -1.3
+S68T    -0.1
+S68A    -0.2
+S68L    1.0
+S68G    2.2
+#
+# [2] S Kimura, S Kanaya, and H Nakamura. "Thermostabilization of Escherichia coli ribonuclease HI
+#      by replacing left-handed helical Lys95 with Gly or Asn." J Biol Chem, 267:22014-22017 (1992).
+#      This paper replaces a left-handed Leu with other residues, and finds that some of the mutations
+#      are stabilizing.  All of the mutants had activities comparable to wildtype.  The ddG values,
+#      as determined by thermal denaturation, are given in Table I.  I have taken the values at pH 5.5;
+#      these are very similar to the values for pH 3.0.  the values are reported in kcal/mol for unfolding;
+#      I have converted them to be for folding.
+K91R 0.0
+D94E 0.4
+K95G -1.9
+K95A -0.1
+K95N -0.9
+# 
+# [3] K Ishikawa, H Nakamura, K Morikawa, and S Kanaya. "Stabilization of Escherichia coli
+#      ribonuclease HI by cavity-filling mutations within a hydrophobic core." Biochemistry,
+#      32:6171-6178 (1993).
+#      This paper makes mutations that fill a cavity in E coli ribonuclease HI.  These mutations
+#      are stabilizing, and do not affect activity.  The ddG values are reported in Table II for
+#      pH 5.5 in kcal/mol for unfolding; I have converted to be for folding.
+V74L    -0.9
+V74I    -0.6
+V74A    3.4
+#
+# [4] K Ishikawa, H Nakamura, K Morikawa, S Kimura, and S Kanaya. "Cooperative stabilization of
+#      Escherichia coli ribonuclease HI by insertion of Gly-80b and Gly-77 -> Ala substitution."
+#      Biochemistry, 32:7136-7142 (1993).
+#      The abstract reports that the mutation G77A reduces the stability by 0.9 kcal/mol.
+G77A    0.9
+#
+# [5] M Haruki, E Noguchi, A Aksasoko, M Oobatake, M Itaya, and S Kanaya. "A novel screening
+#      strategy for stabilization of Escherichia coli ribonuclease HI involving a screen for
+#      an intragenic suppressor of carboxyl-terminal deletions." J Biol Chem, 269:26904-26911
+#      (1994).
+#      This paper uses in vivo screening of mutants that restore a temperature-sensitive defect
+#      to isolate stabilized ribonuclease HI proteins.  The ddG values for the mutations in the
+#      wildtype protein are given in Table III in kcal/mol for unfolding; I have converted to
+#      be for folding.  I have taken the values for pH 5.5.  All of the variants still have
+#      decent activity.
+G23A    -0.5
+A24V    -0.9
+H62R    -0.4
+H62P    -1.1
+H62D    0.2
+K117R   0.0
+E119V   -0.7
+R41C    -0.4
+K95N    -0.9
+E135K   0.2
+#
+# [6] A Aksasako, M Haruki, M Obatake, and S Kanaya. "High resistance of Escherichia coli 
+#      ribonuclease HI variant with quintiple thermostabilizing mutations to thermal
+#      denaturation, acid denaturation, and proteolytic degradation." Biochemistry,
+#      34:8115-8122 (1995).
+#      This paper combines five stabilizing mutations, and shows that the resulting protein
+#      is highly stable and still has good activity.  The ddG values for the mutations
+#      (which originally come from other studies) at pH 5.5 are give in Table 1 in kcal/mol
+#      for unfolding; I have converted to be for folding.
+#      Note that the more stable protein is also more resistant to proteolysis. 
+#      I have not included the mutations to residue D134, both because there is some possibility
+#      that this residue is critical for catalysis, and also because the ddG values vary dramatically
+#      from pH 3.0 to pH 5.5.
+G23A    -0.5
+H62P    -1.1
+V74L    -0.9
+K95G    -1.9
+#
+# [7] A Aksasako, M Haruki, M Oobatake, and S Kanaya. "Conformational stabilities of Escherichia
+#      coli RNase HI variants with a series of amino acid substitutions at a cavity within the
+#      hydrophobic core." J Biol Chem, 272:18686-18693 (1997).
+#      This paper constructs mutations in ribonuclease HI near a core cavity.  The ddG values are
+#      given in Table 1 in kcal/mol for unfolding; I have converted to be for folding.  I have
+#      excluded A52I, A52F, A52L, A52Q, A52E, A52D, A52Y, A52H and A52K since they have less 
+#      than 50% of parental activity.
+#      The ddG values are for pH 3.2.
+A52V    -1.7
+A52C    -0.8
+A52M    -0.5
+A52T    0.8
+A52P    1.6
+A52S    1.8
+A52N    1.8
+A52G    2.7

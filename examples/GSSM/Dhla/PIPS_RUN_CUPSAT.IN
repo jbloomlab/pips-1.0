@@ -1,0 +1,97 @@
+# Anything coming after a pound sign is a comment.
+# Typically there may be one or more comment lines explaining the
+# subject matter of the input file.
+#
+# Each line in this file follows a key-value format.  The first word
+# in the line gives the parameter that is being specified, and the subsequent
+# words give the value of this parameter. 
+#
+# The PROTSEQ key specifies the sequence of the protein to be analyzed.  Typically, this
+# will be a FASTA file in which the sequence of interest is the first entry, as shown below.
+PROTSEQ Dhla.fasta
+#
+# The PDB_FILE key specifies the name of the PDB file containing the structure of the
+# protein of interest.  Further information about this PDB structure is supplied
+# the keys PDB_SEQS_FILE, PDB_CHAIN, and PDB_RES_MAPPING.
+PDB_FILE 1BN7.pdb
+#
+# The PDB_SEQS_FILE key specifies the name of a FASTA file containing the sequences
+# of the chains in the PDB file.  This should be a FASTA file containing one or more
+# sequences.  The header for each sequence should consist ONLY of the chain identifier.
+# For example, if the PDB structure has two chains, A and B, the FASTA file might be:
+#     >A
+#     MTRSQFV
+#     >B
+#     MSRWNNQF
+# If the chain has no ID (which sometimes happens when there is only one chain), then
+# the header should be empty, as in:
+#     >
+#     MTRSQFV
+# It is important that PDB_SEQS_FILE lists all of the chains in the PDB file even if they
+# are not all being used in the CUPSAT calculation, because the script uses this file
+# to determine how many chains are in the PDB structure.
+PDB_SEQS_FILE 1BN7_seq.fasta
+#
+# The PDB_CHAIN key gives the chain ID of the chain that we are analyzing.  This ID
+# must match that given in the header of PDB_SEQS_FILE.  If there is only one chain and
+# it has no ID, then the chain ID should be set to the string NONE.
+PDB_CHAIN A
+# 
+# The PDB_RES_MAPPING specifies the relationship between the residue numbers in the PDB file
+# and the residues in the PDB chain sequence given in PDB_SEQS_FILE.  In the simplest case,
+# the residues in the chain sequence and in the PDB file exactly correspond, with the first
+# residue in the chain being residue 1 in the PDB file, the second being residue 2, and
+# so on.  In other words, the residues in the PDB file are numbered sequentially with
+# no offset.  In this case, PDB_RES_MAPPING would have the following value:
+# PDB_RES_MAPPING OFFSET 0
+# It is also possible that the residues in the PDB file are numbered sequentially, but
+# that there is an offset.  If the first residue in the PDB chain is numbered as X + 1 in
+# the PDB file, the second residue in the PDB chain is numbered as X + 2, etc, then
+# this is called an offset of X (where X is some integer).  In this case, PDB_RES_MAPPING 
+# would have the following value:
+# PDB_RES_MAPPING OFFSET X
+# If either of these OFFSET options are used, then there must be matching residues in
+# the PDB file up through the last residue of the PDB chain sequence (i.e. the PDB chain
+# sequence specified in PDB_SEQS_FILE cannot contain additional C-terminal residues
+# that are not present in the PDB structure file).
+# Finally, there is the possibility that the residues in the PDB file are numbered 
+# non-sequentially (or that we only want to look at certain residues).  In this case,
+# we explicitly list the number mappings.  For example, say that the sequence of the
+# chain in which we are interested is MTRSQFV.  Say that in the PDB file the first
+# residue that appears is T which is numbered 4, then an R numbered 5, then an S numbered
+# 7, a Q numbered 8, no F, and then a V numbered 10.  In this case, PDB_RES_MAPPING could be
+# set as shown below:
+# PDB_RES_MAPPING START_RESIDUE_LIST
+# PDB_RES_MAPPING 2 4 A
+# PDB_RES_MAPPING 3 5 A
+# PDB_RES_MAPPING 4 7 A
+# PDB_RES_MAPPING 5 8 A
+# PDB_RES_MAPPING 7 10 A
+# PDB_RES_MAPPING END_RESIDUE_LIST
+# In other words, every line starts with PDB_RES_MAPPING, and each line between the 
+# START_RESIDUE_LIST and END_RESIDUE_LIST keys gives the number of the residue in
+# sequentially numbered sequence followed by the corresponding number in the PDB file. 
+# The residue numbers are then followed by the chain ID for the residue in the 
+# PDB structure, which in this case does not have to match the chain in PDB_SEQS_FILE.
+# So if you wanted to analyze a protein that spans two protein sequence chains, you would
+# concatenate the chains into a single sequence in PDB_SEQS_FILE, and then map them to
+# the two different chains in the PDB structure using PDB_RES_MAPPING.
+# Any residues that do not appear in the list are not analyzed.
+PDB_RES_MAPPING OFFSET 14
+#
+#
+# The ALIGNMENT_PROG key is used to specify information about a sequence alignment
+# program.  This program is used to align the protein sequence specified by PROTSEQ
+# with the PDB protein sequence specified by PDB_SEQS_FILE.  There should be two
+# strings following the ALIGNMENT_PROG key, specifying the alignment program and a path
+# to the alignment executable.  The two supported alignment programs are
+# MUSCLE (http://www.drive5.com/muscle/index.htm) and PROBCONS
+# (http://probcons.stanford.edu/).  This script has been tested and confirmed to work
+# with version 3.6 of MUSCLE and version 1.12 of PROBCONS.  PROBCONS is the slower
+# program, but in general is considered to be more accurate, so should probably be
+# preferred unless there are time constraints due to the size of the alignment.
+# The specified path should contain executables with the name of either 'muscle'
+# or 'probcons'.  So valid entries would be:
+# ALIGNMENT_PROG MUSCLE /Users/bloom/muscle3.6/
+ALIGNMENT_PROG PROBCONS /Users/bloom/probcons/
+#

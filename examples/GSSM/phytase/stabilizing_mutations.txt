@@ -1,0 +1,22 @@
+# This file gives the stabilizing mutations described in:
+#   "Enhancing the thermal tolerance and gastric performance of a microbial phytase for
+#   use as a phosphate-mobilizing monogastric-feed supplement." Applied and Environmental
+#   Microbiology. 70:3041-3046 (2004).
+#
+# The paper describes that overall gene site saturation mutagenesis was used to 
+# discover 14 improved mutants.  These mutants were combined iteratively in a
+# steepest-ascent walk type optimization to create an 8 mutant (Phy9X).  Unfortunately,
+# the paper only gives the identities of the 8 mutations in that 8-mutant, so those are what
+# are listed here.  
+#
+# The mutations are taken from Figure 1.  The numbers used correspond to sequential
+# numbering of the phytase sequence beginning with 1 at the N-terminal Met.
+Q84W
+A95P
+Y277D
+W68E
+K97C
+R181Y
+N226C
+A95P
+S168E

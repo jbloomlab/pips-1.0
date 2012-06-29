@@ -1,0 +1,426 @@
+>E_coli_thioredoxin_protein_sequence
+--------SD--KII--HLTDDSFDTDVLKAD-GAILVDFWAEWCGPCKMIAPILDEIADEYQGKLTVAKLNIDQNPGTAPKYGIRGIPTLLLFKNGEVAATKVGALSKGQLK-EFLDA----N------L------A
+>UniRef100_P0AA25 Cluster: Thioredoxin-1; n=8; Enterobacteriaceae|Rep: Thioredoxin-1 - Escherichia coli
+-------MSD--KII--HLTDDSFDTDVLKAD-GAILVDFWAEWCGPCKMIAPILDEIADEYQGKLTVAKLNIDQNPGTAPKYGIRGIPTLLLFKNGEVAATKVGALSKGQLK-EFLDA----N------L------A
+>UniRef100_UPI00015265A2 Cluster: Thioredoxin; n=1; Escherichia coli|Rep: Thioredoxin - Escherichia coli
+--------SD--KII--HLTDDSFDTDVLKAD-GAILVDFWAEWCGPCKMIAPILDEIADEYQGKLTVAKLNIDQNPGTAPKYGIRGIPTLLLFKNGDVAATKVGALSKGQLK-EFLDA----N------L------A
+>UniRef100_UPI000152659F Cluster: Thioredoxin; n=1; Escherichia coli|Rep: Thioredoxin - Escherichia coli
+--------SD--KII--HLTDDSFDTDVLKAD-GAILVDFWAEWCGPCKMIAPILDDIADEYQGKLTVAKLNIDQNPGTAPKYGIRGIPTLLLFKNGEVAATKVGALSKGQLK-EFLDA----N------L------A
+>UniRef100_UPI000152659E Cluster: Thioredoxin; n=1; Escherichia coli|Rep: Thioredoxin - Escherichia coli
+--------SD--KII--HLTDDSFDTDVLKAD-GAILVDFWAEWCGPCKMIAPILDEIADDYQGKLTVAKLNIDQNPGTAPKYGIRGIPTLLLFKNGEVAATKVGALSKGQLK-EFLDA----N------L------A
+>UniRef100_UPI00015265A6 Cluster: Thioredoxin; n=1; Escherichia coli|Rep: Thioredoxin - Escherichia coli
+--------SD--KII--HLTDESFDTDVLKAD-GAILVDFWAEWCGPCKMIAPILDEIADEYQGKLTVAKLNIDQNPGTAPKYGIRGIPTLLLFKNGEVAATKVGALSKGQLK-EFLDA----N------L------A
+>UniRef100_UPI00015265A5 Cluster: Thioredoxin; n=1; Escherichia coli|Rep: Thioredoxin - Escherichia coli
+--------SD--KII--HLTDDSFETDVLKAD-GAILVDFWAEWCGPCKMIAPILDEIADEYQGKLTVAKLNIDQNPGTAPKYGIRGIPTLLLFKNGEVAATKVGALSKGQLK-EFLDA----N------L------A
+>UniRef100_UPI00015265A4 Cluster: Thioredoxin; n=1; Escherichia coli|Rep: Thioredoxin - Escherichia coli
+--------SE--KII--HLTDDSFDTDVLKAD-GAILVDFWAEWCGPCKMIAPILDEIADEYQGKLTVAKLNIDQNPGTAPKYGIRGIPTLLLFKNGEVAATKVGALSKGQLK-EFLDA----N------L------A
+>UniRef100_UPI00015265A3 Cluster: Thioredoxin; n=1; Escherichia coli|Rep: Thioredoxin - Escherichia coli
+--------SD--KII--HLTDDSFDTDVLKAD-GAILVDFWAEWCGPCKMIAPILEEIADEYQGKLTVAKLNIDQNPGTAPKYGIRGIPTLLLFKNGEVAATKVGALSKGQLK-EFLDA----N------L------A
+>UniRef100_UPI00015265A1 Cluster: Thioredoxin; n=1; Escherichia coli|Rep: Thioredoxin - Escherichia coli
+--------SD--KII--HLTDDSFDTDVLKAD-GAILVDFWAEWCGPCKMIAPILDEIAEEYQGKLTVAKLNIDQNPGTAPKYGIRGIPTLLLFKNGEVAATKVGALSKGQLK-EFLDA----N------L------A
+>UniRef100_UPI00015265A0 Cluster: Thioredoxin; n=1; Escherichia coli|Rep: Thioredoxin - Escherichia coli
+--------SD--KII--HLTEDSFDTDVLKAD-GAILVDFWAEWCGPCKMIAPILDEIADEYQGKLTVAKLNIDQNPGTAPKYGIRGIPTLLLFKNGEVAATKVGALSKGQLK-EFLDA----N------L------A
+>UniRef100_A4WG29 Cluster: Thioredoxin; n=1; Enterobacter sp. 638|Rep: Thioredoxin - Enterobacter sp. 638
+-------MSD--KII--HLTDDSFDTDVLKAD-GLILVDFWAEWCGPCKMIAPILDEIADEYQGKLTVAKLNIDQNPGTAPKYGIRGIPTLLLFKNGEVAATKVGALSKGQLK-EFLDA----N------L------A
+>UniRef100_A6TGH0 Cluster: Thioredoxin; n=1; Klebsiella pneumoniae subsp. pneumoniae MGH 78578|Rep: Thioredoxin - Klebsiella pneumoniae subsp. pneumoniae MGH 78578
+-------MSD--KII--HLTDDSFDTDVLKAD-GLTLVDFWAEWCGPCKMIAPILDEIAEEYQGKLTVAKLNIDQNPGTAPKYGIRGIPTLLLFKNGEVAATKVGALSKGQLK-EFLDA----N------L------A
+>UniRef100_A0IN61 Cluster: Thioredoxin; n=1; Serratia proteamaculans 568|Rep: Thioredoxin - Serratia proteamaculans 568
+-------MSD--KII--HLTDGSFDTDVLKAE-GPILVDFWAEWCGPCKMIAPILDEIAEEFEGKLTITKLNIDQNPATAPKYGIRGIPTLLLFKNGEVAATKVGALSKGQLK-DFLNA----N-------------L
+>UniRef100_A1JI68 Cluster: Thioredoxin 1; n=1; Yersinia enterocolitica subsp. enterocolitica 8081|Rep: Thioredoxin 1 - Yersinia enterocolitica serotype O:8 / biotype 1B (strain 8081)
+-------MSD--KII--HLSDDSFDTDVLKAS-GLVLVDFWAEWCGPCKMIAPILDEIAEEYEGRLTITKLNIDDNQGTAPKYGIRGIPTLLLFRDGEVVATKVGALSKGQLK-EFLDA----N-------------L
+>UniRef100_Q6CZE0 Cluster: Thioredoxin; n=1; Pectobacterium atrosepticum|Rep: Thioredoxin - Erwinia carotovora subsp. atroseptica (Pectobacterium atrosepticum)
+-------MSD--KII--HLTDDSFGTKVLQAE-GATLVDFWAEWCGPCKMIAPILDEIAEEFEGKLTVTKLNIDENPATAPKYGIRGIPTLLLFKNGEVAATKVGALSKGQLK-EFLTA----N-------------L
+>UniRef100_Q66G18 Cluster: Thioredoxin 1; n=5; Yersinia|Rep: Thioredoxin 1 - Yersinia pseudotuberculosis
+-------MSD--KII--HLSDDSFDTDVLKAS-GLVLVDFWAEWCGPCKMIAPILDEIAEEYEGRLTIAKLNIDDNQGTAPKYGIRGIPTLLLFRDGEVVATKVGALSKGQLK-AFLDA----N-------------L
+>UniRef100_UPI00005F9924 Cluster: COG0526: Thiol-disulfide isomerase and thioredoxins; n=1; Yersinia frederiksenii ATCC 33641|Rep: COG0526: Thiol-disulfide isomerase and thioredoxins - Yersinia frederiksenii ATCC 33641
+-------MSD--KII--HLSDDSFDTDVLKAS-GLVLVDFWAEWCGPCKMIAPILDEIAEEYEGRLTITKLNIDENQGTAPKYGIRGIPTLLLFRDGEVVATKVGALSKGQLK-AFLDA----N-------------L
+>UniRef100_A4TRC7 Cluster: Thioredoxin 1; n=1; Yersinia pestis Pestoides F|Rep: Thioredoxin 1 - Yersinia pestis (strain Pestoides F)
+-------MSD--KII--HLSDDSFDTDVLKAR-GLVLVDFWAEWCGPCKMIAPILDEIAEEYEGRLTIAKLNIDDNQGTAPKYGIRGIPTLLLFRDGEVVATKVGALSKGQLK-AFLDA----N-------------L
+>UniRef100_UPI00005FA731 Cluster: COG0526: Thiol-disulfide isomerase and thioredoxins; n=1; Yersinia intermedia ATCC 29909|Rep: COG0526: Thiol-disulfide isomerase and thioredoxins - Yersinia intermedia ATCC 29909
+-------MSD--KII--HLSDDSFDTDVLKAS-GLVLVDFWAEWCGPCKMIAPILDEIAEEYEGRLTITKLNIDDNQGTAPKYGIRGIPTLLLFRDGEVVATKVGALSKGQLK-AFLDA----N-------------L
+>UniRef100_UPI00005F778B Cluster: COG0526: Thiol-disulfide isomerase and thioredoxins; n=1; Yersinia bercovieri ATCC 43970|Rep: COG0526: Thiol-disulfide isomerase and thioredoxins - Yersinia bercovieri ATCC 43970
+-------MSD--KII--HLSDESFDTDVLKAS-GLVLVDFWAEWCGPCKMIAPILDEIAEEYEGRLTITKLNIDDNQGTAPKYGIRGIPTLLLFRDGEVVATKVGALSKGQLK-AFLDA----N-------------L
+>UniRef100_Q2NQB3 Cluster: Thioredoxin 1; n=1; Sodalis glossinidius str. 'morsitans'|Rep: Thioredoxin 1 - Sodalis glossinidius (strain morsitans)
+-------MSD--KII--HLSDDSFEKDVLQAK-GLFLVDFWAEWCGPCKMIAPILAEVADEFDGKLTVAKLNIDENPATAPKYGIRGIPTLLLFRDGEVVATKVGALSKGQLK-EFLNA----N-------------L
+>UniRef100_Q7MYL3 Cluster: Thioredoxin 1; n=1; Photorhabdus luminescens subsp. laumondii|Rep: Thioredoxin 1 - Photorhabdus luminescens subsp. laumondii
+-------MSD--KII--HLSDASFDTDVLNAA-GPVLVDFWAAWCGPCKMIAPILDEIAPEYSGKLTITKLNIDDNPATAPKYGIRGIPTLLLFKDGQVAATKVGALSKTQLK-EFLDA----N-------------L
+>UniRef100_A6D6I7 Cluster: Thioredoxin; n=1; Vibrio shilonii AK1|Rep: Thioredoxin - Vibrio shilonii AK1
+-------MSE--KIL--QLTDDGFETDVINAA-GPVLVDFWAEWCGPCKMIAPILDEIADEYEGKLTIGKLNIDQNAGTPPKFGIRGIPTLLLFKDGGVAATKVGALSKTQLK-EFLDA----N-------------L
+>UniRef100_A5L3M9 Cluster: Thioredoxin; n=1; Vibrionales bacterium SWAT-3|Rep: Thioredoxin - Vibrionales bacterium SWAT-3
+-------MSD--KIL--QLTDDGFENDVINAA-GPVLVDFWAEWCGPCKMIAPILDEIADEYEGKLTIGKLNIDQNAGTPPKFGIRGIPTLLLFKDGGVAATKVGALSKTQLK-EFLDA----N-------------L
+>UniRef100_A3UXX4 Cluster: Thioredoxin; n=1; Vibrio splendidus 12B01|Rep: Thioredoxin - Vibrio splendidus 12B01
+-------MSD--KIL--QLTDDGFDNDVINAA-GPVLVDFWAEWCGPCKMIAPILDEIANEYEGKLTIGKLNIDQNAGTPPKFGIRGIPTLLLFKDGGVAATKVGALSKTQLK-EFLDA----N-------------L
+>UniRef100_Q2C4A4 Cluster: Putative thioredoxin; n=2; Vibrionaceae|Rep: Putative thioredoxin - Photobacterium sp. SKA34
+-------MSD--KIV--QLTDASFDTDVINAA-GPVLVDFWAEWCGPCKMIAPILDEIADEYEGKLTIGKLNIDQNAETPPKFGIRGIPTLLLFKDGGVAATKVGALSKTQLK-EFLDA----N-------------L
+>UniRef100_Q1V5C9 Cluster: Thioredoxin; n=2; Vibrio|Rep: Thioredoxin - Vibrio alginolyticus 12G01
+-------MSD--KIL--QLTDDGFENDVINAA-GPVLVDFWAEWCGPCKMIAPILDEIADEYEGKLTIGKLNIDHNAGTPPKFGIRGIPTLLLFKDGNVAATKVGALSKTQLK-EFLDA----N-------------L
+>UniRef100_A0KEH0 Cluster: Thioredoxin; n=1; Aeromonas hydrophila subsp. hydrophila ATCC 7966|Rep: Thioredoxin - Aeromonas hydrophila subsp. hydrophila (strain ATCC 7966 / NCIB 9240)
+-------MSD--KIV--QLSDASFEADVIKAD-GAVLVDFWAEWCGPCKMIAPILNEVAQEYAGRVTVAKLNIDHNADTPPKYGIRGIPTLLLFKNGEVAATKVGALSKTQLK-EFLDG----N-------------L
+>UniRef100_A3Y324 Cluster: Thioredoxin; n=1; Vibrio sp. MED222|Rep: Thioredoxin - Vibrio sp. MED222
+-------MSD--KIL--QLTDDGFDNDVINAA-GPVLVDFWAEWCGPCKMIAPILDEIANEYEGQLTIGKLNIDQNAGTPPKFGIRGIPTLLLFKDGGVAATKVGALSKTQLK-EFLDA----N-------------L
+>UniRef100_A4STJ6 Cluster: Thioredoxin; n=1; Aeromonas salmonicida subsp. salmonicida A449|Rep: Thioredoxin - Aeromonas salmonicida (strain A449)
+-------MSD--KIV--QLSDASFEADVIKAD-GAVLVDFWAEWCGPCKMIAPILNEVAQEYAGRVTVAKLNIDHNADTPPKYGIRGIPTLLLFKNGEVAATKVGALSKTQLK-EFLDV----N-------------L
+>UniRef100_Q9KV51 Cluster: Thioredoxin; n=14; Vibrio cholerae|Rep: Thioredoxin - Vibrio cholerae
+-------MSD--KIL--QLTDDGFENDVIKAA-GPVLVDFWAEWCGPCKMIAPILDEVADEYAGKLTIGKLNIDHNAGTPPKFGIRGIPTLLLFKDGSVVATKVGALSKTQLK-EFLDA----N-------------L
+>UniRef100_Q87KH6 Cluster: Thioredoxin; n=2; Vibrio parahaemolyticus|Rep: Thioredoxin - Vibrio parahaemolyticus
+-------MSD--KIL--QLTDDGFENDVINAA-GPVLVDFWAEWCGPCKMIAPILDEIAEEYEGKLTIGKLNIDHNAGTPPKFGIRGIPTLLLFKDGNVAATKVGALSKTQLK-EFLDA----N-------------L
+>UniRef100_Q48AH0 Cluster: Thioredoxin; n=1; Colwellia psychrerythraea 34H|Rep: Thioredoxin - Colwellia psychrerythraea (strain 34H / ATCC BAA-681) (Vibriopsychroerythus)
+-------MSD--KIV--QLTDDSFEADVLKAS-GLVLVDFWAEWCGPCKMIAPVLDDIATEYDGKVTVGKLNIDQNSATPPKYGVRGIPTLLLFKDGEIADTKVGALSKTQLK-EFLDK----N-------------L
+>UniRef100_Q8DDN7 Cluster: Thioredoxin; n=2; Vibrio vulnificus|Rep: Thioredoxin - Vibrio vulnificus
+-------MSD--KIL--QLSDEGFENDVINAA-GPVLVDFWAEWCGPCKMIAPILDEIAEEYEGKLTIGKLNIDHNAGTPPKFGIRGIPTLLLFKNGSVAATKVGALSKTQLK-EFLDA----N-------------L
+>UniRef100_Q5E8U4 Cluster: Thioredoxin; n=1; Vibrio fischeri ES114|Rep: Thioredoxin - Vibrio fischeri (strain ATCC 700601 / ES114)
+-------MSD--KIL--QLTDGGFEESVINAA-GPVLVDFWAEWCGPCKMIAPILDEIADEYEGKLTIGKLNIDQNAGTPPKFGIRGIPTLLLFKDGGVAATKVGALSKTQLK-EFLDA----N-------------L
+>UniRef100_Q6LLL6 Cluster: Putative thioredoxin; n=2; Photobacterium profundum|Rep: Putative thioredoxin - Photobacterium profundum (Photobacterium sp. (strain SS9))
+ME---WKMND--KIV--QLTDATFDSDVVNAA-GPVLVDFWAEWCGPCKMIAPILDEIANEYEGKVTIGKLNIDQNAATPPKFGIRGIPTLLLFKDGSVAATKVGALSKTQLK-EFLDA----N-------------L
+>UniRef100_A0KS83 Cluster: Thioredoxin; n=4; Shewanella|Rep: Thioredoxin - Shewanella sp. (strain ANA-3)
+-------MSD--KII--YLSDDSFENDVLKAD-LPVLVDFWAEWCGPCKMIAPILDDVAEEYAGRVTIAKLNVDQNNVSPAKYGVRGIPTLLLFKNGELAATKVGALSKTQLK-EFIDA----Q-------------I
+>UniRef100_A3Q9R2 Cluster: Thioredoxin; n=1; Shewanella loihica PV-4|Rep: Thioredoxin - Shewanella loihica (strain BAA-1088 / PV-4)
+-------MSD--KII--TLSDDSFENDVLKSD-LPVLVDFWAEWCGPCKMIAPILDDVADEYAGKVTIAKLNVDQNNASPAKYGVRGIPTLLLFKNGELADTKVGALSKTQLK-EFIDA----Q-------------L
+>UniRef100_A0Y0C7 Cluster: Thioredoxin 1, redox factor; n=1; Alteromonadales bacterium TW-7|Rep: Thioredoxin 1, redox factor - Alteromonadales bacterium TW-7
+-------MSE--KII--QITDDSFEADVLQSD-KPVLVDFWAEWCGPCKMIAPILNEVADEYDGRVAVAKLNIDQNAGTPPKFGIRGIPTLLLFKDGQVAATKVGALSKTQLI-EFLDN----N-------------I
+>UniRef100_Q15N17 Cluster: Thioredoxin; n=1; Pseudoalteromonas atlantica T6c|Rep: Thioredoxin - Pseudoalteromonas atlantica (strain T6c / BAA-1087)
+-------MSD--KII--QLSDDSFEADVINAT-GPVLVDFWAEWCGPCKMIAPILHEIADEFDGKLTVGKLNVDENNETPPKYGIRGIPTLLLFKGGNVAATKVGALSKSQLE-EFLNE----N-------------I
+>UniRef100_A4AZI4 Cluster: Thioredoxin; n=1; Alteromonas macleodii 'Deep ecotype'|Rep: Thioredoxin - Alteromonas macleodii 'Deep ecotype'
+-------MSD--KII--QLSDDKFEADVINAE-GPVLVDFWAEWCGPCKMIAPILEEVATEFDGKLTVGKLNVDENNETPPKYGIRGIPTLLLFKNGNVAATKVGALSKAQLT-EFLNE----N-------------L
+>UniRef100_A5NAX6 Cluster: Thioredoxin; n=4; Shewanella baltica|Rep: Thioredoxin - Shewanella baltica OS223
+-------MSD--KII--YLSDDSFENDVLKSD-LPVLVDFWAEWCGPCKMIAPILDDVSEEYAGRVTIAKLNVDQNNVSPAKYGVRGIPTLLLFKNGELAATKVGALSKTQLK-EFIDA----Q-------------I
+>UniRef100_A1RFB2 Cluster: Thioredoxin; n=3; Shewanella|Rep: Thioredoxin - Shewanella sp. (strain W3-18-1)
+-------MSD--KII--YLSDDGFENDVLKSD-LPVLVDFWAEWCGPCKMIAPILDDVAEEYAGRVTIAKLNVDQNNVSPAKYGVRGIPTLLLFKNGELAATKVGALSKTQLK-EFIDA----Q-------------I
+>UniRef100_Q3LEJ9 Cluster: Thioredoxin; n=2; Pseudoalteromonas haloplanktis|Rep: Thioredoxin - Pseudoalteromonas haloplanktis (Alteromonas haloplanktis)
+-------MSE--KII--QITDDSFEADVLQSD-KPVLVDFWAEWCGPCKMIAPILSEVAEEFDGRVTIAKLNIDQNAGTPPKFGIRGIPTLLLFKDGQVAATKVGALSKTQLI-EFLEN----N-------------L
+>UniRef100_A6F8Y2 Cluster: Putative thioredoxin; n=1; Moritella sp. PE36|Rep: Putative thioredoxin - Moritella sp. PE36
+-------MSD--KII--QLTDAAFDTDVINSE-LPVLVDFWAEWCGPCKMIAPILSEVAEEYAGKVIIGKLNIDQNSGTPPKFGIRGIPTLLLFKNGAVAATKVGALSKAQLQ-SFLDE----N-------------L
+>UniRef100_A4CFA3 Cluster: Thioredoxin 1, redox factor; n=1; Pseudoalteromonas tunicata D2|Rep: Thioredoxin 1, redox factor - Pseudoalteromonas tunicata D2
+-------MSD--KII--QLTDDSFETDVLKAD-KPVLVDFWAEWCGPCKMIAPILDDVASEYADRVVVGKLNIDQNSATPPKFGIRGIPTLLLFKDGQVAATKVGALSKTQLI-EFLEN----N-------------I
+>UniRef100_Q1ZDN9 Cluster: Putative thioredoxin; n=1; Psychromonas sp. CNPT3|Rep: Putative thioredoxin - Psychromonas sp. CNPT3
+-------MSD--KIV--TLTDASFDADVINAA-GPVLVDFWAEWCGPCKMIAPLLSEIATEYAGKVTVGKLNIDENSATPPKFGIRGIPTLLLFKDGKVAATKVGALSKTQLV-EFLDA----N-------------I
+>UniRef100_Q7NXP2 Cluster: Thioredoxin; n=1; Chromobacterium violaceum|Rep: Thioredoxin - Chromobacterium violaceum
+-------MSD--LIL--HVTDDSFENEVLKAD-RPVLVDYWAEWCGPCKMIAPILDEVAKEYDGKLKIAKLNIDQNEQTPPKFGIRGIPTLMLFKDGQVAATKVGALSKSQLT-AFIDS----Q-------------L
+>UniRef100_A0IZG1 Cluster: Thioredoxin; n=1; Shewanella woodyi ATCC 51908|Rep: Thioredoxin - Shewanella woodyi ATCC 51908
+-------MSD--KIV--HLSDDSFENDVINST-LPVVVDFWAEWCGPCKMIAPILDDVAEEYEGKVTIAKMNVDQNSVSPAKYGVRGIPTLLIFKNGELASTKVGALSKTQLK-EFIDA----Q-------------L
+>UniRef100_Q1I335 Cluster: Thioredoxin; n=1; Pseudomonas entomophila L48|Rep: Thioredoxin - Pseudomonas entomophila (strain L48)
+-------MSD--KIK--HVTDASFEADVLKAE-GAVLVDYWAEWCGPCKMIAPVLDAIAEDYAGKLVVAKLNIDENQETPAKHGVRGIPTLMLFKNGNVEATKVGALSKSQLQ-AFIDA----N-------------L
+>UniRef100_A4B9V6 Cluster: Thioredoxin; n=1; Reinekea sp. MED297|Rep: Thioredoxin - Reinekea sp. MED297
+-------MSE--NIL--NVTDDSFETDVLRNE-HPVLVDYWAEWCGPCKMIAPVLEEVADEYAGKMVVAKLNIDDNPNTPPKYGIRGIPTLMIFKGGEVAATKVGALSKSQLL-EFIQS----N-------------S
+>UniRef100_Q088J3 Cluster: Thioredoxin; n=1; Shewanella frigidimarina NCIMB 400|Rep: Thioredoxin - Shewanella frigidimarina (strain NCIMB 400)
+-------MSD--KIV--YLSDDSFENDVLKSE-TPVLVDFWAEWCGPCKMIAPILNDVAEEYAGKLTVAKLNVDQNNVSPAKYGVRGIPTLLMFKGGELVATKVGALSKTQLK-EFIDA----K-------------I
+>UniRef100_Q3K4W0 Cluster: Thioredoxin; n=2; Pseudomonas fluorescens|Rep: Thioredoxin - Pseudomonas fluorescens (strain PfO-1)
+-------MSSD-LIK--HVSDASFEADVLKAE-GAVLVDYWAEWCGPCKMIAPVLDEIAETYKGKLTVAKLNIDENQETPAKHGVRGIPTLMLFKNGNVEATKVGALSKSQLA-AFLDA----N-------------I
+>UniRef100_Q87UQ3 Cluster: Thioredoxin; n=1; Pseudomonas syringae pv. tomato|Rep: Thioredoxin - Pseudomonas syringae pv. tomato
+-------MSND-LIK--HVTDASFEADVLKAD-GAVLVDYWAEWCGPCKMIAPVLDEIATTYAGKLTIAKLNIDENQETPAKHGVRGIPTLMLFKNGNVEATKVGALSKSQLA-AFLDA----N-------------I
+>UniRef100_A6P7Y2 Cluster: Thioredoxin; n=1; Shewanella sediminis HAW-EB3|Rep: Thioredoxin - Shewanella sediminis HAW-EB3
+-------MSD--KIV--YLSDDSFENDVINSE-LPVIVDFWAEWCGPCKMIAPILDDVAEEYAGKVTIAKLNVDQNNVSPAKYGVRGIPTLLIFKNGELAGTKVGALSKTQLK-EFIDA----Q-------------L
+>UniRef100_Q9X2T1 Cluster: Thioredoxin; n=4; Pseudomonas aeruginosa|Rep: Thioredoxin - Pseudomonas aeruginosa
+-------MSE--HIV--NVTDASFEQDVLKAD-GPVLVDYWAEWCGPCKMIAPVLDEVARDYQGKLKVCKLNIDENQDTPPKYGVRGIPTLMLFKDGNVEATKVGALSKSQLA-AFLDA----N-------------I
+>UniRef100_Q48PS7 Cluster: Thioredoxin; n=1; Pseudomonas syringae pv. phaseolicola 1448A|Rep: Thioredoxin - Pseudomonas syringae pv. phaseolicola (strain 1448A / Race 6)
+-------MSNE-KIK--HVTDANFEAEVLKAE-GAVLVDYWAEWCGPCKMIAPVLDEIADTYAGKLTIAKLNIDENQETPAKHGVRGIPTLMLFKNGNVEATKVGALSKSQLA-AFLDA----N-------------I
+>UniRef100_A6VE14 Cluster: Thioredoxin; n=1; Pseudomonas aeruginosa PA7|Rep: Thioredoxin - Pseudomonas aeruginosa PA7
+-------MSE--HIV--NVTDASFEQDVLKAD-GPVLVDYWAEWCGPCKMIAPVLDEVARDYQGKLKVCKLNIDENQDTPPKYGVRGIPTLMLFKGGNVEATKVGALSKSQLA-AFLDA----N-------------I
+>UniRef100_A5WAT2 Cluster: Thioredoxin; n=2; Pseudomonas putida|Rep: Thioredoxin - Pseudomonas putida F1
+-------MSSD-LIK--HVTDASFEADVLKAE-GAVLVDYWAEWCGPCKMIAPVLDDIASTYEGKLTVAKLNIDENQETPAKHGVRGIPTLMLFKNGNVEATKVGALSKSQLA-AFLDA----H-------------L
+>UniRef100_Q209R6 Cluster: Thioredoxin; n=1; Pseudomonas chlororaphis|Rep: Thioredoxin - Pseudomonas chlororaphis (Pseudomonas aureofaciens)
+-------MSSD-LIK--HVSDASFEADVLKAE-GAVLVDYWAEWCGPCKMIAPVVDEIAETYKGKLTVAKLNIDENQETPAKHGVRGIPTLMLFKNGNVEATKVGALSKSQLA-AFLDA----N-------------I
+>UniRef100_A0WYX9 Cluster: Thioredoxin; n=1; Shewanella pealeana ATCC 700345|Rep: Thioredoxin - Shewanella pealeana ATCC 700345
+-------MSD--KIV--YLSDDSFENDVINSE-LPVLVDFWAEWCGPCKMIAPILDDVAEEYEGKIKIAKLNVDQNNVSPAKYGVRGIPTLLLFKAGELAATKVGALSKTQLK-EFIDA----Q-------------L
+>UniRef100_Q12S36 Cluster: Thioredoxin; n=1; Shewanella denitrificans OS217|Rep: Thioredoxin - Shewanella denitrificans (strain OS217 / ATCC BAA-1090 / DSM 15013)
+-------MSD--KIV--YLSDDSFENDVLKSE-LPVLVDFWAEWCGPCKMIAPILDDVAQEYAGRVTVAKLNVDQNNVSPAKYGVRGIPTLLMFKGGELVATKVGALSKTQLK-EFMDA----Q-------------I
+>UniRef100_A1SAL2 Cluster: Thioredoxin; n=1; Shewanella amazonensis SB2B|Rep: Thioredoxin - Shewanella amazonensis (strain ATCC BAA-1098 / SB2B)
+-------MSD--KIV--TLSDDSFENDVLKSE-LPVLVDFWAEWCGPCKMIAPILDDVAAEYEGKVTVAKLNVDHNNASPAKYGVRGIPTLLMFKGGELVATKVGALSKTQLK-EFIDA----Q-------------L
+>UniRef100_A3HF01 Cluster: Thioredoxin; n=1; Pseudomonas putida GB-1|Rep: Thioredoxin - Pseudomonas putida (strain GB-1)
+-------MSD--KIK--HVTDASFEADVLQAQ-GPVLVDYWAEWCGPCKMIAPVLDDIAATYEGKLTVAKLNIDENQETPAKHGVRGIPTLMLFKNGNVEATKVGALSKSQLA-AFLDA----H-------------L
+>UniRef100_Q60CP8 Cluster: Thioredoxin; n=1; Methylococcus capsulatus|Rep: Thioredoxin - Methylococcus capsulatus
+-------MSSD-KIL--HVTDAEFEDKVLKAP-GPVLVDYWAEWCGPCKMIAPILDEIAGEYEGRLTVAKLNIDDNPATPQRYGVRGIPTLMVFKGGEVVASKVGALTKSQLA-AFLEG----N-------------M
+>UniRef100_A1SZG3 Cluster: Thioredoxin; n=1; Psychromonas ingrahamii 37|Rep: Thioredoxin - Psychromonas ingrahamii (strain 37)
+-------MSE--NIV--TLSDASFEDDVVNAE-GPVLVDFWAEWCGPCKMIAPILQEVAAEYAGKVTIGKLNIDENSATPPKFGIRGIPTLLLFKDGKVAATKVGALSKTQLV-EFLDA----N-------------I
+>UniRef100_Q31JF0 Cluster: Thioredoxin; n=1; Thiomicrospira crunogena XCL-2|Rep: Thioredoxin - Thiomicrospira crunogena (strain XCL-2)
+-------MSD--NMI--ATSDANFDSEVLQSD-VPVLVDFWAEWCGPCKMIAPILDEVAGEYAGKIKVAKLNIDENPATPPKYGVRGIPTLVLFKNGEVDATQVGALSKSQLC-AFLDG----N-------------L
+>UniRef100_A3WLL5 Cluster: Thioredoxin; n=1; Idiomarina baltica OS145|Rep: Thioredoxin - Idiomarina baltica OS145
+-------MSE--VIV--QLSDDSFEADVINSD-KPVLVDFWAEWCGPCKMIAPILDDISKDYEGRLTIGKLNVDHNDQTPPKYGIRGIPTLLLFKNGEVVATKVGALSRAQLT-EFLDQ----H-------------I
+>UniRef100_A4BS74 Cluster: Thioredoxin; n=1; Nitrococcus mobilis Nb-231|Rep: Thioredoxin - Nitrococcus mobilis Nb-231
+-------MSG--NIV--HASDETFEQEVLKAA-EPVLVDYWAEWCGPCKMIAPILDEVAEAYAGKLKVIKLNIDDNPETPPKYGIRGIPTLMLFKNGEVEATKVGAVSKSQLT-AFLDS----N-------------L
+>UniRef100_A4XP16 Cluster: Thioredoxin; n=1; Pseudomonas mendocina ymp|Rep: Thioredoxin - Pseudomonas mendocina ymp
+-------MSE--FIT--NVSDASFDQDVIQAE-GPVLVDYWAEWCGPCKMIAPVLDEIAKDYQGKLKICKLNIDENQETPPKYGVRGIPTLMLFKNGNVEATKVGALSKSQLA-AFLDS----N-------------I
+>UniRef100_Q2SQ77 Cluster: Thioredoxin; n=1; Hahella chejuensis KCTC 2396|Rep: Thioredoxin - Hahella chejuensis (strain KCTC 2396)
+-------MSS--RIV--NVTDDSFESEVLKAD-GPVLVDYWAEWCGPCKMIAPVLEEIAEEYGDRLKICKLNIDENEKTPPKFSIRGIPTLMLFKNGAVDATKVGALSKSQLT-AFLDS----N-------------L
+>UniRef100_A6GQQ1 Cluster: Thioredoxin; n=1; Limnobacter sp. MED105|Rep: Thioredoxin - Limnobacter sp. MED105
+-------MSSD-LIK--HVSDASFDSDVLKTD-GPVLVDYWAEWCGPCKMIAPILDDLSSEYNGKLQIAKMNVDENAETPAKYGIRGIPTLMLFKNGAVVATKVGALSKSQLA-AFIDS----H-------------L
+>UniRef100_Q1N4E1 Cluster: Thioredoxin; n=1; Oceanobacter sp. RED65|Rep: Thioredoxin - Oceanobacter sp. RED65
+-------MSD--NII--TLSDDSFDADVLQSD-VPVLVDYWAEWCGPCKMIAPVLEEIAEEYDGKLKVAKLNIDQNEATPPKFGIRGIPTLMIFKGGNVEGTKVGALSKSQLT-AFIDS----T-------------I
+>UniRef100_Q4ZZP9 Cluster: Thioredoxin; n=1; Pseudomonas syringae pv. syringae B728a|Rep: Thioredoxin - Pseudomonas syringae pv. syringae (strain B728a)
+-------MSSD-LIK--HVTDGTFDAEVLEAQ-GPVLVDYWAEWCGPCKMIAPVLDEIASTYKGRLTVAKLNIDQNPDTPAKHGVRGIPTLMLFKGGNVEATKVGALSKSQLT-AFLEG----NGIDLPKP------V
+>UniRef100_Q0ABR4 Cluster: Thioredoxin; n=1; Alkalilimnicola ehrlichei MLHE-1|Rep: Thioredoxin - Alkalilimnicola ehrlichei (strain MLHE-1)
+-------MSG--QIV--HATDQNFEDEVIKAG-EPVLVDYWADWCGPCKMITPILDEVASEYAGKLKVVKLNIDENPETPPKYGIRGIPTLMLFKNGGVEATKVGALSKSQLT-AFIDS----N-------------L
+>UniRef100_P52233 Cluster: Thioredoxin; n=1; Acidithiobacillus ferrooxidans|Rep: Thioredoxin - Thiobacillus ferrooxidans (Acidithiobacillus ferrooxidans)
+-------MSD--AIL--YVSDDSFETDVLKSS-KPVLVDFWAEWCGPCKMIAPILEEIADEYADRLRVAKFNIDENPNTPPQYAIRGIPTLLLFKAGKLEATKVGALSKAQLT-AFLDS----Q-------------L
+>UniRef100_A1TXV7 Cluster: Thioredoxin; n=1; Marinobacter aquaeolei VT8|Rep: Thioredoxin - Marinobacter aquaeolei (strain ATCC 700491 / DSM 11845 / VT8)(Marinobacter hydrocarbonoclasticus (strain DSM 11845))
+-------MSG--NIV--NVTDASFEQDVLKSD-VPVLVDYWAEWCGPCKMIAPVLEEIADEYDGKLKVCKLNIDENEQTPPKFNIRGIPTLMLFKNGNVDATKVGALSKSQLA-AFLDS----N-------------L
+>UniRef100_Q0F9E5 Cluster: Thioredoxin; n=1; alpha proteobacterium HTCC2255|Rep: Thioredoxin - alpha proteobacterium HTCC2255
+-------MSD--KII--TLSDDKFEADVLNAE-GPVLVDFWAEWCGPCKMIAPILSEIADTYEGKVKIGKLNVDEFSETPKKFGIRGIPTLLLFKDGNVAGTKVGALSKAQLE-EFLQE----N-------------L
+>UniRef100_Q1GYY1 Cluster: Thioredoxin; n=1; Methylobacillus flagellatus KT|Rep: Thioredoxin - Methylobacillus flagellatus (strain KT / ATCC 51484 / DSM 6875)
+-------MSE--HIT--HISDDTFDQEVLQSQ-LPVLVDYWAEWCGPCKMIAPILDEIAKEYAGRLKIAKLNIDENQNTPPKYGIRGIPTLMLFKDGNVEATKVGALSKSQLT-AFIDS----N-------------I
+>UniRef100_A1FMG1 Cluster: Thioredoxin; n=1; Pseudomonas putida W619|Rep: Thioredoxin - Pseudomonas putida W619
+-------MSSD-LIK--HVTDATFEAEVLQAQ-GPVLVDYWAEWCGPCKMIAPVLDDIATTYEGKLTVAKLNIDDNQETPAKHGVRGIPTLMLFKNGNVEATKVGALSKSQLA-AFLDA----H-------------L
+>UniRef100_Q5QYF9 Cluster: Thioredoxin; n=1; Idiomarina loihiensis|Rep: Thioredoxin - Idiomarina loihiensis
+-------MSD--VIV--QLSDDSFDADVINSD-KPVLVDFWAEWCGPCKMVAPILDDIASEYADKLVIGKLNVDHNEQTPPKYNIRGIPTLLLFKGGEVVGTKVGALSRAQLT-EFLDQ----H-------------I
+>UniRef100_Q2BL57 Cluster: Thioredoxin; n=1; Oceanospirillum sp. MED92|Rep: Thioredoxin - Oceanospirillum sp. MED92
+-------MSE--NIV--NVTDASFEEDVLKAE-GAVLVDYWAEWCGPCKMIAPVLEEIAKEYGDQLKICKLNIDENSETPPKFGIRGIPTLMLFKGGNVEATKVGALSKSQLA-AFIEA----N-------------L
+>UniRef100_A1W8E3 Cluster: Thioredoxin; n=1; Acidovorax sp. JS42|Rep: Thioredoxin - Acidovorax sp. (strain JS42)
+-------MASE-LIK--HLSDASFEADVLKAG-TPVLVDYWAEWCGPCKMIAPILDEVAGAYQGKLTIAKMNVDENREIPAKFGIRGIPTLMLFKNGELAATKVGAMSKAQLT-AFIDQ----Q------L------A
+>UniRef100_A6EZV6 Cluster: Thioredoxin; n=1; Marinobacter algicola DG893|Rep: Thioredoxin - Marinobacter algicola DG893
+-------MSG--NIV--NVTDASFEQDVLQSD-VPVLVDYWAEWCGPCKMIAPVLEEMAEEYEGKLKVCKLNIDENEQTPPKFNIRGIPTLMLFKNGNVDATKVGALSKSQLA-AFLDS----N-------------L
+>UniRef100_A3JE58 Cluster: Thioredoxin; n=1; Marinobacter sp. ELB17|Rep: Thioredoxin - Marinobacter sp. ELB17
+-------MSA--NIV--NVTDVSFEQDVLQSD-VPVLVDYWAEWCGPCKMIAPVLEEIAEEYAGKLKVCKLNIDENEQTPPKFNIRGIPTLMLFKNGNVDATKVGALSKSQLA-AFLDS----N-------------L
+>UniRef100_Q0F1X7 Cluster: Thioredoxin; n=1; Mariprofundus ferrooxydans PV-1|Rep: Thioredoxin - Mariprofundus ferrooxydans PV-1
+-------MSSD-LII--HVSDESFDADVLKAS-GPVLVDFWAPWCGPCKQIAPILDEVAGEKQGQVTIAKINIDDNPNTPGKYGVRGIPTLMLFSGGNVQGTKVGAVNKAKLG-EFIDE----H------L------G
+>UniRef100_Q2KY09 Cluster: Thioredoxin 1; n=1; Bordetella avium 197N|Rep: Thioredoxin 1 - Bordetella avium (strain 197N)
+MSD-IPIMSE--QIK--NVSDASFEGDVLKSS-QPVLVDYWAAWCGPCKMIAPILEEVASEYAGRLTVAKLNVDENQGTAAKYGIRGIPTLMLFKDGQAAATKVGALSKSQLT-AFLDS----A-------------L
+>UniRef100_A0Y9V1 Cluster: Thioredoxin; n=1; marine gamma proteobacterium HTCC2143|Rep: Thioredoxin - marine gamma proteobacterium HTCC2143
+-------MSD--NIV--HVTDASFESDVLGAD-VPVLVDFWAEWCGPCKMIAPVIAEIANEYEGKLKVCKVDVDANTETAPKFGIRGIPTLMIFKNGNAEATKVGALSKTQLT-EFITS----A-------------L
+>UniRef100_Q4J0I8 Cluster: Thioredoxin; n=1; Azotobacter vinelandii AvOP|Rep: Thioredoxin - Azotobacter vinelandii AvOP
+-------MSE--LIT--NVSDASFEQDVLQAE-GPVLVDYWAEWCGPCKMIAPVLNEIAKDYEGRLKICKLNIDENQGTPAKYGVRGIPTLMLFKGGNVEATKVGALSKSQLA-AFLDS----N-------------I
+>UniRef100_A4G313 Cluster: Thioredoxin; n=1; Herminiimonas arsenicoxydans|Rep: Thioredoxin - Herminiimonas arsenicoxydans
+-------MSE--NIT--HITDASFDTDVLKSD-TPVLVDFWAEWCGPCKMIAPILEDVAKEYAGKIRIAKMDVDANQAIPAKFGIRGIPTLILFKNGVPAAQKVGALAKGQLT-AFIDS----N-------------I
+>UniRef100_Q3J810 Cluster: Thioredoxin; n=1; Nitrosococcus oceani ATCC 19707|Rep: Thioredoxin - Nitrosococcus oceani (strain ATCC 19707 / NCIMB 11848)
+-------MT-D-RIIPVTVTDATFEEEVLKSE-QPALVDYWAEWCGPCKTVAPILEEIANDYQGKLKICKLNIDENPSTPPRYGIRGIPTLMLFKNGNVEATKVGALSKSQLS-AFIDS----N-------------L
+>UniRef100_A1WYQ8 Cluster: Thioredoxin; n=1; Halorhodospira halophila SL1|Rep: Thioredoxin - Halorhodospira halophila (strain DSM 244 / SL1) (Ectothiorhodospirahalophila (strain DSM 244 / SL1))
+-------MSD--AIV--HATDQNFEQEVLQAS-VPVLVDYWAEWCGPCKMIGPILEEIAADYGDRLKVVKLNIDENPETPPKYGIRGIPTLMLFKGGNVEATKVGALSKSQLT-AFIDS----N-------------L
+>UniRef100_Q47BQ4 Cluster: Thioredoxin; n=1; Dechloromonas aromatica RCB|Rep: Thioredoxin - Dechloromonas aromatica (strain RCB)
+-------MSE--HIH--YVTDDTFEAEVLQSQ-QPVLVDYWAEWCGPCKMIAPILDEVATEYAGKLKVAKVNIDDNQATPAKFGIRGIPTLMIFKNGNVEATKVGALSKSQLA-AFIDS----N-------------L
+>UniRef100_Q3SMQ2 Cluster: Thioredoxin; n=1; Thiobacillus denitrificans ATCC 25259|Rep: Thioredoxin - Thiobacillus denitrificans (strain ATCC 25259)
+-------MSE--HVH--YISDDSFEQEVLQAG-VPVLVDYWADWCGPCKMISPILDEVAKEYAGKLKVCKLNIDENQATPPKFGIRGIPTLMIFKNGNVEATKVGALSKSQLT-AFVDS----N-------------I
+>UniRef100_A6SVL6 Cluster: Thioredoxin; n=1; Janthinobacterium sp. Marseille|Rep: Thioredoxin - Janthinobacterium sp. Marseille
+-------MSE--NIK--HITDASFDTDVLKSD-KPVLVDFWAEWCGPCKMIAPILEDVAKEYAGKIQITKMDVDANQAIPAKFGIRGIPTLILFKNGAPAAQKVGALAKGQLT-AFIDS----N-------------I
+>UniRef100_Q62JU6 Cluster: Thioredoxin; n=12; Burkholderia|Rep: Thioredoxin - Burkholderia mallei (Pseudomonas mallei)
+-------MSE--QIK--HISDASFEQDVVKSD-KPVLLDFWAEWCGPCKMIAPILDEVAKDYGDKLQIAKINVDENQATPAKFGVRGIPTLILFKNGAVAAQKVGALSKSQLT-AFLDS----H-------------L
+>UniRef100_A1TQH3 Cluster: Thioredoxin; n=1; Acidovorax avenae subsp. citrulli AAC00-1|Rep: Thioredoxin - Acidovorax avenae subsp. citrulli (strain AAC00-1)
+-------MASE-LIK--HISDASFEADVLQPG-TTVLVDYWAEWCGPCKMIAPILDEVAGSYQGKLTVAKMNVDENREVPAKFGIRGIPTLMLFKDGQLAATKVGAMSKAQLT-SFIDQ----Q------L------A
+>UniRef100_A3S0C9 Cluster: Thioredoxin; n=1; Ralstonia solanacearum UW551|Rep: Thioredoxin - Ralstonia solanacearum UW551
+-------MSE--QIK--YVSDASFEADVLKSD-KPVLVDFWAEWCGPCKMIAPILDEVSKDYADKVQIAKLNVDENAGVPAKFGIRGIPTLILFKNGAVAAQKVGALSKSQLT-AFLDS----H-------------L
+>UniRef100_Q8Y056 Cluster: Probable thioredoxin 1 (Redox factor) protein; n=1; Ralstonia solanacearum|Rep: Probable thioredoxin 1 (Redox factor) protein - Ralstonia solanacearum (Pseudomonas solanacearum)
+-------MSE--QIK--YVSDASFEADVLKSD-KPVLVDFWAEWCGPCKMIAPILDEVSKDYGDKVQIAKLNVDENAGVPAKFGIRGIPTLILFKNGAVAAQKVGALSKSQLT-AFLDS----H-------------L
+>UniRef100_Q2Y793 Cluster: Thioredoxin; n=1; Nitrosospira multiformis ATCC 25196|Rep: Thioredoxin - Nitrosospira multiformis (strain ATCC 25196 / NCIMB 11849)
+-------MSH---TH--HISDGNFETEVLQST-VPVLVDYWAEWCGPCKMIAPILDEVAKEYGDRLKVAKLNIDENQATPPKYGIRGIPTLMLFKNGNIEATKVGALSKSQLT-AFIDS----H-------------I
+>UniRef100_Q39FP3 Cluster: Thioredoxin; n=9; Burkholderia cepacia complex|Rep: Thioredoxin - Burkholderia sp. (strain 383) (Burkholderia cepacia (strain ATCC 17760/ NCIB 9086 / R18194))
+-------MSE--QIK--HISDASFEQDVVKSD-KPVLVDFWAEWCGPCKMIAPILDEVAKDYGDKLQIAKINVDDNQATPAKFGVRGIPTLILFKNGAAAAQKVGALSKSQLT-AFLDS----H-------------L
+>UniRef100_A4U5M1 Cluster: Thioredoxin; n=1; Magnetospirillum gryphiswaldense|Rep: Thioredoxin - Magnetospirillum gryphiswaldense
+-------------MK--NVTDQTFETEVLKAD-GPVLVDFWAEWCGPCRQIAPALEDLAKDLEGKLTVAKINIDENPGTPGKYGVRGIPTLMIFKGGQVAATKIGALPKSKLV-EWVNS----S-------------L
+>UniRef100_A0GTC3 Cluster: Thioredoxin; n=2; Burkholderia|Rep: Thioredoxin - Burkholderia phytofirmans PsJN
+-------MSE--QIK--HISDASFEQDVVKSD-KPVLLDFWAEWCGPCKMIAPILDEVAKDYADRLQIAKINVDEHQSTPVKFGVRGIPTLILFKNGAVAAQKVGALSKSQLT-AFLDG----N-------------L
+>UniRef100_A1K492 Cluster: Thioredoxin-disulfide reductase; n=1; Azoarcus sp. BH72|Rep: Thioredoxin-disulfide reductase - Azoarcus sp. (strain BH72)
+-------MSE--HIH--YVTDGSFEAEVLQSQ-TPVLVDYWAEWCGPCKMIAPILDEVAKDYAGKLKVAKLNIDENQETPAKYGIRGIPTLMIFKGGNIEATKVGALSKSQLT-AFIDS----N-------------I
+>UniRef100_Q1LLG3 Cluster: Thioredoxin; n=1; Ralstonia metallidurans CH34|Rep: Thioredoxin - Ralstonia metallidurans (strain CH34 / ATCC 43123 / DSM 2839)
+-------MSE--QIK--YVSDASFDADVLKSD-KPVLLDFWAEWCGPCKMIAPILDEVAKDYGDKVQVAKINVDENQQVPAKFGIRGIPTLILFKNGQVAAQKVGALSKSQLT-AFLDS----Q-------------L
+>UniRef100_A1HEE1 Cluster: Putative thioredoxin 1 (Redox factor) protein; n=1; Ralstonia pickettii 12J|Rep: Putative thioredoxin 1 (Redox factor) protein - Ralstonia pickettii 12J
+-------MSE--QIK--YVSDASFEADVLKSD-KPVLVDFWAEWCGPCKMIAPILDEVSKDYGEKVQIAKINVDENQGVPAKFGIRGIPTLILFKNGAVAAQKVGALSKSQLT-AFLDS----H-------------L
+>UniRef100_Q0VLN8 Cluster: Thioredoxin; n=1; Alcanivorax borkumensis SK2|Rep: Thioredoxin - Alcanivorax borkumensis (strain SK2 / ATCC 700651 / DSM 11573)
+-------MSG--EII--NVTDADFEAKVINAD-GPVLVDYWAPWCGPCKMVAPILEQLAGEYGDKLTIAKINIDDNPETPKKYGVRGIPTLTVFKNGNVEATKVGALSKSQLT-AFLDS----T-------------L
+>UniRef100_Q0K932 Cluster: Thioredoxin; n=2; Cupriavidus necator|Rep: Thioredoxin - Ralstonia eutropha (strain ATCC 17699 / H16 / DSM 428 / Stanier 337)(Cupriavidus necator (strain ATCC 17699 / H16 / DSM 428 / Stanier337))
+-------MSE--QIK--YVSDASFDADVLQSD-KPVLLDFWAEWCGPCKMIAPILDEVAKDYGDKLQIAKINVDENQQVPAKFGIRGIPTLILFKNGAVAAQKVGALSKSQLT-AFLDG----N-------------L
+>UniRef100_A0FSZ7 Cluster: Thioredoxin; n=1; Burkholderia phymatum STM815|Rep: Thioredoxin - Burkholderia phymatum STM815
+-------MSE--HIK--HISDASFEQDVVKSD-KPVLLDFWAEWCGPCKMIAPILDEVAKDYADRLQIAKINVDEHQSTPVKFGVRGIPTLILFKNGAVAAQKVGALSKSQLT-AFLDG----N-------------L
+>UniRef100_A1KUI8 Cluster: Thioredoxin I; n=2; Neisseria meningitidis|Rep: Thioredoxin I - Neisseria meningitidis serogroup C / serotype 2a (strain ATCC 700532 /FAM18)
+-------MSSE-LIV--HTSDAAFEKDVLNAD-IPVLLDFWAPWCGPCKMIAPILDDIAAEFEGRLKVVKINIDDNEATPSRFGVRGIPTLMVFKNGEVVATKVGALAKGQLT-AFVEA----S------I------A
+>UniRef100_A1VPC5 Cluster: Thioredoxin; n=1; Polaromonas naphthalenivorans CJ2|Rep: Thioredoxin - Polaromonas naphthalenivorans (strain CJ2)
+-------MANE-LIK--HTTDATFDADVLKSS-TPVLVDYWAEWCGPCKMIAPILDEVATGYEGKLQIAKMNVDENREIPAKFGIRGIPTLMLFKDGQLAATKVGALSKSQLT-AFIDQ----Q------L------A
+>UniRef100_Q5F8V8 Cluster: Putative thioredoxin I; n=1; Neisseria gonorrhoeae FA 1090|Rep: Putative thioredoxin I - Neisseria gonorrhoeae (strain ATCC 700825 / FA 1090)
+-------MSSE-LIV--HTGDAAFEQDVLKSD-LPVLLDFWAPWCGPCKMIAPILDDIAAEFEGRLKVVKINIDDNEATPSRFGVRGIPTLMVFKNGEVVATKVGALAKGQLT-AFVEA----S------I------A
+>UniRef100_Q5P1K8 Cluster: Thioredoxin; n=1; Azoarcus sp. EbN1|Rep: Thioredoxin - Azoarcus sp. (strain EbN1) (Aromatoleum aromaticum (strain EbN1))
+-------MSE--HIH--YVTDGNFEAEVLQSQ-TPVLVDYWAEWCGPCKMIAPILDDVAKEYAGKLKVAKLNIDENQETPAKFGVRGIPTLMLFKGGNVEATKVGALSKSQLT-AFIDS----N-------------L
+>UniRef100_Q1LTR8 Cluster: Thioredoxin 1; n=1; Baumannia cicadellinicola str. Hc (Homalodisca coagulata)|Rep: Thioredoxin 1 - Baumannia cicadellinicola (subsp. Homalodisca coagulata)
+-------MKD--KII--NISQENFTQQVLQNE-GLFLVDFWAEWCAPCKSITPILAEIANEFNGKVTIVKLNIDENPAIAQKYNVRSIPSLLLFRNGEVVATKVGALSKGQLI-EFLNA----N-------------I
+>UniRef100_A4A9G3 Cluster: Thioredoxin; n=1; Congregibacter litoralis KT71|Rep: Thioredoxin - Congregibacter litoralis KT71
+-------MSD--AIV--HVSDASFEQDVLSSD-VPVLVDFWAEWCGPCKMIAPVLDELAGEFAGKLKVCKVDVDANPEVPGKFGIRGIPTLILFKDGNAEATKVGALSKSQLV-EFVNE----S------I------A
+>UniRef100_UPI0000E8802F Cluster: Thioredoxin; n=1; Methylophilales bacterium HTCC2181|Rep: Thioredoxin - Methylophilales bacterium HTCC2181
+-------MSN--SII--HLTDETFQKTVLESN-IPVLVDYWAEWCGPCKMIAPILESLVSEYEGKLIIAKHNIDDNPQTPAKYGVRGIPTLMIFKDGNIEATKVGALSKSQLA-AFIDS----T-------------I
+>UniRef100_A1ISG7 Cluster: Thioredoxin I; n=1; Neisseria meningitidis serogroup A|Rep: Thioredoxin I - Neisseria meningitidis serogroup A
+-------MSSE-LIV--HTGDAAFEQDVLKSD-LPVLLDFWAPWCGPCKMIAPILDDIAAEFEGRLKVVKINIDDNEATPSRFGVRGIPTLMVFKNGDVVATKVGALAKGQLT-AFVEA----S------I------A
+>UniRef100_Q12BA4 Cluster: Thioredoxin; n=1; Polaromonas sp. JS666|Rep: Thioredoxin - Polaromonas sp. (strain JS666 / ATCC BAA-500)
+-------MASE-LIK--HTTDATFEADVLKSS-TPVLVDYWAEWCGPCKMIAPILDEVATGYDGKLQIAKMNVDENRDIPAKFGIRGIPTLMLFKDGQLAATKVGAMSKAQLT-AFIDQ----Q------L------A
+>UniRef100_Q0AD96 Cluster: Thioredoxin; n=1; Nitrosomonas eutropha C91|Rep: Thioredoxin - Nitrosomonas eutropha (strain C71)
+-------MSQ--HIH--YVTDATFEAEVLQCP-LPVLVDYWAEWCGPCRMIAPILDEIANEYNGRLKVAKLNIDENQSTPQKYGIRGIPTLMLFKNGNIEATKVGALSKSQLI-AFVDD----H-------------L
+>UniRef100_A1H074 Cluster: Thiol-disulfide isomerase and thioredoxins; n=1; Parvibaculum lavamentivorans DS-1|Rep: Thiol-disulfide isomerase and thioredoxins - Parvibaculum lavamentivorans DS-1
+-------MAT----N--KVTDASFEADVLDAA-GPVLVDFWAEWCGPCKQIGPALEEIAKDYGGKLTIAKINIDENPNVPTKYGVRGIPTLMIFKDGQVAATKVGALPKGKIV-EWIDN----S-------------L
+>UniRef100_A2SFA6 Cluster: Thioredoxin 1; n=1; Methylibium petroleiphilum PM1|Rep: Thioredoxin 1 - Methylibium petroleiphilum (strain PM1)
+-------MASE-LIK--HVSDASFDDDVLKSG-TPVLVDYWAEWCGPCKMIAPILDEVAKDYGSKLQIAKMNVDENRDVPAKFGIRGIPTLMLFKGGQLAATKVGALNKSQLT-AFLDG----H-------------L
+>UniRef100_Q1YVE3 Cluster: Thioredoxin; n=1; gamma proteobacterium HTCC2207|Rep: Thioredoxin - gamma proteobacterium HTCC2207
+-------MSD--AIV--HTTDSSFESDVLQSD-IPALVDFWAAWCGPCKMIAPLLDELSTEYAGRVKICKVDVDASPETAAKFNVRGIPTLLVFKNGTVEATKVGALSKAQLV-EFVDS----I-------------L
+>UniRef100_Q5GUR7 Cluster: Thioredoxin; n=2; Xanthomonas oryzae pv. oryzae|Rep: Thioredoxin - Xanthomonas oryzae pv. oryzae
+-------MSD--KVQ--HVGDADFDTAVLQSG-EPVLVDFWAEWCGPCKMIAPVLDDLADTYQGRLKVAKVNVDQNRALAIKYHVRSIPMLLLFKNGEVQATQIGAVGKGQLT-QMIDK----T------L--GDAAA
+>UniRef100_UPI00006A2769 Cluster: UPI00006A2769 related cluster; n=1; Xenopus tropicalis|Rep: unknown - Xenopus tropicalis
+-------MTSN-LIK--HVSDTSFQADVLQSS-TPVLVDYWAEWCGPCKMIAPILDDVAGAYQGKLTIAKMNMDDNQEIPAKFGIRGIPTLMLFKNGQLAATHVGALGRAQLT-AFIDQ----Q------L------A
+>UniRef100_Q82VN2 Cluster: Thioredoxin; n=1; Nitrosomonas europaea|Rep: Thioredoxin - Nitrosomonas europaea
+-------MSQ--HIH--YVTDASFESEVLQCP-VPVLVDYWAEWCGPCRMIAPLLDEIASEYGDRLKIAKLNIDENQSTPQKYGIRGIPTLMIFKNGNIEATKVGALSKSQLT-AFVDS----H-------------L
+>UniRef100_A0HCU6 Cluster: Thioredoxin; n=1; Comamonas testosteroni KF-1|Rep: Thioredoxin - Comamonas testosteroni KF-1
+-------MASE-LIK--HITDASFESDVLQPG-TTVLVDYWAEWCGPCKMIAPILDDVAEGYKGKVQIAKMNVDENREIPAKFGIRGIPTLMLFKDGQLAATKVGALNKTQLS-AFLDQ----H-------------I
+>UniRef100_Q09AP2 Cluster: Thioredoxin; n=1; Stigmatella aurantiaca DW4/3-1|Rep: Thioredoxin - Stigmatella aurantiaca DW4/3-1
+-------MSA--KPI--HVSEVNFDEVVLKDQ-GPVLVDFWAEWCGPCERIAPLLDEIADEYAGKLTIAKLNIDENRALARKQGVRRIPTLMLFKQGEVAAVKEGVPSKTQLN-EFLTA----N-------------M
+>UniRef100_Q8PFZ2 Cluster: Thioredoxin; n=1; Xanthomonas axonopodis pv. citri|Rep: Thioredoxin - Xanthomonas axonopodis pv. citri
+-------MSD--KVQ--HVGDADFDTAVLQAG-EPVLVDFWAEWCGPCKMIAPVLDDLADTYQGRLKVAKVNVDQNRALAIKYHVRSIPMLLLFKDGQVQATQIGAVGKGQLT-QMIDK----T------L--GGAAA
+>UniRef100_Q21EG9 Cluster: Thioredoxin TrxA; n=1; Saccharophagus degradans 2-40|Rep: Thioredoxin TrxA - Saccharophagus degradans (strain 2-40 / ATCC 43961 / DSM 17024)
+-------MSE--AIV--QVSDASFEQDVLSSD-IPVLVDYWAAWCGPCKMIAPVLDELAKEYEGKIKICKMDVDANKETPAKYNIRGIPTLIMFKGGNAEGTKVGALSKAQLK-EFIDA----S-------------L
+>UniRef100_Q4UPY4 Cluster: Thioredoxin; n=2; Xanthomonas campestris pv. campestris|Rep: Thioredoxin - Xanthomonas campestris pv. campestris (strain 8004)
+-------MSD--KVQ--HVGDADFDTAVLQSG-EPVLVDFWAEWCGPCKMIAPVLDDLADTYQGKLKVAKVNVDQNRALAIKYHVRSIPMLLLFKDGEVQASQIGAVGKGQLT-QMIDK----T------L--GGAAA
+>UniRef100_A3UEQ3 Cluster: Thioredoxin; n=1; Oceanicaulis alexandrii HTCC2633|Rep: Thioredoxin - Oceanicaulis alexandrii HTCC2633
+-------MAT----Q--AVTDDTFENDVLKAD-GPVLVDFWAEWCGPCKQIGPALEEIASEKAGKLTIAKVNIDENPMAPSKYGVRGIPTLLIFKNGEEVSRKVGAMAKSKIE-EWINE----A-------------V
+>UniRef100_Q3BNH7 Cluster: Thioredoxin; n=1; Xanthomonas campestris pv. vesicatoria str. 85-10|Rep: Thioredoxin - Xanthomonas campestris pv. vesicatoria (strain 85-10)
+-------MSD--KVQ--HVGDADFDTAVLQSG-EPVLVDFWAEWCGPCKMIAPVLDDLADTYQGRLKVAKVNVDQNRALAIKYHVRSIPMLLLFKDGQVQATQIGAVGKGQLT-QMIDK----T------L--GGAAA
+>UniRef100_A1WFM2 Cluster: Thioredoxin precursor; n=1; Verminephrobacter eiseniae EF01-2|Rep: Thioredoxin precursor - Verminephrobacter eiseniae (strain EF01-2)
+-------MTSA-LIK--HVSDASFEADVLQAD-TPVLVDYWAPWCGPCKMIAPLLDDAADRYQGRLQIVKMDVDDNRQTPAKFGIRGVPTLMLFKDGQPAATQVGALGRAQLT-EFLDQ----Q------L-----AA
+>UniRef100_A0V6D8 Cluster: Thioredoxin; n=1; Delftia acidovorans SPH-1|Rep: Thioredoxin - Delftia acidovorans SPH-1
+-------MASE-LIK--HISDASFEADVLQPG-TTVLVDYWAEWCGPCKMIAPILDEAAQTYKEKLSIAKMNVDENREIPAKFGIRGIPTLMLFKDGQLAATKVGALNKAQLS-AFLEQ----H------L------A
+>UniRef100_A4SYF7 Cluster: Thioredoxin; n=1; Polynucleobacter sp. QLW-P1DMWA-1|Rep: Thioredoxin - Polynucleobacter sp. QLW-P1DMWA-1
+-------MSA--GIK--YVTDASFEQDVLKSD-KPVLLDFWAEWCGPCKMIGPILEELSGEYGDKLQIAKMNVDENQGVPAQFNIRGIPTLILFKNGTVAAQKVGALAKSQLS-AFIDS----N-------------I
+>UniRef100_P57653 Cluster: Thioredoxin; n=1; Buchnera aphidicola (Acyrthosiphon pisum)|Rep: Thioredoxin - Buchnera aphidicola subsp. Acyrthosiphon pisum (Acyrthosiphon pisumsymbiotic bacterium)
+--------MN--KII--ELTDQNFEEQVLNSK-SFFLVDFWAQWCNPCKILAPILEEISKEYSNKVIVGKLNIEENPNTAPVYSIRSIPTLLLFNNSEVLATKVGAVSKLELK-EFLDE----N------I------N
+>UniRef100_O51890 Cluster: Thioredoxin; n=1; Buchnera aphidicola (Schizaphis graminum)|Rep: Thioredoxin - Buchnera aphidicola subsp. Schizaphis graminum
+--------MN--KII--ELTDQNFEKEVLEHK-SFVLVDFWAEWCNPCKILAPILEEIAQEYFNKIKVGKLNIEKNPNTAPIYSIRGIPALLLFHGREVLATKVGAISKLQLK-DFLDE----N------I------K
+>UniRef100_Q8L1N0 Cluster: Thioredoxin; n=1; Buchnera aphidicola (Pemphigus spyrothecae)|Rep: Thioredoxin - Buchnera aphidicola subsp. Pemphigus spyrothecae
+-------MINT-KII--NVNEENFEKNILQEK-NFILVDFWAEWCNPCKILAPILEEIANEYQDKLIVAKINIDENPNIAPKYSIRGIPALLLFKNGTLLKTKIGALSKIQLQ-TFLNK----Y------L------I
+>UniRef100_P59527 Cluster: Thioredoxin; n=1; Buchnera aphidicola (Baizongia pistaciae)|Rep: Thioredoxin - Buchnera aphidicola subsp. Baizongia pistaciae
+-------MTN--CIV--ELTDGIFKQYILESK-KAVLVDFWAEWCNPCKILAPILEDIAKEYEHKLIVTKINIDKNPNTAPKYSIRGIPALLLFKNSELVGTKVGALSKVQLK-DFLNL----Y------L------K
+>UniRef100_Q1K3R0 Cluster: Thioredoxin; n=1; Desulfuromonas acetoxidans DSM 684|Rep: Thioredoxin - Desulfuromonas acetoxidans DSM 684
+-------MAND-NVV--QFTDDNFDAEVLKAD-QPVLVDFWATWCAPCKAIAPVIDELANQFSGQVKIGKVNVDENPNTPGQYGVRGIPTLVLFKNGEVVDQLVGAIPKNQLE-EFINK----A-------------L
+>UniRef100_Q3A004 Cluster: Thioredoxin; n=1; Pelobacter carbinolicus DSM 2380|Rep: Thioredoxin - Pelobacter carbinolicus (strain DSM 2380 / Gra Bd 1)
+-------MASD-KIV--HLSDNSFDADVLKSS-EPVLVDFWASWCGPCKAIAPAIDELAEQFDGQVKIGKINVDENPATPSNYGVRGIPTLILFKDGQVVDQVVGAVPKGQLE-ALIKK----A-------------L
+>UniRef100_A3YDK0 Cluster: Thioredoxin; n=1; Marinomonas sp. MED121|Rep: Thioredoxin - Marinomonas sp. MED121
+-------MGD--NTI--QITDAQFQEEVLNSE-VPVVVDFWAPWCGPCKMIGPVLEDVAGEMEGKIKVVKINVDENPDTAPKYNVRGIPTLLVVKGGEVVATKVGAVSKSQLV-DFIDT----S-------------I
+>UniRef100_Q2RNR8 Cluster: Thioredoxin; n=1; Rhodospirillum rubrum ATCC 11170|Rep: Thioredoxin - Rhodospirillum rubrum (strain ATCC 11170 / NCIB 8255)
+-------------MK--QVSDASFEEDVLKAD-GPVLVDFWAEWCGPCRQIAPALEELATALGDKVTVAKINIDENPQTPSKYGVRGIPTLMIFKDGQVAATKIGALPKTKLF-EWVEA----S-------------V
+>UniRef100_Q5FT93 Cluster: Thioredoxin; n=1; Gluconobacter oxydans|Rep: Thioredoxin - Gluconobacter oxydans (Gluconobacter suboxydans)
+-------MSA--NTV--AVSDSSFEADVLKSE-GPVLVDFWAEWCGPCKMIAPALEEIGAEYQGRLKVAKVNIDSNPEAPTKYGVRSIPTLIVFKDGKPVAQQMGALPKSQLK-AWIDQ----S-------------L
+>UniRef100_Q0ATK4 Cluster: Thioredoxin; n=1; Maricaulis maris MCS10|Rep: Thioredoxin - Maricaulis maris (strain MCS10)
+-------MAT----K--AVSDESFESDVINAS-GPVLVDFWAEWCGPCKQISPALEEIAEEMSGSLTVAKVNIDDHPMTPGKYGVRGIPTLMIFKDGQVVSTKIGAMAKGKIS-EWVQE----T-------------L
+>UniRef100_A5V9S2 Cluster: Thioredoxin; n=1; Sphingomonas wittichii RW1|Rep: Thioredoxin - Sphingomonas wittichii RW1
+-------MPT----K--AITDSSFHDDVISAD-KPVLVDFWAEWCGPCKMIGPALEEIADELGEKVTIAKINIDDNPDAPGKYGVRGIPTMILFKNGQPTATKVGAAPKSQLK-GWLEG----E-------------L
+>UniRef100_Q39QN1 Cluster: Thioredoxin; n=1; Geobacter metallireducens GS-15|Rep: Thioredoxin - Geobacter metallireducens (strain GS-15 / ATCC 53774 / DSM 7210)
+-------MASE-KVL--TFSDDNFDTDVLKAT-VPVLVDFWATWCAPCKAIAPVIDAIADEYDGKVKVGKVNVDDNPGTPGKYGVRGIPTVILFKDGKVVDQVVGAVPKAQLE-ALIKK----A-------------L
+>UniRef100_A6W1A7 Cluster: Thioredoxin; n=1; Marinomonas sp. MWYL1|Rep: Thioredoxin - Marinomonas sp. MWYL1
+-------MSE--NTI--QITDAQFAEEVLNSE-IPVIVDFWAPWCGPCKMIAPVLEDVAAEYAGKVKVVKLNVDENQETAPKYNVRGIPTLLIVKGGEVVATKVGAVSKSQLV-DFVNS----A-------------I
+>UniRef100_A5CWY1 Cluster: Thioredoxin 1; n=1; Candidatus Vesicomyosocius okutanii HA|Rep: Thioredoxin 1 - Vesicomyosocius okutanii subsp. Calyptogena okutanii (strain HA)
+-------MND--KIK--IVVDASFEAEVVNSS-QVVLVDFWAQWCGPCKTLMPVLDKIADEYDGRVLIAKINIDENQKIPSKYGIRGIPTMLLFFEGVVQATKMGALSKAELS-AFIDA----N-------------I
+>UniRef100_Q1NDW9 Cluster: Thioredoxin; n=1; Sphingomonas sp. SKA58|Rep: Thioredoxin - Sphingomonas sp. SKA58
+-------MAT----K--AVTDVSFQQDVIAAD-KPVLVDFWAEWCGPCKMIGPALEEISEELGDKVTIAKINIDENPDAPGKYGVRGIPTMILFKNGEVSATKVGAAPKSALK-GWIES----V-------------L
+>UniRef100_Q1GWU2 Cluster: Thioredoxin; n=1; Sphingopyxis alaskensis|Rep: Thioredoxin - Sphingopyxis alaskensis (Sphingomonas alaskensis)
+-------MGT----K--AITDASFQADVLDSE-TPVLVDFWAEWCGPCKMIGPALEEISDELAGKVVIAKLNIDDHPDAPSKYGVRGIPTMILFKNGEIADTKVGAAPKSALK-GWLEG----A-------------L
+>UniRef100_Q83A24 Cluster: Thioredoxin; n=1; Coxiella burnetii|Rep: Thioredoxin - Coxiella burnetii
+-------MSE--HVH--TASDENFETEVLQAD-MPVLVDFWAEWCQPCKMISPVVEEIAKEYAGRVKVFKLNVDENAQTPTKYGVRGIPSLLIFREGEVVDRKVGALNKSQLA-AFLDE----S------L---HFSS
+>UniRef100_A1AWC5 Cluster: Thioredoxin; n=1; Candidatus Ruthia magnifica str. Cm (Calyptogena magnifica)|Rep: Thioredoxin - Ruthia magnifica subsp. Calyptogena magnifica
+-------MND--KIK--VVTDASFEANVVNSS-QVVLVDFWAEWCGSCKALMSVLDEIADEYDGKVIITKINIDENDQTLLKYGIHGIPTMLLFSDGVVQATKMGALSKAELS-TFIDA----N-------------I
+>UniRef100_Q65S27 Cluster: TrxA protein; n=1; Mannheimia succiniciproducens MBEL55E|Rep: TrxA protein - Mannheimia succiniciproducens (strain MBEL55E)
+-------MSE---VL--HATDASFEADVLRSD-VPVLVDLWAPWCGPCRMVAPILDDLAAELAGKVKIVKINIDENQGTPAQFGVRSIPTLLMFKDGQLVGTQVGALPKNQLA-AFVEK----N-------------L
+>UniRef100_UPI0000DAE539 Cluster: hypothetical protein Rgryl_01000578; n=1; Rickettsiella grylli|Rep: hypothetical protein Rgryl_01000578 - Rickettsiella grylli
+-------MNNS-SIV--TLNDASFESEVLQFNATPILVDFWAEWCGPCKAISPILDKLSEKYRGKIKIGKLNVDENPKTPAKYGVRGIPTLILFKDGKAVETKVGALLESQLE-SFLEK----H------LTNPGTST
+>UniRef100_Q0BQJ3 Cluster: Thioredoxin; n=1; Granulibacter bethesdensis CGDNIH1|Rep: Thioredoxin - Granulobacter bethesdensis (strain ATCC BAA-1260 / CGDNIH1)
+MIEKRLPMS-E-HTK--PVTDATFETDVLGAS-GPVLVDFWAEWCGPCRMIAPALEEVAAENTGRLTVAKVNIDENPDSPNRYGVTGIPTLILFKDGQPIAKQVGALPKSALK-QWVSG----N-------------I
+>UniRef100_Q747I5 Cluster: Thioredoxin; n=1; Geobacter sulfurreducens|Rep: Thioredoxin - Geobacter sulfurreducens
+-------MASD-KVL--TFSDDTFDSEVLKSP-VPVLVDFWATWCAPCKAIAPVIDAIADEFDGKVKVGKVNVDDNPGTPGKYGVRGIPTVILFKEGKVVDQVVGAVPKAQLE-ALIKK----A-------------L
+>UniRef100_P10473 Cluster: Thioredoxin; n=1; Rhodospirillum rubrum|Rep: Thioredoxin - Rhodospirillum rubrum
+-------M------K--QVSDASFEEDVLKAD-GPNXVDFWAEWCGPCRQXAPALEELATALGDKVTVAKINIDENPQTPSKYGVRGIPTLMIFKDGQVAATKIGALPKTKLF-EWVEA----S-------------V
+>UniRef100_A6VQE9 Cluster: Thioredoxin; n=1; Actinobacillus succinogenes 130Z|Rep: Thioredoxin - Actinobacillus succinogenes 130Z
+-------MAE---VF--HSTDASFEADVLKAD-VPVLLDFWAPWCGPCRMVGPILEELAAEYGDKVKIVKINIDENQGTPAQFGVRSIPTLLLFKDGKVVGTQVGALPKNQLA-NFVNQ----A-------------L
+>UniRef100_Q3AA19 Cluster: Thioredoxin; n=1; Carboxydothermus hydrogenoformans Z-2901|Rep: Thioredoxin - Carboxydothermus hydrogenoformans (strain Z-2901 / DSM 6008)
+-------MGI----I--TLTDENFETEALKRE-GLIIVDFWAEWCGPCRMIAPILEEIAQEYEGKLTVGKLDVDSNPETPRRYGIMSIPTLLFIKNGEEVGRTVGFKHKNELM-KIIIK----N-------------L
+>UniRef100_Q5NNI9 Cluster: Thiol-disulfide isomerase; n=1; Zymomonas mobilis|Rep: Thiol-disulfide isomerase - Zymomonas mobilis
+-------MSV----I--NVTDASFEADVLKSP-VPVVVDFWAEWCGPCRQIAPALGEIASELEGKMTLAKVEVDNNIETASRFGIRNIPTLLLFKNGEVVATRTGGAPKSQLK-SWIES----S-------------L
+>UniRef100_A0LDV0 Cluster: Thioredoxin; n=1; Magnetococcus sp. MC-1|Rep: Thioredoxin - Magnetococcus sp. (strain MC-1)
+-------MSE--HVT--STTDSQFETDVLQAE-TPVLVDFWAEWCGPCKQVAPFLDQLAQDKVGSLKVVKLNIDENPNVPGRFGVRGIPTLMIFKGGQIQASKIGAMPKSKLY-EWVDEA-L-A-------------G
+>UniRef100_A1EV01 Cluster: Thioredoxin; n=1; Coxiella burnetii 'MSU Goat Q177'|Rep: Thioredoxin - Coxiella burnetii 'MSU Goat Q177'
+-------MSE--HVH--TASDENFETEVLQAD-MPVLVDFWAEWCQPCKMISPVVEEIAKEYAGRVKVFKFNVDENAQTPTKYGVRGIPSLLIFREGEVVDRKVGALNKSQLA-AFLDE----R------L---HFSS
+>UniRef100_Q9CM49 Cluster: Thioredoxin; n=1; Pasteurella multocida|Rep: Thioredoxin - Pasteurella multocida
+-------MEV----L--HSTDATFTADVVNSD-VPVLLDFWAPWCGPCRMISPILDEIAAEFSGKVKVVKINIDENQATPAQLGVRSIPTLVLFKNGKAVATQVGALPKNQLA-NFINQ----N-------------I
+>UniRef100_A1AUF2 Cluster: Thioredoxin; n=1; Pelobacter propionicus DSM 2379|Rep: Thioredoxin - Pelobacter propionicus (strain DSM 2379)
+-------MASD-KVL--ALNDANFERDVLQSD-LPVLVDFWATWCSPCKAIAPLIDAVADEYAGKIKVGKVNVDENPSTPGKYGVRGIPTLVLFKGGVVVDQVVGAIPKSQLE-ALIAK----A-------------F
+>UniRef100_Q0YQR5 Cluster: Thioredoxin; n=1; Chlorobium ferrooxidans DSM 13031|Rep: Thioredoxin - Chlorobium ferrooxidans DSM 13031
+-------MSE--KYL--AATDQNFTTEILESD-KVALVDFWATWCGPCMMLGPVIDELAGEYAGRAVVAKVNVDENPATAARYGIRSIPSLLIFKNGQVVDQLLGAIPKNQIS-RKMDL----H------L------A
+>UniRef100_A5GCW6 Cluster: Thioredoxin; n=1; Geobacter uraniumreducens Rf4|Rep: Thioredoxin - Geobacter uraniumreducens Rf4
+-------MASE-KVL--TFTDDNFEAAVLQSD-VPVLVDFWATWCAPCKAIAPLIDTIADEYDGKIKVGKVNVDDNPGTPGKYGVRGIPTVILIKDGKVVDQVVGAVPKAQLE-ALIKK----A-------------V
+>UniRef100_A0P3P9 Cluster: Thioredoxin:Thioredoxin type domain:Thioredoxin domain 2; n=1; Stappia aggregata IAM 12614|Rep: Thioredoxin:Thioredoxin type domain:Thioredoxin domain 2 - Stappia aggregata IAM 12614
+-------MAT----T--QVTDSSFEAEVLKSD-GPVVVDFWAEWCGPCKMIAPALEEISEEMSGQVKITKLNIDENQDMAMKYGVRSIPMLILFKDGEPMATQIGAAPKGKLS-DWIKS----A-------------L
+>UniRef100_A1YAC5 Cluster: Thioredoxin; n=2; Acetobacter aceti|Rep: Thioredoxin - Acetobacter aceti
+-------MSE--HTL--AVSDSSFDQDVLKAS-GLVLVDFWAEWCGPCKMIGPALGEIGKEFAGKVTVAKVNIDDNPETPNAYQVRSIPTLMLVRDGKVIDKKVGALPKSQLK-AWVES----A-------------Q
+>UniRef100_Q2RZ76 Cluster: Thioredoxin; n=1; Salinibacter ruber DSM 13855|Rep: Thioredoxin - Salinibacter ruber (strain DSM 13855)
+-------MAESANVI--TLTDDNFEDEVIGAD-QPVLVDFWATWCGPCRQIAPIVEELADEYEGQAKIGKVDVDENPQTAQEYGVRSIPTLLFFKDGEAKEQVVGAAGKQPLK-ENLEAL-LGQ------P------A
+>UniRef100_A3N184 Cluster: Thioredoxin; n=1; Actinobacillus pleuropneumoniae L20|Rep: Thioredoxin - Actinobacillus pleuropneumoniae serotype 5b (strain L20)
+-------MTL-------QVTDATFEQEVLKSD-VPVLLDFWAPWCGPCRMVAPILDELSEEFAGRAKIAKVNVDENQQIPAQFGIRSIPTLILFKNGEVVATQVGALPKSQLS-AFVEQ----A-------------L
+>UniRef100_Q1NR49 Cluster: Thioredoxin; n=1; delta proteobacterium MLMS-1|Rep: Thioredoxin - delta proteobacterium MLMS-1
+-------MASD-KLV--QVSDADFDSQVLQSA-EPVLVDFWAPWCGPCKAIGPVVEELADEYAGKAKIAKMNVDDNPATPGKYGIRAIPTLILFKGGEVVDQVTGAVGKPQLT-ALIDK----G-------------M
+>UniRef100_P43785 Cluster: Thioredoxin; n=1; Haemophilus influenzae|Rep: Thioredoxin - Haemophilus influenzae
+-------MSE---VL--HINDADFESVVVNSD-IPILLDFWAPWCGPCKMIAPVLDELAPEFAGKVKIVKMNVDDNQATPAQFGVRSIPTLLLIKNGQVVATQVGALPKTQLA-NFINQ----H-------------I
+>UniRef100_Q11CC4 Cluster: Thioredoxin; n=1; Mesorhizobium sp. BNC1|Rep: Thioredoxin - Mesorhizobium sp. (strain BNC1)
+-------MAT----V--KVDSGNFQSDVLQAC-EPVVVDFWAEWCGPCKMIAPALEEISSEMQGKVKVAKLNIDENPELAARYGVRSIPTLMLFKNGEVADMKVGAAPKTALS-AWIGG--S-I-------------A
+>UniRef100_Q9AJR5 Cluster: Thioredoxin; n=1; Aggregatibacter actinomycetemcomitans|Rep: Thioredoxin - Actinobacillus actinomycetemcomitans (Haemophilusactinomycetemcomitans)
+-------MSE---VL--HSSDATFVADVLNSE-VPVLLDFWATWCGPCKMIAPILDDLAVEFDGKVKIVKINIDDNQATPAQFGVRSVPTLLLFKDGKPVATQVGALPKNQLA-AFINQ----N-------------I
+>UniRef100_Q0I4N9 Cluster: Thioredoxin; n=1; Haemophilus somnus 129PT|Rep: Thioredoxin - Haemophilus somnus (strain 129Pt) (Histophilus somni (strain 129Pt))
+-------MSE---VL--HTTDATFDTDVLKSD-IPVLLDFWAPWCGPCRMIGPILEELSAELGDKVKIVKINIDENQATPAQFGVRSIPTLIFFKEGKAVATQVGALPKNQLV-NFINQ----N-------------S
+>UniRef100_Q2RHW4 Cluster: Thioredoxin; n=1; Moorella thermoacetica ATCC 39073|Rep: Thioredoxin - Moorella thermoacetica (strain ATCC 39073)
+-------MAAS-NII--TLTDANFEEEVLSAT-TPVLVDFWAAWCGPCRMIAPIVDELAQEYAGKVKVAKLNVDEYPKIPADYGIMSIPTLILFKNGEVIARTVGYQSKEKLA-QVLEN----N-------------L
+>UniRef100_A3VPD9 Cluster: Thioredoxin; n=1; Parvularcula bermudensis HTCC2503|Rep: Thioredoxin - Parvularcula bermudensis HTCC2503
+-------MAT----K--TVTDASFEQDVLKGT-GLVLVDFWATWCGPCRQIAPALEEIADEMGDDLTVAKLDIDENPTTMMQYGVRGVPTLMLFKEGQLVSTKVGADAKGAIL-AWVKETAS-A-------------A
+>UniRef100_Q5ZRE7 Cluster: RSc1188; probable thioredoxin 1; n=4; Legionella pneumophila|Rep: RSc1188; probable thioredoxin 1 - Legionella pneumophila subsp. pneumophila (strain Philadelphia 1 /ATCC 33152 / DSM 7513)
+-------MSD--HIK--TVTDASFEQDVINSS-KPVLVDFWAEWCGPCRALTPILEEVAATHSKDMTFAKINIDENPQAPAKFGVMSIPTLILFKNGQVEAVKMGLLSKSQLS-AFVES----N-------------L
+>UniRef100_A5FYI2 Cluster: Thioredoxin; n=1; Acidiphilium cryptum JF-5|Rep: Thioredoxin - Acidiphilium cryptum JF-5
+-------MGA--ATK--AVSDAEFSTSVLDSK-EPVLVDFWAEWCGPCKIIGPSLEELGSEYAGRVTIAKVNIDENPMTPTQYGVRGIPTLILFKDGKPAAQHVGAAPKSVLK-AWLDK----N-------------I
+>UniRef100_A1UUF2 Cluster: Thioredoxin; n=1; Bartonella bacilliformis KC583|Rep: Thioredoxin - Bartonella bacilliformis (strain ATCC 35685 / KC583)
+-------MTC----I--KIDNSNFENEVLTSS-IPVVVDFWAEWCGPCKMIAPILDEISAEMEGQVKIAKISIDENPELATQYGVRSIPTLLMFKNGNVSSNVVGATSKGRLC-EWIKD--N-L-------------R
+>UniRef100_P33791 Cluster: Thioredoxin; n=1; Streptomyces aureofaciens|Rep: Thioredoxin - Streptomyces aureofaciens
+-------GAT----V--KVTNATFKSDVLESD-KPVLVHFEGPWCGPCKMVAPVLDEIANEYEGKVKVAKVNTDENPQLASQYGVRSIPTRLMFKGGEVAANMVGAAPKTRLA-AFLDA----S-------------L
+>UniRef100_A1BFQ5 Cluster: Thioredoxin; n=1; Chlorobium phaeobacteroides DSM 266|Rep: Thioredoxin - Chlorobium phaeobacteroides (strain DSM 266)
+-------MSG--KYL--VATDQNFKTEILDSD-KVALVDFWAAWCGPCMMLGPVIEELAGDYEGKAIVAKLNVDDNPNTASQYGIRSIPTMLLIKNGKVVDQMVGAMPKNMIA-KKIDE----H------L------A
+>UniRef100_UPI0000399F09 Cluster: COG0526: Thiol-disulfide isomerase and thioredoxins; n=1; Rickettsia rickettsii|Rep: COG0526: Thiol-disulfide isomerase and thioredoxins - Rickettsia rickettsii
+-------MAN-------NVKDNSFKKEVLESD-LPVLVDFWAEWCGPCKMLTPIIDEISKELQGKVKVLKMNIDENPNTPSEYGIRSIPTIMLFKNGEQKDTKIGLQQKNSLL-DWINK----S-------------I
+>UniRef100_A5NR44 Cluster: Thioredoxin; n=1; Methylobacterium sp. 4-46|Rep: Thioredoxin - Methylobacterium sp. 4-46
+-------MAT----V--KVTDASFRQDVLEAS-EPVVVDFWAEWCGPCRAIGPALEEISSEMQGRVKIAKVNVDENPGIASEYGIRSIPTLMIFKDGKLASQKVGAAPKGDLS-RWIQS--A-S-------------A
+>UniRef100_Q6G1B7 Cluster: Thioredoxin; n=1; Bartonella quintana|Rep: Thioredoxin - Bartonella quintana (Rochalimaea quintana)
+-------MTC----I--KTDKCNFENEVLASS-VPVVVDFWAEWCGPCKMIAPILDEISTEMQGQIKIAKVNIDENPELATQYGVRSIPTLLMFKNGKASSNMVGAASKGRVS-EWIKD--G-L-------------R
+>UniRef100_A0WBV6 Cluster: Thioredoxin; n=1; Geobacter lovleyi SZ|Rep: Thioredoxin - Geobacter lovleyi SZ
+-------MASD-AVL--TLSDANFDRDVLQSD-LPVLVDFWATWCAPCKAIAPLIDAVAADYAGKVKVGKVNVDDNPATPGKYGVRGIPTLILFKGGKVVDQVVGAVPKSQLD-ALIAK----A-------------L
+>UniRef100_Q92JR5 Cluster: Thioredoxin; n=2; spotted fever group|Rep: Thioredoxin - Rickettsia conorii
+-------MAN-------NVMDSSFKKEVLESD-LPVLVDFWAEWCGPCKMLTPIIDEISKELQGKVKVLKMNIDENPNTPSEYGIRSIPTIMLFKNGEQKDTKIGLQQKNSLL-DWINK----S-------------I
+>UniRef100_A3YY45 Cluster: Thioredoxin; n=1; Synechococcus sp. WH 5701|Rep: Thioredoxin - Synechococcus sp. WH 5701
+-------MSS---AT--AVTDASFELDVLKSD-VPVLVDFWAPWCGPCRMVAPIVDEIAKEFEGKLKVYKLNTDENPNVASQYGIRSIPTLMIFKGGQKVDTVVGAVPKNTLS-GTIAK----Y-------------L
+>UniRef100_Q4FQ72 Cluster: Putative thioredoxin; n=1; Psychrobacter arcticus|Rep: Putative thioredoxin - Psychrobacter arcticum
+-------MSD--LII--NTTDANFDQDVLQSD-VPVLVDFWATWCGPCKAIAPILEDLATEYQGKVKIVKVDVDNNPQAASRFGIRNIPTLFVFKGGEKVDSVMGLQPKAELA-KVLDK----H-------------L
+>UniRef100_UPI0000DAD903 Cluster: hypothetical protein RcanM_01000002; n=1; Rickettsia canadensis str. McKiel|Rep: hypothetical protein RcanM_01000002 - Rickettsia canadensis str. McKiel
+-------MAS-------NVNDSSFKKEVLESD-LPVLVDFWAEWCGPCKMLTPIIDEISKELQGKVKVLKMNIDENPNTPSEYGIRSIPTIMLFKNGEQKDTKIGLQQKSYLL-DWIHK----F-------------V
+>UniRef100_P52230 Cluster: Thioredoxin; n=1; Streptomyces coelicolor|Rep: Thioredoxin - Streptomyces coelicolor
+-------MAG--TLK--HVTDDSFEQDVLKND-KPVLVDFWAAWCGPCRQIAPSLEAIAAEYGDKIEIVKLNIDENPGTAAKYGVMSIPTLNVYQGGEVAKTIVGAKPKAAIV-RDLEDF-I-A-------------D
+>UniRef100_Q6G588 Cluster: Thioredoxin; n=1; Bartonella henselae|Rep: Thioredoxin - Bartonella henselae (Rochalimaea henselae)
+-------MSC----I--KVDKSNFESEVLTSS-TPVVVDFWAEWCGPCKMIAPILDEISMEMQNQVKIAKVNIDENPELATQYGVRSIPTLLMFKDGNIASNMVGAASKGRVS-EWIKE--G-L-------------R
+>UniRef100_A6WX34 Cluster: Thioredoxin; n=1; Ochrobactrum anthropi ATCC 49188|Rep: Thioredoxin - Ochrobactrum anthropi ATCC 49188
+-------MAT----V--KVDNSNFQSDVLQSS-EPVVVDFWAEWCGPCKMIAPALDEIATEMAGQVKIAKVNIDENPELAAQFGVRSIPTLLMFKDGELAANMVGAAPKSRLA-DWIKA--S-A-------------A
+>UniRef100_Q82FE7 Cluster: Putative thioredoxin; n=1; Streptomyces avermitilis|Rep: Putative thioredoxin - Streptomyces avermitilis
+-------MAG--TLK--NVTDDSFEQDVLKSD-KPVLVDFWAAWCGPCRQIAPSLEAIASEYGDKIEIVKLNIDENPGTAAKYGVMSIPTLNVYQGGEVAKTIVGAKPKAAIV-RDLEDF-I-A-------------E
+>UniRef100_Q47K80 Cluster: Thioredoxin; n=1; Thermobifida fusca YX|Rep: Thioredoxin - Thermobifida fusca (strain YX)
+-------MAT---IQ--NVTDDTFEEVVLKSK-LPVLVDFWAEWCAPCKMIAPVLEQIAEEQEGKLTVVKINADQNPDTVRQYGVMGLPTLNLYKNGEVVKQLVGAKPKRVIE-KELEE----F-------------L
+>UniRef100_UPI0000DB0D6E Cluster: hypothetical protein RbelO_01000002; n=1; Rickettsia bellii OSU 85-389|Rep: hypothetical protein RbelO_01000002 - Rickettsia bellii OSU 85-389
+-------MAS-------NVTDKSFEEEVLKSD-LPVLVDFWAEWCGPCRMLTPIIEEISKDLESKVKVLKMNIDENPEIPSKYGIRSIPTVMLFKNGEQKDTKVGLHQKNSLI-EWINN----N-------------I
+>UniRef100_Q7UJ35 Cluster: Thioredoxin 1; n=1; Pirellula sp.|Rep: Thioredoxin 1 - Rhodopirellula baltica
+-------MASE-AVK--EFNDDNFDSEVLKSD-SPVLVDFWAPWCGPCRQIAPMIDELASENPG-VKIGKVNIDDNPGAAQKFGINSIPTLLLFKNGEIADTFVGVRPKAALQ-DALTS----V-------------S
+>UniRef100_Q7VKR2 Cluster: Thioredoxin; n=1; Haemophilus ducreyi|Rep: Thioredoxin - Haemophilus ducreyi
+-------MTH-------QVTDATFEQEVLKSD-LPVLLDFWAPWCGPCRTIAPWLDELAQEFAGRAKVAKVNVDENQQIAAQFGIRSIPTLLLFKNGEVVAIQVGVLPKSQLV-TFIEQ----A-------------L
+>UniRef100_P00275 Cluster: Thioredoxin C-1; n=1; Corynebacterium nephridii|Rep: Thioredoxin C-1 - Corynebacterium nephridii
+-------ATV-------KVDNSNFQSDVLQSS-EPVVVDFWAEWCGPCKMIAPALDEIATEMAGQVKIAKVNIDENPELAAQFGVRSIPTLLMFKDGELAANMVGAAPKSRLA-DWIKA----S-------------A
+>UniRef100_Q7U534 Cluster: Thioredoxin; n=1; Synechococcus sp. WH 8102|Rep: Thioredoxin - Synechococcus sp. (strain WH8102)
+-------MVA-------DFTDAGFASEVLQAP-GTVLVDFWAPWCGPCRLMAPLMDWAADTYGERLTVGKLEVDGNPSTRDAYEVQGIPTLILYRDGEVIARHEGAIAKPQLQ-AFLDA----N-------------L
+>UniRef100_A5GRY2 Cluster: Thioredoxin; n=1; Synechococcus sp. RCC307|Rep: Thioredoxin - Synechococcus sp. (strain RCC307)
+-------MSS---AA--AVTDASFDQDVLQCD-VPVLVDFWAPWCGPCRMVAPIVDEIAKEFEGRIKVVKLNTDENPNVASQYGIRSIPTLMVFKGGQKVDTVVGAVPKTTLA-STISK----Y-------------L
+>UniRef100_A5P6U6 Cluster: Thiol-disulfide isomerase; n=1; Erythrobacter sp. SD-21|Rep: Thiol-disulfide isomerase - Erythrobacter sp. SD-21
+-------MAT----I--NVTDDGFQKDVLDSD-KPVLVDFWADWCGPCKMIAPALEELSDELGDKVTIAKMDIMENTGVPGAMGVQSIPYLVLFKNGEPAAHMRGAAPKGQLK-QWLEG----E-------------L
+>UniRef100_A6Q6T4 Cluster: Thioredoxin; n=1; Sulfurovum sp. NBC37-1|Rep: Thioredoxin - Sulfurovum sp. NBC37-1
+-------MAK---YV--ELTSENFDATV--AE-GVTMVDFWAPWCGPCRMIAPVVEELAEEYEGKATIAKVNTDEQQELAVKYGIRSIPAILFFKNGEVADQMVGAASKDAFA-EKINA----L-------------L
+>UniRef100_Q0SAI2 Cluster: Thioredoxin; n=1; Rhodococcus sp. RHA1|Rep: Thioredoxin - Rhodococcus sp. (strain RHA1)
+-------MSN---TV--TITDDSFQQDVISSD-KPVLVDFWATWCGPCKMIAPVLEEIAGEHSEKLTIAKLDIDANPGAARDFQVMSIPTLILFKDGKPINTIVGTKGKAALL-KELAD----V-------------L
+>UniRef100_Q491Z3 Cluster: Thioredoxin 1, redox factor; n=1; Candidatus Blochmannia pennsylvanicus str. BPEN|Rep: Thioredoxin 1, redox factor - Blochmannia pennsylvanicus (strain BPEN)
+-------MNQ--IIM--HLTDSNFKETVSNST-DLFLVDFWAEWCNPCKAMIPILEDISVEFNDTLKVVKLNIDENPITTKNYGIKSVPTLLLIRHGTVLSTKVGLLSKQKLQ-EFLKI----H-------------I
+>UniRef100_A6Q598 Cluster: Thioredoxin; n=1; Nitratiruptor sp. SB155-2|Rep: Thioredoxin - Nitratiruptor sp. SB155-2
+-------MGK---YI--ELNASNFDDTI--KE-GVVMVDFWAPWCGPCRMIAPIIDELAEEYEGKAKIAKVNTDEEQDIAIRYGIRSIPTILFFKDGQLVDQMVGAASKDVYK-QKLDA----L------L------S
+>UniRef100_Q92TC5 Cluster: PROBABLE THIOREDOXIN PROTEIN; n=1; Sinorhizobium meliloti|Rep: PROBABLE THIOREDOXIN PROTEIN - Rhizobium meliloti (Sinorhizobium meliloti)
+-------MAT----V--KVDTANFQKEVLNSA-EPVVVDFWAEWCGPCKMIAPSLEEIATELAGKVKVVKLNIDENPELAAQYGVRSIPTLAMFKGGEVADIKVGAAPKTALS-SWISN--A-V-------------A
+>UniRef100_A0K2L7 Cluster: Thioredoxin; n=1; Arthrobacter sp. FB24|Rep: Thioredoxin - Arthrobacter sp. (strain FB24)
+-------MSN---AK--DVTDASFSTDVLSAD-KPVIVDFWAEWCGPCRKLGPILDEISVEYSEKVNVVKVNVDDNPAIAAEYGITSIPAVYLFQGGEVKNTVIGAKPKQFFEKEFAD---V-L-------------S
+>UniRef100_A5UYF2 Cluster: Thioredoxin; n=1; Roseiflexus sp. RS-1|Rep: Thioredoxin - Roseiflexus sp. RS-1
+-------MAK---PV--TVTDDDFEQQVLKSD-IPVVVDFWAPWCGPCRVIAPILEELANEYDGKVKVAKVNTDDHQLWMSKFGIMAIPTMIFFKNGKEINRIVGAGPKRMLK-EAFDAA-V-A-------------A
+>UniRef100_Q1MRF3 Cluster: Thiol-disulfide isomerase and thioredoxins; n=1; Lawsonia intracellularis PHE/MN1-00|Rep: Thiol-disulfide isomerase and thioredoxins - Lawsonia intracellularis (strain PHE/MN1-00)
+-------MAA-------QVTDTNFDTIVLKSN-KPVLVDFWAPWCGPCRAIGPIIDEIALEYASDIHVVKLNVDENTITPGQYGIKAIPTLILFKNGEVVEQLTGAVSKTSII-TMLKEK-A-L-------------S
+>UniRef100_A3TN65 Cluster: Thioredoxin; n=1; Janibacter sp. HTCC2649|Rep: Thioredoxin - Janibacter sp. HTCC2649
+-------MDTT-TFT-RTTDDVSFDADVLKNS-KVTLVDFWAPWCGPCKAIAPVLEEIARDHADILDVVKLNTDENPAVTGKLGITSIPTLHVYKDGEIVKTIVGAMPKPKLL-RELEP----F------L------A

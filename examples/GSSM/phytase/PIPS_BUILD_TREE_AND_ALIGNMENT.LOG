@@ -1,0 +1,1203 @@
+Beginning execution of pips_build_tree_and_alignment.py at Wed Apr  1 17:49:11 2009.
+Using version 1.0 of PIPS, written by Jesse Bloom.
+Using input/output files in the current directory, which is /Users/bloom/new_pips/pips-1.0/examples/GSSM/phytase
+
+Reading input from PIPS_BUILD_TREE_AND_ALIGNMENT.IN.
+Contents of input file are listed below:
+
+********
+# Anything coming after a pound sign is a comment.
+# Typically there may be one or more comment lines explaining the
+# subject matter of the input file.
+#
+# Each line in this file follows a key-value format.  The first word
+# in the line gives the parameter that is being specified, and the subsequent
+# words give the value of this parameter. 
+#
+# The PROTSEQ key specifies the sequence of the protein to be analyzed.  Typically, this
+# will be a FASTA file in which the sequence of interest is the first entry, as shown below.
+PROTSEQ phytase.fasta
+#
+# The OUTPUT_ALIGNMENT key specifies the name of the file to which the aligned protein
+# sequences are written.  This key should therefore be followed by a string giving
+# a valid file name.  If the file already exists, the user will be prompted for confirmation
+# before it is overwritten.  The aligned sequences are written to this file in FASTA format,
+# with the first sequence in the file being the one specified by PROTSEQ.  The sequences
+# are aligned by inserting gap ("-") characters as appropriate.  The sequences that are 
+# aligned include PROTSEQ and all unique sequences specified by HOMOLOGOUS_SEQS
+# that satisfy the criteria established by HOMOLOGY_THRESHOLD.  The headers
+# of these sequences are replaced with short names, that are related to the original headers
+# as described in the file specified by OUTPUT_SEQNAMES.  These names are the ones used
+# in the phylogenetic tree specified by OUTPUT_TREE.
+OUTPUT_ALIGNMENT renamed_alignment.fasta
+#
+# The OUTPUT_TREE key specifies the name of the file to which is written the phylogenetic
+# tree specifying the relationship among the sequences in OUTPUT_ALIGNMENT.  The names
+# of the sequences in this tree match those used in OUTPUT_ALIGNMENT, and are detailed in
+# relation to the original seauence headers by OUTPUT_SEQNAMES.  The tree is
+# in Newick format (http://evolution.gs.washington.edu/phylip/newick_doc.html).  If the
+# specified file already exists, the user is prompted for confirmation before the file
+# is overwritten.
+OUTPUT_TREE tree.newick
+#
+# The OUTPUT_SEQNAMES key specifies the name of a file to which we write the relationship
+# between the new names given to the sequences in OUTPUT_TREE and OUTPUT_ALIGNMENT, and
+# the original sequence names as given in their headers in the FASTA files specified by
+# PROTSEQ and HOMOLOGOUS_SEQS.  The format is simply lines with the new name, a space,
+# and then the original header in the FASTA file. 
+OUTPUT_SEQNAMES seqnames.txt
+#
+# The PHYLIP_PROG key is used to specify information about the PHYLIP program that is
+# used to generate the phylogenetic tree.  This PIPS script is guaranteed to work with 
+# version 3.68 of PHYLIP for Mac OS X, downloaded from 
+# http://evolution.genetics.washington.edu/phylip.html
+# It will probably also work with other versions of PHYLIP on other operating
+# systems, but that has not been actually tested.  There are a number of 
+# strings that are present after the PHYLIP_PROG key.  These strings cannot
+# contain spaces, but can have any other non-whitespace characters.  They are:
+#  * The first string should give the path to which the PHYLIP executables can
+#    be found. 
+#  * The second string is the type of tree that is build.  Currently, the only
+#    supported option is DISTANCE for methods based on pairwise distances
+#    between sequences.  These trees are built using one of the 'fitch',
+#    'kitsch', or 'neighbor' programs of PHYLIP.
+#  * The third string specifies whether or not we are using a molecular clock.
+#    It can have two values, CLOCK or NO_CLOCK depending on whether or not
+#    we assume a molecular clock.  If we are not using a molecular clock,
+#    then the OUTGROUP_SEQ key must be set to a value in order to provide
+#    an outgroup sequence for rooting the tree.
+#  * The fourth string specifies whether or not we use a neighbor joining
+#    method (neighbor joining without a molecular clock, or UPGMA with
+#    a molecular clock).  Neighbor joining is generally faster, but
+#    considered to be less accurate.  The string should be either
+#    NEIGHBOR if we are using neighbor joining / UPGMA or NO_NEIGHBOR
+#    if we are not.  Neighbor joining can lead to negative branch lengths,
+#    so any negative lengths are set to zero.
+PHYLIP_PROG /Users/bloom/phylip-3.68/exe/ DISTANCE CLOCK NO_NEIGHBOR
+#
+# The ALIGNMENT_PROG key is used to specify information about the program used to make
+# the multiple sequence alignment of the protein sequences.  There should be two 
+# strings following the ALIGNMENT_PROG key, specifying the alignment program and a path
+# to the alignment executable.  The two supported alignment programs are
+# MUSCLE (http://www.drive5.com/muscle/index.htm) and PROBCONS
+# (http://probcons.stanford.edu/).  This script has been tested and confirmed to work
+# with version 3.6 of MUSCLE and version 1.12 of PROBCONS.  PROBCONS is the slower
+# program, but in general is considered to be more accurate, so should probably be
+# preferred unless there are time constraints due to the size of the alignment.
+# The specified path should contain executables with the name of either 'muscle'
+# or 'probcons'.  So valid entries would be:
+# ALIGNMENT_PROG MUSCLE /Users/bloom/muscle3.6/
+ALIGNMENT_PROG PROBCONS /Users/bloom/probcons/
+#
+# The HOMOLOGOUS_SEQS key specifies the homologous sequences that are aligned
+# and used to build the phylogenetic tree.  The key should be followed by the
+# names of one or more existing FASTA files.  All of these sequences are read.
+# Any duplicate sequences (identical sequences, NOT necessarily identical headers)
+# have only the first sequence retained, with subsequent duplicates discarded.  These
+# sequences are then screened according to the criteria specified by HOMOLOGY_THRESHOLD,
+# and any sufficiently homologous sequences are retained for the alignment and to 
+# build the phylogenetic tree.  For the alignment, the sequences are renamed
+# as specified by OUTPUT_SEQNAMES
+HOMOLOGOUS_SEQS phytase-refseq-blast.fasta
+#
+# The HOMOLOGY_THRESHOLD key specifies the screening of the sequences in HOMOLOGOUS_SEQS.
+# It can be used to only include sequences that have a specified degree of identity with
+# PROTSEQ.  You should specify both an identity cutoff and a gap cutoff.  The identity
+# cutoff, which occurs after the string IDENTITY_CUTOFF, means that we only include
+# sequences in which the fractions of identities among alignable residues is greater than
+# or equal to this cutoff.  The gap cutoff, which comes after the string GAP_CUTOFF,
+# means that we only include sequences in which the fraction of graps is less 
+# than or equal to the indicated cutoff.  These values are computed
+# in pairwise alignments of PROTSEQ with each sequence.  For example, if the sequence
+# specified by PROTSEQ is MGCQT and the pairwise aligned homologous sequence is MG-QA,
+# then the identity is 0.75 and the gap fraction is 0.2.  If you don't want to exclude any
+# of the sequences, then set the identity cutoff to 0.0 and the gap cutoff 1.0, which
+# will include all sequences.
+HOMOLOGY_THRESHOLD IDENTITY_CUTOFF 0.45 GAP_CUTOFF 0.5
+#
+# The OUTGROUP_SEQ key specifies an outgroup sequence used to root the phylogenetic
+# tree if the tree is being computed without a molecular clock.  If the tree is being
+# computed without a molecular clock, then we need an outgroup to root the tree.  In general,
+# the outgroup will be more distantly related to the homologous sequences.  In this case,
+# the value should be the name of a FASTA file.  The first sequence listed in this
+# FASTA file is used as the outgroup sequence.  So for example, this line would look like this:
+# OUTGROUP_SEQ outgroup.fasta
+# On the other hand, if we are not using a molecular clock, not outgroup sequence is 
+# needed to root the tree.  In that case, the value should be NONE, as in:
+OUTGROUP_SEQ NONE
+#
+
+******
+
+
+Reading PROTSEQ protein sequence from phytase.fasta...
+This file contains 1 sequence(s).  The first one is being used.
+This protein sequence is as follows:
+>gi|145285|gb|AAA72086.1| periplasmic phosphoanhydride phosphohydrolase [Escherichia coli]
+MKAILIPFLSLLIPLTPQSAFAQSEPELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKKGCPQSGQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELERVLNFPQSNLCLKREKQDESCSLTQALPSELKVSADNVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIKTALTPHPPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSLNTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL
+
+OUTPUT_ALIGNMENT specifies that we output the protein alignment to renamed_alignment.fasta.
+
+A file with name renamed_alignment.fasta already exists.  This existing file is being deleted.
+
+OUTPUT_TREE specifies that we output the phylogenetic tree to tree.newick.
+
+A file with name tree.newick already exists.  This existing file is being deleted.
+
+OUTPUT_SEQNAMES specifies that we output the sequence names to seqnames.txt.
+
+A file with name seqnames.txt already exists.  This existing file is being deleted.
+
+Reading specifications for the phylogenetic tree from PHYLIP_PROG.
+The PHYLIP executables are specified to reside in the directory /Users/bloom/phylip-3.68/exe/The DISTANCE keyword specifies that we will construct a tree based on pairwise sequence distances.
+The CLOCK keyword specifies that we will construct the tree assuming a molecular clock.
+The NO_NEIGHBOR keyword specifies that we will not use neighbor joining or UPGMA.
+
+Reading specifications for the alignment program from ALIGNMENT_PROG.
+PROBCON key specifies that the alignments will be done using PROBCONS.
+The alignment program resides in directory /Users/bloom/probcons/
+
+Reading in the homologous protein sequences specified by HOMOLOGOUS_SEQS.
+These sequences are contained in the following FASTA file(s): phytase-refseq-blast.fasta
+Reading sequences from phytase-refseq-blast.fasta...
+Read 180 sequences from phytase-refseq-blast.fasta.
+Read a total of 180 homologous sequences.
+
+Reading the homology thresholds specified by HOMOLOGY_THRESHOLD.
+Homologous sequences will be pairwise aligned with PROTSEQ, and any with less than 0.450000 fraction identities among alignable residues, or with more than 0.500000 fraction gaps, will be excluded.
+
+Reading the outgroup sequence specified by OUTGROUP_SEQ.  This sequence will be used to root the phylogenetic tree if we do not assume a molecular clock; it will not be used if we assume a molecular clock.
+Value of NONE, meaning no outgroup sequence is specified.
+
+HOMOLOGOUS_SEQS specified 180 sequences.  We will now eliminate any duplicates among these sequences...
+Duplicate sequence -- the sequence with the header shown below is identical to PROTSEQ:
+	gi|16128946|ref|NP_415500.1| phosphoanhydride phosphorylase [Escherichia coli str. K-12 substr. MG1655]
+After eliminating the duplicates, there are 179 unique sequences.
+
+Based on the criteria specified by HOMOLOGY_THRESHOLD, we will screen the 179 unique homologous sequences...
+Each sequence will be pairwise aligned with PROTSEQ, and those with a fraction identity of at least 0.450000 among alignable residues, and with a fraction of gaps no greater than 0.500000 will be retained...
+Performing pairwise alignment of PROTSEQ with sequence 1 of 179, which has header:
+	gi|170020620|ref|YP_001725574.1| histidine acid phosphatase [Escherichia coli ATCC 8739]
+	This sequence aligns to PROTSEQ with 0.997685 fraction identities, and 0.022624 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 2 of 179, which has header:
+	gi|218553567|ref|YP_002386480.1| phosphoanhydride phosphorylase [Escherichia coli IAI1]
+	This sequence aligns to PROTSEQ with 0.997685 fraction identities, and 0.000000 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 3 of 179, which has header:
+	gi|193070045|ref|ZP_03050992.1| periplasmic AppA protein [Escherichia coli E110019]
+	This sequence aligns to PROTSEQ with 0.997685 fraction identities, and 0.000000 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 4 of 179, which has header:
+	gi|209918233|ref|YP_002292317.1| phosphoanhydride phosphorylase [Escherichia coli SE11]
+	This sequence aligns to PROTSEQ with 0.995370 fraction identities, and 0.000000 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 5 of 179, which has header:
+	gi|157159123|ref|YP_001462212.1| phosphoanhydride phosphorylase [Escherichia coli E24377A]
+	This sequence aligns to PROTSEQ with 0.995370 fraction identities, and 0.000000 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 6 of 179, which has header:
+	gi|82544696|ref|YP_408643.1| phosphoanhydride phosphorylase [Shigella boydii Sb227]
+	This sequence aligns to PROTSEQ with 0.988426 fraction identities, and 0.000000 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 7 of 179, which has header:
+	gi|194429835|ref|ZP_03062348.1| periplasmic AppA protein [Escherichia coli B171]
+	This sequence aligns to PROTSEQ with 0.988426 fraction identities, and 0.000000 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 8 of 179, which has header:
+	gi|187734018|ref|YP_001880822.1| periplasmic AppA protein [Shigella boydii CDC 3083-94]
+	This sequence aligns to PROTSEQ with 0.986111 fraction identities, and 0.000000 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 9 of 179, which has header:
+	gi|110641169|ref|YP_668899.1| phosphoanhydride phosphorylase [Escherichia coli 536]
+	This sequence aligns to PROTSEQ with 0.981481 fraction identities, and 0.031390 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 10 of 179, which has header:
+	gi|110804994|ref|YP_688514.1| phosphoanhydride phosphorylase [Shigella flexneri 5 str. 8401]
+	This sequence aligns to PROTSEQ with 0.983796 fraction identities, and 0.000000 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 11 of 179, which has header:
+	gi|56479787|ref|NP_706903.2| phosphoanhydride phosphorylase [Shigella flexneri 2a str. 301]
+	This sequence aligns to PROTSEQ with 0.983796 fraction identities, and 0.000000 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 12 of 179, which has header:
+	gi|191172406|ref|ZP_03033947.1| periplasmic AppA protein [Escherichia coli F11]
+	This sequence aligns to PROTSEQ with 0.981481 fraction identities, and 0.009174 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 13 of 179, which has header:
+	gi|170682176|ref|YP_001744188.1| periplasmic AppA protein [Escherichia coli SMS-3-5]
+	This sequence aligns to PROTSEQ with 0.981481 fraction identities, and 0.009174 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 14 of 179, which has header:
+	gi|30062518|ref|NP_836689.1| phosphoanhydride phosphorylase [Shigella flexneri 2a str. 2457T]
+	This sequence aligns to PROTSEQ with 0.981481 fraction identities, and 0.000000 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 15 of 179, which has header:
+	gi|26247006|ref|NP_753046.1| phosphoanhydride phosphorylase [Escherichia coli CFT073]
+	This sequence aligns to PROTSEQ with 0.979167 fraction identities, and 0.031390 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 16 of 179, which has header:
+	gi|15800901|ref|NP_286917.1| phosphoanhydride phosphorylase [Escherichia coli O157:H7 EDL933]
+	This sequence aligns to PROTSEQ with 0.986111 fraction identities, and 0.027027 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 17 of 179, which has header:
+	gi|215486097|ref|YP_002328528.1| phosphoanhydride phosphorylase [Escherichia coli O127:H6 str. E2348/69]
+	This sequence aligns to PROTSEQ with 0.979167 fraction identities, and 0.000000 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 18 of 179, which has header:
+	gi|15830390|ref|NP_309163.1| phosphoanhydride phosphorylase [Escherichia coli O157:H7 str. Sakai]
+	This sequence aligns to PROTSEQ with 0.986111 fraction identities, and 0.004608 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 19 of 179, which has header:
+	gi|218704404|ref|YP_002411923.1| phosphoanhydride phosphorylase [Escherichia coli UMN026]
+	This sequence aligns to PROTSEQ with 0.983645 fraction identities, and 0.018349 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 20 of 179, which has header:
+	gi|91210078|ref|YP_540064.1| phosphoanhydride phosphorylase [Escherichia coli UTI89]
+	This sequence aligns to PROTSEQ with 0.972222 fraction identities, and 0.031390 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 21 of 179, which has header:
+	gi|218700500|ref|YP_002408129.1| phosphoanhydride phosphorylase [Escherichia coli IAI39]
+	This sequence aligns to PROTSEQ with 0.981308 fraction identities, and 0.018349 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 22 of 179, which has header:
+	gi|218557878|ref|YP_002390791.1| phosphoanhydride phosphorylase [Escherichia coli S88]
+	This sequence aligns to PROTSEQ with 0.972222 fraction identities, and 0.009174 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 23 of 179, which has header:
+	gi|82776270|ref|YP_402619.1| phosphoanhydride phosphorylase [Shigella dysenteriae Sd197]
+	This sequence aligns to PROTSEQ with 0.981481 fraction identities, and 0.004608 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 24 of 179, which has header:
+	gi|218688876|ref|YP_002397088.1| phosphoanhydride phosphorylase [Escherichia coli ED1a]
+	This sequence aligns to PROTSEQ with 0.969626 fraction identities, and 0.018349 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 25 of 179, which has header:
+	gi|194432431|ref|ZP_03064718.1| periplasmic AppA protein [Shigella dysenteriae 1012]
+	This sequence aligns to PROTSEQ with 0.988124 fraction identities, and 0.025463 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 26 of 179, which has header:
+	gi|193066335|ref|ZP_03047385.1| periplasmic AppA protein [Escherichia coli E22]
+	This sequence aligns to PROTSEQ with 0.984962 fraction identities, and 0.076389 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 27 of 179, which has header:
+	gi|170769951|ref|ZP_02904404.1| periplasmic AppA protein [Escherichia albertii TW07627]
+	This sequence aligns to PROTSEQ with 0.856481 fraction identities, and 0.015945 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 28 of 179, which has header:
+	gi|218550351|ref|YP_002384142.1| Periplasmic appA protein precursor [Includes: Phosphoanhydride phosphohydrolase (pH 2.5 acid phosphatase) (AP); 4-phytase] [Escherichia fergusonii ATCC 35469]
+	This sequence aligns to PROTSEQ with 0.647196 fraction identities, and 0.009259 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 29 of 179, which has header:
+	gi|156934265|ref|YP_001438181.1| phosphoanhydride phosphorylase [Enterobacter sakazakii ATCC BAA-894]
+	This sequence aligns to PROTSEQ with 0.583721 fraction identities, and 0.022727 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 30 of 179, which has header:
+	gi|123442823|ref|YP_001006799.1| phosphoanhydride phosphorylase [Yersinia enterocolitica subsp. enterocolitica 8081]
+	This sequence aligns to PROTSEQ with 0.457944 fraction identities, and 0.038202 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 31 of 179, which has header:
+	gi|77957099|ref|ZP_00821164.1| hypothetical protein YberA_01002654 [Yersinia bercovieri ATCC 43970]
+	This sequence aligns to PROTSEQ with 0.448598 fraction identities, and 0.022831 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 32 of 179, which has header:
+	gi|22125704|ref|NP_669127.1| phosphoanhydride phosphorylase [Yersinia pestis KIM]
+	This sequence aligns to PROTSEQ with 0.452436 fraction identities, and 0.024887 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 33 of 179, which has header:
+	gi|51596743|ref|YP_070934.1| phosphoanhydride phosphorylase [Yersinia pseudotuberculosis IP 32953]
+	This sequence aligns to PROTSEQ with 0.452436 fraction identities, and 0.024887 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 34 of 179, which has header:
+	gi|77976895|ref|ZP_00832361.1| hypothetical protein YintA_01003287 [Yersinia intermedia ATCC 29909]
+	This sequence aligns to PROTSEQ with 0.448598 fraction identities, and 0.038202 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 35 of 179, which has header:
+	gi|77960519|ref|ZP_00824387.1| hypothetical protein YmolA_01003233 [Yersinia mollaretii ATCC 43969]
+	This sequence aligns to PROTSEQ with 0.449412 fraction identities, and 0.036281 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 36 of 179, which has header:
+	gi|77975766|ref|ZP_00831300.1| hypothetical protein YfreA_01000410 [Yersinia frederiksenii ATCC 33641]
+	This sequence aligns to PROTSEQ with 0.436916 fraction identities, and 0.038202 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 37 of 179, which has header:
+	gi|188534216|ref|YP_001908013.1| Glucose-1-phosphatase [Erwinia tasmaniensis Et1/99]
+	This sequence aligns to PROTSEQ with 0.355072 fraction identities, and 0.269841 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 38 of 179, which has header:
+	gi|123441632|ref|YP_001005617.1| glucose-1-phosphatase/inositol phosphatase [Yersinia enterocolitica subsp. enterocolitica 8081]
+	This sequence aligns to PROTSEQ with 0.322275 fraction identities, and 0.047404 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 39 of 179, which has header:
+	gi|157371403|ref|YP_001479392.1| glucose-1-phosphatase/inositol phosphatase [Serratia proteamaculans 568]
+	This sequence aligns to PROTSEQ with 0.354115 fraction identities, and 0.088636 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 40 of 179, which has header:
+	gi|223991054|ref|ZP_03640226.1| hypothetical protein PROVRETT_03323 [Providencia rettgeri DSM 1131]
+	This sequence aligns to PROTSEQ with 0.333333 fraction identities, and 0.074830 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 41 of 179, which has header:
+	gi|77960219|ref|ZP_00824103.1| hypothetical protein YmolA_01003510 [Yersinia mollaretii ATCC 43969]
+	This sequence aligns to PROTSEQ with 0.328605 fraction identities, and 0.053691 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 42 of 179, which has header:
+	gi|77975524|ref|ZP_00831059.1| hypothetical protein YfreA_01000683 [Yersinia frederiksenii ATCC 33641]
+	This sequence aligns to PROTSEQ with 0.329384 fraction identities, and 0.070485 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 43 of 179, which has header:
+	gi|77979071|ref|ZP_00834492.1| hypothetical protein YintA_01001039 [Yersinia intermedia ATCC 29909]
+	This sequence aligns to PROTSEQ with 0.323877 fraction identities, and 0.042986 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 44 of 179, which has header:
+	gi|212709885|ref|ZP_03318013.1| hypothetical protein PROVALCAL_00934 [Providencia alcalifaciens DSM 30120]
+	This sequence aligns to PROTSEQ with 0.307317 fraction identities, and 0.070295 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 45 of 179, which has header:
+	gi|161503796|ref|YP_001570908.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. arizonae serovar 62:z4,z23:--]
+	This sequence aligns to PROTSEQ with 0.345588 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 46 of 179, which has header:
+	gi|15800923|ref|NP_286939.1| glucose-1-phosphatase/inositol phosphatase [Escherichia coli O157:H7 EDL933]
+	This sequence aligns to PROTSEQ with 0.328431 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 47 of 179, which has header:
+	gi|157158962|ref|YP_001462236.1| glucose-1-phosphatase/inositol phosphatase [Escherichia coli E24377A]
+	This sequence aligns to PROTSEQ with 0.330882 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 48 of 179, which has header:
+	gi|215486181|ref|YP_002328612.1| glucose-1-phosphatase/inositol phosphatase [Escherichia coli O127:H6 str. E2348/69]
+	This sequence aligns to PROTSEQ with 0.328431 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 49 of 179, which has header:
+	gi|91210094|ref|YP_540080.1| glucose-1-phosphatase/inositol phosphatase [Escherichia coli UTI89]
+	This sequence aligns to PROTSEQ with 0.328431 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 50 of 179, which has header:
+	gi|194438094|ref|ZP_03070187.1| glucose-1-phosphatase [Escherichia coli 101-1]
+	This sequence aligns to PROTSEQ with 0.328431 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 51 of 179, which has header:
+	gi|218700486|ref|YP_002408115.1| glucose-1-phosphatase/inositol phosphatase [Escherichia coli IAI39]
+	This sequence aligns to PROTSEQ with 0.334975 fraction identities, and 0.075171 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 52 of 179, which has header:
+	gi|218694537|ref|YP_002402204.1| glucose-1-phosphatase/inositol phosphatase [Escherichia coli 55989]
+	This sequence aligns to PROTSEQ with 0.328431 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 53 of 179, which has header:
+	gi|194365014|ref|YP_002027624.1| histidine acid phosphatase [Stenotrophomonas maltophilia R551-3]
+	This sequence aligns to PROTSEQ with 0.367246 fraction identities, and 0.075688 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 54 of 179, which has header:
+	gi|74311559|ref|YP_309978.1| glucose-1-phosphatase/inositol phosphatase [Shigella sonnei Ss046]
+	This sequence aligns to PROTSEQ with 0.328431 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 55 of 179, which has header:
+	gi|110641185|ref|YP_668915.1| glucose-1-phosphatase/inositol phosphatase [Escherichia coli 536]
+	This sequence aligns to PROTSEQ with 0.328431 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 56 of 179, which has header:
+	gi|183598460|ref|ZP_02959953.1| hypothetical protein PROSTU_01855 [Providencia stuartii ATCC 25827]
+	This sequence aligns to PROTSEQ with 0.311436 fraction identities, and 0.065909 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 57 of 179, which has header:
+	gi|209918255|ref|YP_002292339.1| glucose-1-phosphatase [Escherichia coli SE11]
+	This sequence aligns to PROTSEQ with 0.328431 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 58 of 179, which has header:
+	gi|191166951|ref|ZP_03028775.1| glucose-1-phosphatase [Escherichia coli B7A]
+	This sequence aligns to PROTSEQ with 0.328431 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 59 of 179, which has header:
+	gi|193070793|ref|ZP_03051727.1| glucose-1-phosphatase [Escherichia coli E110019]
+	This sequence aligns to PROTSEQ with 0.328431 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 60 of 179, which has header:
+	gi|170683233|ref|YP_001744173.1| glucose-1-phosphatase [Escherichia coli SMS-3-5]
+	This sequence aligns to PROTSEQ with 0.328431 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 61 of 179, which has header:
+	gi|218548524|ref|YP_002382315.1| glucose-1-phosphatase/inositol phosphatase [Escherichia fergusonii ATCC 35469]
+	This sequence aligns to PROTSEQ with 0.332512 fraction identities, and 0.075171 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 62 of 179, which has header:
+	gi|157160524|ref|YP_001457842.1| glucose-1-phosphatase/inositol phosphatase [Escherichia coli HS]
+	This sequence aligns to PROTSEQ with 0.328431 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 63 of 179, which has header:
+	gi|16128968|ref|NP_415522.1| glucose-1-phosphatase/inositol phosphatase [Escherichia coli str. K-12 substr. MG1655]
+	This sequence aligns to PROTSEQ with 0.328431 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 64 of 179, which has header:
+	gi|30062539|ref|NP_836710.1| glucose-1-phosphatase/inositol phosphatase [Shigella flexneri 2a str. 2457T]
+	This sequence aligns to PROTSEQ with 0.328431 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 65 of 179, which has header:
+	gi|170769958|ref|ZP_02904411.1| glucose-1-phosphatase [Escherichia albertii TW07627]
+	This sequence aligns to PROTSEQ with 0.325980 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 66 of 179, which has header:
+	gi|190573473|ref|YP_001971318.1| putative glucose-1-phosphatase precursor (G1Pase), secreted [Stenotrophomonas maltophilia K279a]
+	This sequence aligns to PROTSEQ with 0.365000 fraction identities, and 0.095023 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 67 of 179, which has header:
+	gi|146311171|ref|YP_001176245.1| glucose-1-phosphatase/inositol phosphatase [Enterobacter sp. 638]
+	This sequence aligns to PROTSEQ with 0.328431 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 68 of 179, which has header:
+	gi|168233498|ref|ZP_02658556.1| glucose-1-phosphatase [Salmonella enterica subsp. enterica serovar Kentucky str. CDC 191]
+	This sequence aligns to PROTSEQ with 0.340686 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 69 of 179, which has header:
+	gi|168243914|ref|ZP_02668846.1| glucose-1-phosphatase [Salmonella enterica subsp. enterica serovar Heidelberg str. SL486]
+	This sequence aligns to PROTSEQ with 0.340686 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 70 of 179, which has header:
+	gi|82776289|ref|YP_402638.1| glucose-1-phosphatase/inositol phosphatase [Shigella dysenteriae Sd197]
+	This sequence aligns to PROTSEQ with 0.325980 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 71 of 179, which has header:
+	gi|168264114|ref|ZP_02686087.1| glucose-1-phosphatase [Salmonella enterica subsp. enterica serovar Hadar str. RI_05P066]
+	This sequence aligns to PROTSEQ with 0.343137 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 72 of 179, which has header:
+	gi|200391039|ref|ZP_03217650.1| glucose-1-phosphatase [Salmonella enterica subsp. enterica serovar Virchow str. SL491]
+	This sequence aligns to PROTSEQ with 0.343137 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 73 of 179, which has header:
+	gi|225142709|ref|YP_002708478.1| glucose-1-phosphatase [Stenotrophomonas sp. SKA14]
+	This sequence aligns to PROTSEQ with 0.365000 fraction identities, and 0.080460 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 74 of 179, which has header:
+	gi|56413891|ref|YP_150966.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Paratyphi A str. ATCC 9150]
+	This sequence aligns to PROTSEQ with 0.338235 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 75 of 179, which has header:
+	gi|205352270|ref|YP_002226071.1| glucose-1-phosphatase precursor (G1Pase), secreted [Salmonella enterica subsp. enterica serovar Gallinarum str. 287/91]
+	This sequence aligns to PROTSEQ with 0.340686 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 76 of 179, which has header:
+	gi|16764475|ref|NP_460090.1| glucose-1-phosphatase/inositol phosphatase [Salmonella typhimurium LT2]
+	This sequence aligns to PROTSEQ with 0.340686 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 77 of 179, which has header:
+	gi|168467566|ref|ZP_02701403.1| glucose-1-phosphatase [Salmonella enterica subsp. enterica serovar Newport str. SL317]
+	This sequence aligns to PROTSEQ with 0.340686 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 78 of 179, which has header:
+	gi|198241748|ref|YP_002215048.1| glucose-1-phosphatase [Salmonella enterica subsp. enterica serovar Dublin str. CT_02021853]
+	This sequence aligns to PROTSEQ with 0.340686 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 79 of 179, which has header:
+	gi|204930844|ref|ZP_03221717.1| glucose-1-phosphatase [Salmonella enterica subsp. enterica serovar Javiana str. GA_MM04042433]
+	This sequence aligns to PROTSEQ with 0.340686 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 80 of 179, which has header:
+	gi|206577711|ref|YP_002239354.1| glucose-1-phosphatase [Klebsiella pneumoniae 342]
+	This sequence aligns to PROTSEQ with 0.334975 fraction identities, and 0.079365 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 81 of 179, which has header:
+	gi|157146291|ref|YP_001453610.1| glucose-1-phosphatase/inositol phosphatase [Citrobacter koseri ATCC BAA-895]
+	This sequence aligns to PROTSEQ with 0.326781 fraction identities, and 0.070776 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 82 of 179, which has header:
+	gi|152969583|ref|YP_001334692.1| glucose-1-phosphatase/inositol phosphatase [Klebsiella pneumoniae subsp. pneumoniae MGH 78578]
+	This sequence aligns to PROTSEQ with 0.326781 fraction identities, and 0.087444 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 83 of 179, which has header:
+	gi|16759995|ref|NP_455612.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Typhi str. CT18]
+	This sequence aligns to PROTSEQ with 0.338235 fraction identities, and 0.066362 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 84 of 179, which has header:
+	gi|212708243|ref|ZP_03316371.1| hypothetical protein PROVRUST_03201 [Providencia rustigianii DSM 4541]
+	This sequence aligns to PROTSEQ with 0.295844 fraction identities, and 0.070455 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 85 of 179, which has header:
+	gi|209907510|ref|ZP_03281994.1| hypothetical protein ENTCAN_01774 [Enterobacter cancerogenus ATCC 35316]
+	This sequence aligns to PROTSEQ with 0.329238 fraction identities, and 0.070776 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 86 of 179, which has header:
+	gi|16124797|ref|NP_419361.1| periplasmic phosphoanhydride phosphohydrolase [Caulobacter crescentus CB15]
+	This sequence aligns to PROTSEQ with 0.347087 fraction identities, and 0.050691 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 87 of 179, which has header:
+	gi|158425943|ref|YP_001527235.1| hypothetical protein AZC_4319 [Azorhizobium caulinodans ORS 571]
+	This sequence aligns to PROTSEQ with 0.327411 fraction identities, and 0.116592 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 88 of 179, which has header:
+	gi|77748551|ref|NP_641164.2| phosphoanhydride phosphohydrolase [Xanthomonas axonopodis pv. citri str. 306]
+	This sequence aligns to PROTSEQ with 0.332506 fraction identities, and 0.287986 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 89 of 179, which has header:
+	gi|21230234|ref|NP_636151.1| phosphoanhydride phosphohydrolase [Xanthomonas campestris pv. campestris str. ATCC 33913]
+	This sequence aligns to PROTSEQ with 0.346633 fraction identities, and 0.154008 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 90 of 179, which has header:
+	gi|213579928|ref|ZP_03361754.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Typhi str. E98-0664]
+	This sequence aligns to PROTSEQ with 0.338109 fraction identities, and 0.197701 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 91 of 179, which has header:
+	gi|50123118|ref|YP_052285.1| putative exported phosphatase [Pectobacterium atrosepticum SCRI1043]
+	This sequence aligns to PROTSEQ with 0.298077 fraction identities, and 0.077605 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 92 of 179, which has header:
+	gi|78046420|ref|YP_362595.1| phosphoanhydride phosphohydrolase / 4-phytase multifunctional enzyme [Xanthomonas campestris pv. vesicatoria str. 85-10]
+	This sequence aligns to PROTSEQ with 0.327543 fraction identities, and 0.259191 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 93 of 179, which has header:
+	gi|188575334|ref|YP_001912263.1| phosphoanhydride phosphohydrolase [Xanthomonas oryzae pv. oryzae PXO99A]
+	This sequence aligns to PROTSEQ with 0.330846 fraction identities, and 0.255556 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 94 of 179, which has header:
+	gi|58583415|ref|YP_202431.1| phosphoanhydride phosphohydrolase [Xanthomonas oryzae pv. oryzae KACC10331]
+	This sequence aligns to PROTSEQ with 0.330846 fraction identities, and 0.284698 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 95 of 179, which has header:
+	gi|78049781|ref|YP_365956.1| putative acid phosphatase precursor [Xanthomonas campestris pv. vesicatoria str. 85-10]
+	This sequence aligns to PROTSEQ with 0.343066 fraction identities, and 0.094714 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 96 of 179, which has header:
+	gi|77748758|ref|NP_644431.2| 6-phytase [Xanthomonas axonopodis pv. citri str. 306]
+	This sequence aligns to PROTSEQ with 0.344140 fraction identities, and 0.102908 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 97 of 179, which has header:
+	gi|166710687|ref|ZP_02241894.1| phosphoanhydride phosphohydrolase [Xanthomonas oryzae pv. oryzicola BLS256]
+	This sequence aligns to PROTSEQ with 0.330846 fraction identities, and 0.265082 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 98 of 179, which has header:
+	gi|66047727|ref|YP_237568.1| 4-phytase [Pseudomonas syringae pv. syringae B728a]
+	This sequence aligns to PROTSEQ with 0.310345 fraction identities, and 0.103753 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 99 of 179, which has header:
+	gi|214003494|ref|ZP_03414229.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Typhi str. E98-3139]
+	This sequence aligns to PROTSEQ with 0.328267 fraction identities, and 0.243678 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 100 of 179, which has header:
+	gi|94986881|ref|YP_594814.1| PhyA2 [Lawsonia intracellularis PHE/MN1-00]
+	This sequence aligns to PROTSEQ with 0.285714 fraction identities, and 0.072848 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 101 of 179, which has header:
+	gi|222147481|ref|YP_002548438.1| acid phosphatase protein [Agrobacterium vitis S4]
+	This sequence aligns to PROTSEQ with 0.300469 fraction identities, and 0.087794 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 102 of 179, which has header:
+	gi|84625231|ref|YP_452603.1| phosphoanhydride phosphohydrolase [Xanthomonas oryzae pv. oryzae MAFF 311018]
+	This sequence aligns to PROTSEQ with 0.325967 fraction identities, and 0.173516 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 103 of 179, which has header:
+	gi|26247022|ref|NP_753062.1| glucose-1-phosphatase/inositol phosphatase [Escherichia coli CFT073]
+	This sequence aligns to PROTSEQ with 0.321656 fraction identities, and 0.279817 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 104 of 179, which has header:
+	gi|213963772|ref|ZP_03392021.1| glucose-1-phosphatase [Capnocytophaga sputigena Capno]
+	This sequence aligns to PROTSEQ with 0.291566 fraction identities, and 0.067416 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 105 of 179, which has header:
+	gi|58039537|ref|YP_191501.1| periplasmic phosphoanhydride phosphohydrolase [Gluconobacter oxydans 621H]
+	This sequence aligns to PROTSEQ with 0.296392 fraction identities, and 0.108046 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 106 of 179, which has header:
+	gi|56550957|ref|YP_161796.1| phytase [Zymomonas mobilis subsp. mobilis ZM4]
+	This sequence aligns to PROTSEQ with 0.310945 fraction identities, and 0.131749 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 107 of 179, which has header:
+	gi|152969199|ref|YP_001334308.1| putative 3-phytase precursor [Klebsiella pneumoniae subsp. pneumoniae MGH 78578]
+	This sequence aligns to PROTSEQ with 0.273399 fraction identities, and 0.093750 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 108 of 179, which has header:
+	gi|206579065|ref|YP_002239752.1| histidine acid phosphatase family protein [Klebsiella pneumoniae 342]
+	This sequence aligns to PROTSEQ with 0.275862 fraction identities, and 0.093750 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 109 of 179, which has header:
+	gi|21241328|ref|NP_640910.1| 6-phytase [Xanthomonas axonopodis pv. citri str. 306]
+	This sequence aligns to PROTSEQ with 0.306122 fraction identities, and 0.136564 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 110 of 179, which has header:
+	gi|78046146|ref|YP_362321.1| acid phosphatase precursor [Xanthomonas campestris pv. vesicatoria str. 85-10]
+	This sequence aligns to PROTSEQ with 0.308290 fraction identities, and 0.176972 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 111 of 179, which has header:
+	gi|212702480|ref|ZP_03310608.1| hypothetical protein DESPIG_00497 [Desulfovibrio piger ATCC 29098]
+	This sequence aligns to PROTSEQ with 0.306024 fraction identities, and 0.135417 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 112 of 179, which has header:
+	gi|213163114|ref|ZP_03348824.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Typhi str. E00-7866]
+	This sequence aligns to PROTSEQ with 0.326271 fraction identities, and 0.457471 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 113 of 179, which has header:
+	gi|213621579|ref|ZP_03374362.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Typhi str. E98-2068]
+	This sequence aligns to PROTSEQ with 0.335938 fraction identities, and 0.412844 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 114 of 179, which has header:
+	gi|213974072|ref|ZP_03401331.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Typhi str. AG3]
+	This sequence aligns to PROTSEQ with 0.343750 fraction identities, and 0.485057 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 115 of 179, which has header:
+	gi|213648758|ref|ZP_03378811.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Typhi str. J185]
+	This sequence aligns to PROTSEQ with 0.339450 fraction identities, and 0.498851 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 116 of 179, which has header:
+	gi|213649793|ref|ZP_03379846.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Typhi str. J185]
+	This sequence aligns to PROTSEQ with 0.372449 fraction identities, and 0.549425 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 117 of 179, which has header:
+	gi|213024212|ref|ZP_03338659.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Typhi str. 404ty]
+	This sequence aligns to PROTSEQ with 0.368984 fraction identities, and 0.569124 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 118 of 179, which has header:
+	gi|213162809|ref|ZP_03348519.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Typhi str. E00-7866]
+	This sequence aligns to PROTSEQ with 0.375723 fraction identities, and 0.601382 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 119 of 179, which has header:
+	gi|213619263|ref|ZP_03373089.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Typhi str. E98-2068]
+	This sequence aligns to PROTSEQ with 0.377358 fraction identities, and 0.633641 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 120 of 179, which has header:
+	gi|213862834|ref|ZP_03386304.1| phosphoanhydride phosphorylase [Salmonella enterica subsp. enterica serovar Typhi str. M223]
+	This sequence aligns to PROTSEQ with 1.000000 fraction identities, and 0.886878 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 121 of 179, which has header:
+	gi|213974377|ref|ZP_03401636.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Typhi str. AG3]
+	This sequence aligns to PROTSEQ with 0.369231 fraction identities, and 0.550691 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 122 of 179, which has header:
+	gi|187736887|ref|YP_001816625.1| hypothetical protein IPF_107 [Escherichia coli 1520]
+	This sequence aligns to PROTSEQ with 0.335165 fraction identities, and 0.580645 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 123 of 179, which has header:
+	gi|218692824|ref|YP_002405936.1| Glucose-1-phosphatase precursor (G1Pase) (fragment) [Escherichia coli UMN026]
+	This sequence aligns to PROTSEQ with 0.346939 fraction identities, and 0.661290 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 124 of 179, which has header:
+	gi|58039643|ref|YP_191607.1| glucose-1-phosphatase [Gluconobacter oxydans 621H]
+	This sequence aligns to PROTSEQ with 0.292899 fraction identities, and 0.224771 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 125 of 179, which has header:
+	gi|94986880|ref|YP_594813.1| histidine acid phosphatase [Lawsonia intracellularis PHE/MN1-00]
+	This sequence aligns to PROTSEQ with 0.318182 fraction identities, and 0.599089 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 126 of 179, which has header:
+	gi|213418650|ref|ZP_03351716.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Typhi str. E01-6750]
+	This sequence aligns to PROTSEQ with 0.385321 fraction identities, and 0.748848 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 127 of 179, which has header:
+	gi|94986879|ref|YP_594812.1| PhyA2 [Lawsonia intracellularis PHE/MN1-00]
+	This sequence aligns to PROTSEQ with 0.265385 fraction identities, and 0.427313 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 128 of 179, which has header:
+	gi|213022119|ref|ZP_03336566.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Typhi str. 404ty]
+	This sequence aligns to PROTSEQ with 0.347826 fraction identities, and 0.787037 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 129 of 179, which has header:
+	gi|158293901|ref|XP_315237.4| AGAP004591-PA [Anopheles gambiae str. PEST]
+	This sequence aligns to PROTSEQ with 0.267806 fraction identities, and 0.213004 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 130 of 179, which has header:
+	gi|114328074|ref|YP_745231.1| 6-phytase [Granulibacter bethesdensis CGDNIH1]
+	This sequence aligns to PROTSEQ with 0.286957 fraction identities, and 0.477273 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 131 of 179, which has header:
+	gi|221091667|ref|XP_002169721.1| PREDICTED: similar to acid phosphatase, prostate long, partial [Hydra magnipapillata]
+	This sequence aligns to PROTSEQ with 0.267516 fraction identities, and 0.299107 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 132 of 179, which has header:
+	gi|114328076|ref|YP_745233.1| 6-phytase [Granulibacter bethesdensis CGDNIH1]
+	This sequence aligns to PROTSEQ with 0.304688 fraction identities, and 0.711061 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 133 of 179, which has header:
+	gi|213418741|ref|ZP_03351807.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Typhi str. E01-6750]
+	This sequence aligns to PROTSEQ with 0.349206 fraction identities, and 0.709677 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 134 of 179, which has header:
+	gi|170045196|ref|XP_001850203.1| lysosomal acid phosphatase [Culex quinquefasciatus]
+	This sequence aligns to PROTSEQ with 0.247283 fraction identities, and 0.194748 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 135 of 179, which has header:
+	gi|148377789|ref|YP_001256665.1| hypothetical protein MAG_5270 [Mycoplasma agalactiae PG2]
+	This sequence aligns to PROTSEQ with 0.240816 fraction identities, and 0.439359 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 136 of 179, which has header:
+	gi|156552450|ref|XP_001601135.1| PREDICTED: similar to putative acid phosphatase 1 [Nasonia vitripennis]
+	This sequence aligns to PROTSEQ with 0.265487 fraction identities, and 0.261438 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 137 of 179, which has header:
+	gi|157103481|ref|XP_001648000.1| acid phosphatase-1 [Aedes aegypti]
+	This sequence aligns to PROTSEQ with 0.274052 fraction identities, and 0.251092 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 138 of 179, which has header:
+	gi|26247023|ref|NP_753063.1| hypothetical protein c1138 [Escherichia coli CFT073]
+	This sequence aligns to PROTSEQ with 0.297619 fraction identities, and 0.805556 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 139 of 179, which has header:
+	gi|115496994|ref|NP_001069526.1| acid phosphatase 2, lysosomal [Bos taurus]
+	This sequence aligns to PROTSEQ with 0.294798 fraction identities, and 0.320236 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 140 of 179, which has header:
+	gi|91077636|ref|XP_974062.1| PREDICTED: similar to putative acid phosphatase 1 [Tribolium castaneum]
+	This sequence aligns to PROTSEQ with 0.292835 fraction identities, and 0.317021 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 141 of 179, which has header:
+	gi|91085409|ref|XP_967434.1| PREDICTED: similar to acid phosphatase-1 [Tribolium castaneum]
+	This sequence aligns to PROTSEQ with 0.279412 fraction identities, and 0.317269 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 142 of 179, which has header:
+	gi|167627027|ref|YP_001677527.1| acid phosphatase [Francisella philomiragia subsp. philomiragia ATCC 25017]
+	This sequence aligns to PROTSEQ with 0.256637 fraction identities, and 0.263043 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 143 of 179, which has header:
+	gi|118086124|ref|XP_001235914.1| PREDICTED: similar to Chain  , Prostatic Acid Phosphatase (E.C.3.1.3.2) Complexed With Tartaric Acid [Gallus gallus]
+	This sequence aligns to PROTSEQ with 0.253521 fraction identities, and 0.287149 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 144 of 179, which has header:
+	gi|73947875|ref|XP_541473.2| PREDICTED: similar to testicular acid phosphatase isoform a precursor [Canis familiaris]
+	This sequence aligns to PROTSEQ with 0.311798 fraction identities, and 0.292247 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 145 of 179, which has header:
+	gi|213416802|ref|ZP_03349946.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Typhi str. E01-6750]
+	This sequence aligns to PROTSEQ with 0.322034 fraction identities, and 0.863426 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 146 of 179, which has header:
+	gi|89255478|ref|YP_512839.1| acid phosphatase [Francisella tularensis subsp. holarctica]
+	This sequence aligns to PROTSEQ with 0.273810 fraction identities, and 0.248322 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 147 of 179, which has header:
+	gi|113970113|ref|YP_733906.1| exodeoxyribonuclease V, gamma subunit [Shewanella sp. MR-4]
+	This sequence aligns to PROTSEQ with 0.274611 fraction identities, and 0.698908 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 148 of 179, which has header:
+	gi|187930922|ref|YP_001890906.1| histidine acid phosphatase [Francisella tularensis subsp. mediasiatica FSC147]
+	This sequence aligns to PROTSEQ with 0.270833 fraction identities, and 0.248322 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 149 of 179, which has header:
+	gi|61651828|ref|NP_001013355.1| hypothetical protein LOC503759 [Danio rerio]
+	This sequence aligns to PROTSEQ with 0.252747 fraction identities, and 0.244813 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 150 of 179, which has header:
+	gi|197746060|ref|YP_002169693.1| acid phosphatase [Francisella tularensis subsp. novicida GA99-3548]
+	This sequence aligns to PROTSEQ with 0.254386 fraction identities, and 0.224490 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 151 of 179, which has header:
+	gi|118496637|ref|YP_897687.1| histidine acid phosphatase [Francisella tularensis subsp. novicida U112]
+	This sequence aligns to PROTSEQ with 0.270833 fraction identities, and 0.248322 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 152 of 179, which has header:
+	gi|213025249|ref|ZP_03339696.1| glucose-1-phosphatase/inositol phosphatase [Salmonella enterica subsp. enterica serovar Typhi str. 404ty]
+	This sequence aligns to PROTSEQ with 0.294737 fraction identities, and 0.781106 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 153 of 179, which has header:
+	gi|224045479|ref|XP_002196542.1| PREDICTED: similar to acid phosphatase, prostate [Taeniopygia guttata]
+	This sequence aligns to PROTSEQ with 0.263473 fraction identities, and 0.309917 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 154 of 179, which has header:
+	gi|167563408|ref|ZP_02356324.1| glutamine amidotransferase, class I [Burkholderia oklahomensis EO147]
+	This sequence aligns to PROTSEQ with 0.272727 fraction identities, and 0.466960 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 155 of 179, which has header:
+	gi|221121742|ref|XP_002162575.1| PREDICTED: similar to LOC446918 protein, partial [Hydra magnipapillata]
+	This sequence aligns to PROTSEQ with 0.291892 fraction identities, and 0.587054 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 156 of 179, which has header:
+	gi|197745726|ref|YP_002169360.1| hypothetical protein FTCG_01162 [Francisella novicida GA99-3549]
+	This sequence aligns to PROTSEQ with 0.273016 fraction identities, and 0.295302 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 157 of 179, which has header:
+	gi|156501407|ref|YP_001427472.1| acid phosphatase [Francisella tularensis subsp. holarctica FTNF002-00]
+	This sequence aligns to PROTSEQ with 0.270833 fraction identities, and 0.248322 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 158 of 179, which has header:
+	gi|115911715|ref|XP_787936.2| PREDICTED: hypothetical protein, partial [Strongylocentrotus purpuratus]
+	This sequence aligns to PROTSEQ with 0.283465 fraction identities, and 0.425339 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 159 of 179, which has header:
+	gi|222084660|ref|YP_002543189.1| molecular chaperone heat shock protein (hsp-70) [Agrobacterium radiobacter K84]
+	This sequence aligns to PROTSEQ with 0.278049 fraction identities, and 0.528736 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 160 of 179, which has header:
+	gi|134115451|ref|XP_773439.1| hypothetical protein CNBI0530 [Cryptococcus neoformans var. neoformans B-3501A]
+	This sequence aligns to PROTSEQ with 0.333333 fraction identities, and 0.746418 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 161 of 179, which has header:
+	gi|118370562|ref|XP_001018482.1| histidine acid phosphatase [Tetrahymena thermophila SB210]
+	This sequence aligns to PROTSEQ with 0.275964 fraction identities, and 0.417962 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 162 of 179, which has header:
+	gi|212645396|ref|NP_496137.2| hypothetical protein F26C11.1 [Caenorhabditis elegans]
+	This sequence aligns to PROTSEQ with 0.232955 fraction identities, and 0.316505 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 163 of 179, which has header:
+	gi|17533215|ref|NP_495775.1| hypothetical protein F14E5.6 [Caenorhabditis elegans]
+	This sequence aligns to PROTSEQ with 0.250000 fraction identities, and 0.453465 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 164 of 179, which has header:
+	gi|157109719|ref|XP_001650796.1| acid phosphatase [Aedes aegypti]
+	This sequence aligns to PROTSEQ with 0.268456 fraction identities, and 0.667411 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 165 of 179, which has header:
+	gi|219849321|ref|YP_002463754.1| glycosyl transferase group 1 [Chloroflexus aggregans DSM 9485]
+	This sequence aligns to PROTSEQ with 0.245690 fraction identities, and 0.596522 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 166 of 179, which has header:
+	gi|58261490|ref|XP_568155.1| hypothetical protein [Cryptococcus neoformans var. neoformans JEC21]
+	This sequence aligns to PROTSEQ with 0.327684 fraction identities, and 0.746418 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 167 of 179, which has header:
+	gi|219440244|ref|XP_002217892.1| hypothetical protein BRAFLDRAFT_80114 [Branchiostoma floridae]
+	This sequence aligns to PROTSEQ with 0.270358 fraction identities, and 0.331155 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 168 of 179, which has header:
+	gi|149725140|ref|XP_001490891.1| PREDICTED: similar to Lysosomal acid phosphatase precursor (LAP) [Equus caballus]
+	This sequence aligns to PROTSEQ with 0.282799 fraction identities, and 0.330078 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 169 of 179, which has header:
+	gi|117920688|ref|YP_869880.1| exodeoxyribonuclease V, gamma subunit [Shewanella sp. ANA-3]
+	This sequence aligns to PROTSEQ with 0.275120 fraction identities, and 0.665064 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 170 of 179, which has header:
+	gi|114047351|ref|YP_737901.1| exodeoxyribonuclease V, gamma subunit [Shewanella sp. MR-7]
+	This sequence aligns to PROTSEQ with 0.285714 fraction identities, and 0.655367 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 171 of 179, which has header:
+	gi|157749805|ref|XP_001678616.1| Hypothetical protein CBG00675 [Caenorhabditis briggsae AF16]
+	This sequence aligns to PROTSEQ with 0.238806 fraction identities, and 0.330000 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 172 of 179, which has header:
+	gi|146341119|ref|YP_001206167.1| putative S-adenosyl-L-methionine (SAM)-dependent methyltransferase [Bradyrhizobium sp. ORS278]
+	This sequence aligns to PROTSEQ with 0.305556 fraction identities, and 0.568862 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 173 of 179, which has header:
+	gi|111021641|ref|YP_704613.1| cytochrome P450 CYP123 [Rhodococcus jostii RHA1]
+	This sequence aligns to PROTSEQ with 0.244776 fraction identities, and 0.336634 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 174 of 179, which has header:
+	gi|194215821|ref|XP_001917480.1| PREDICTED: similar to testicular acid phosphatase [Equus caballus]
+	This sequence aligns to PROTSEQ with 0.331325 fraction identities, and 0.331992 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 175 of 179, which has header:
+	gi|109125690|ref|XP_001116150.1| PREDICTED: similar to testicular acid phosphatase isoform a precursor isoform 2 [Macaca mulatta]
+	This sequence aligns to PROTSEQ with 0.323442 fraction identities, and 0.353167 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 176 of 179, which has header:
+	gi|82905719|ref|XP_919537.1| PREDICTED: similar to acid phosphatase [Mus musculus]
+	This sequence aligns to PROTSEQ with 0.292135 fraction identities, and 0.289421 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 177 of 179, which has header:
+	gi|163846568|ref|YP_001634612.1| glycosyl transferase group 1 [Chloroflexus aurantiacus J-10-fl]
+	This sequence aligns to PROTSEQ with 0.291139 fraction identities, and 0.577540 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 178 of 179, which has header:
+	gi|157869824|ref|XP_001683463.1| membrane-bound acid phosphatase 2 [Leishmania major]
+	This sequence aligns to PROTSEQ with 0.263158 fraction identities, and 0.360269 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 179 of 179, which has header:
+	gi|221109865|ref|XP_002154251.1| PREDICTED: similar to Lysosomal acid phosphatase [Hydra magnipapillata]
+	This sequence aligns to PROTSEQ with 0.237389 fraction identities, and 0.328685 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+After screening for sequences satisfying HOMOLOGY_THRESHOLD, 32 unique homologous sequences remain.
+
+We will now build a multiple sequence alignment (MSA) of all of the relevant sequences.
+The first sequence in the MSA will be PROTSEQ.
+The MSA will then include the 32 screened unique homologous sequences.
+This MSA will not include an outgroup sequence, since OUTGROUP_SEQ was set to NONE, and since no outgroup is needed since we are not using a molecular clock.
+The MSA will include a total of 33 sequences.  These sequences have all been given short names that are acceptable to PHYLIP.  A table relating these new names to the original sequence headers has been written to the OUTPUT_SEQNAMES file of seqnames.txt.
+
+Here are the contents of the OUTPUT_SEQNAMES file of seqnames.txt:
+
+******
+PROTSEQ gi|145285|gb|AAA72086.1| periplasmic phosphoanhydride phosphohydrolase [Escherichia coli]
+SEQ1 gi|170020620|ref|YP_001725574.1| histidine acid phosphatase [Escherichia coli ATCC 8739]
+SEQ2 gi|218553567|ref|YP_002386480.1| phosphoanhydride phosphorylase [Escherichia coli IAI1]
+SEQ3 gi|193070045|ref|ZP_03050992.1| periplasmic AppA protein [Escherichia coli E110019]
+SEQ4 gi|209918233|ref|YP_002292317.1| phosphoanhydride phosphorylase [Escherichia coli SE11]
+SEQ5 gi|157159123|ref|YP_001462212.1| phosphoanhydride phosphorylase [Escherichia coli E24377A]
+SEQ6 gi|82544696|ref|YP_408643.1| phosphoanhydride phosphorylase [Shigella boydii Sb227]
+SEQ7 gi|194429835|ref|ZP_03062348.1| periplasmic AppA protein [Escherichia coli B171]
+SEQ8 gi|187734018|ref|YP_001880822.1| periplasmic AppA protein [Shigella boydii CDC 3083-94]
+SEQ9 gi|110641169|ref|YP_668899.1| phosphoanhydride phosphorylase [Escherichia coli 536]
+SEQ10 gi|110804994|ref|YP_688514.1| phosphoanhydride phosphorylase [Shigella flexneri 5 str. 8401]
+SEQ11 gi|56479787|ref|NP_706903.2| phosphoanhydride phosphorylase [Shigella flexneri 2a str. 301]
+SEQ12 gi|191172406|ref|ZP_03033947.1| periplasmic AppA protein [Escherichia coli F11]
+SEQ13 gi|170682176|ref|YP_001744188.1| periplasmic AppA protein [Escherichia coli SMS-3-5]
+SEQ14 gi|30062518|ref|NP_836689.1| phosphoanhydride phosphorylase [Shigella flexneri 2a str. 2457T]
+SEQ15 gi|26247006|ref|NP_753046.1| phosphoanhydride phosphorylase [Escherichia coli CFT073]
+SEQ16 gi|15800901|ref|NP_286917.1| phosphoanhydride phosphorylase [Escherichia coli O157:H7 EDL933]
+SEQ17 gi|215486097|ref|YP_002328528.1| phosphoanhydride phosphorylase [Escherichia coli O127:H6 str. E2348/69]
+SEQ18 gi|15830390|ref|NP_309163.1| phosphoanhydride phosphorylase [Escherichia coli O157:H7 str. Sakai]
+SEQ19 gi|218704404|ref|YP_002411923.1| phosphoanhydride phosphorylase [Escherichia coli UMN026]
+SEQ20 gi|91210078|ref|YP_540064.1| phosphoanhydride phosphorylase [Escherichia coli UTI89]
+SEQ21 gi|218700500|ref|YP_002408129.1| phosphoanhydride phosphorylase [Escherichia coli IAI39]
+SEQ22 gi|218557878|ref|YP_002390791.1| phosphoanhydride phosphorylase [Escherichia coli S88]
+SEQ23 gi|82776270|ref|YP_402619.1| phosphoanhydride phosphorylase [Shigella dysenteriae Sd197]
+SEQ24 gi|218688876|ref|YP_002397088.1| phosphoanhydride phosphorylase [Escherichia coli ED1a]
+SEQ25 gi|194432431|ref|ZP_03064718.1| periplasmic AppA protein [Shigella dysenteriae 1012]
+SEQ26 gi|193066335|ref|ZP_03047385.1| periplasmic AppA protein [Escherichia coli E22]
+SEQ27 gi|170769951|ref|ZP_02904404.1| periplasmic AppA protein [Escherichia albertii TW07627]
+SEQ28 gi|218550351|ref|YP_002384142.1| Periplasmic appA protein precursor [Includes: Phosphoanhydride phosphohydrolase (pH 2.5 acid phosphatase) (AP); 4-phytase] [Escherichia fergusonii ATCC 35469]
+SEQ29 gi|156934265|ref|YP_001438181.1| phosphoanhydride phosphorylase [Enterobacter sakazakii ATCC BAA-894]
+SEQ30 gi|123442823|ref|YP_001006799.1| phosphoanhydride phosphorylase [Yersinia enterocolitica subsp. enterocolitica 8081]
+SEQ31 gi|22125704|ref|NP_669127.1| phosphoanhydride phosphorylase [Yersinia pestis KIM]
+SEQ32 gi|51596743|ref|YP_070934.1| phosphoanhydride phosphorylase [Yersinia pseudotuberculosis IP 32953]
+
+******
+
+Now constructing the MSA (this may take a while)...
+Completed aligning the sequences.  Now writing this alignment to the OUTPUT_ALIGNMENT file of renamed_alignment.fasta.
+
+Here are the contents of the OUTPUT_ALIGNMENT file of renamed_alignment.fasta:
+
+******
+>PROTSEQ
+----------MKAI----LIPFLS-LLIPLTP--QSAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKKGCPQSGQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELERVLNFPQSNLCLKREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIKTALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL------
+>SEQ1
+MSDMKSGNISMKAI----LIPFLS-LLIPLTP--QSAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKKGCPQSGQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNSNVTDAILSRAGGSIADFTGHRQTAFRELERVLNFPQSNLCLKREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIKTALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL------
+>SEQ2
+----------MKAI----LIPFLS-LLIPLTP--QSAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKKGCPQSGQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELERVLNFPQSNLCLKREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIKTALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPSGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL------
+>SEQ3
+----------MKAI----LIPFLS-LLIPLTP--QSAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKKGCPQSGQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELERVLNFPQSNLCLKREKQDESCSLTQALASELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIKTALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL------
+>SEQ4
+----------MKAI----LIPFLS-LLIPLTP--QSAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKKGCPQSGQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNSNVTDAILSRAGGSIAGFTGHRQTAFRELERVLNFPQSNLCLKREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIKTALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL------
+>SEQ5
+----------MKAI----LIPFLS-LLIPLTP--QSAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKKGCPQSGQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELERVLNFPQSNLCLKREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMAALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL------
+>SEQ6
+----------MKAI----LIPFLS-LLIPLTS--QSAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYFGHYQRQRLVADGLLAKKGCPQPGQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELERVLNFPQSNLCLKREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMAALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL------
+>SEQ7
+----------MKAI----LIPFLS-LLIPLTP--QSAFAQSE--S-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKKGCPQPGQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELERVLNFPQSKLCLNREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMTALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL------
+>SEQ8
+----------MKAI----LIPFLS-LLIPLTS--QSAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYFGHYQRQRLVADGLLAKKGCPQPGQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSKAGGSIADFTGHRQTAFRELERVLNFPQSNLCLKREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMAALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL------
+>SEQ9
+MSDMKSGNISMKAI----LIPFLS-LLIPLTP--KSAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKKGCPQPGQVAVIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELEQVLNFPQSNLCLNREKQDKSCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMTALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACALHQD--K
+>SEQ10
+----------MKAI----LIPFLS-LLIPLTP--QSAFAQSE--P-ELKLESMVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKKGCPQSAQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLRTGVCQLDNANVTDAILCRAGGSIADFTGHRQTAFRELERVLNFPQSNLCLNREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMAALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL------
+>SEQ11
+----------MKAI----LIPFLS-LLIPLTP--QSAFAQSE--P-ELKLESMVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKKGCPQSAQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILCRAGGSIADFTGHRQTVFRELERVLNFPQSNLCLNREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMAALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL------
+>SEQ12
+----------MKAI----LIPFLS-LLIPLTP--KSAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKKGCPQPGQVAVIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELEQVLNFPQSNLCLNREKQDKSCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMTALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACALHQD--K
+>SEQ13
+----------MKAI----LIPFLS-LLIPLTP--QSAFAKSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKKGCPQPGQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELEQVLNFPQSNLCLNREKQDKSCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIKTALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPAQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLASFTQIVNEARIPACALHQD--K
+>SEQ14
+----------MKAI----LIPFLS-LLIPLTP--QSAFAQSE--P-ELKLESMVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKKGCPQSAQVAIIADVDERTRKTGEAFTAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILCRAGGSIADFTGHRQTVFRELERVLNFPQSNLCLNREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMAALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL------
+>SEQ15
+MSDMKSGNISMKAI----LIPFLS-LLIPLTP--KSAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLTKKGCPQPGQVAIISDVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELERVLNFPQSNLCLNREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMAALTPH-PSQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACALHQD--K
+>SEQ16
+MSDMKSGNISMKAI----LIPFLS-LLIPLTP--QSAFAQSEPEP-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPNWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLTKKGCPQPGQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELERVLNFPQSNLCLNREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMIALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL------
+>SEQ17
+----------MKAI----LIPFLS-LLIPLTP--QSAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLTKKGCPQPGQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFAGHRQTAFRELERVLNFPQSNLCLNREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMTALMPH-PPQKQVYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSHWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFMQIVNEARIPACSL------
+>SEQ18
+----------MKAI----LIPFLS-LLIPLTP--QSAFAQSEPEP-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPNWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLTKKGCPQPGQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELERVLNFPQSNLCLNREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMIALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL------
+>SEQ19
+------------------MIPFLS-LLIPFTP--QSAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKKGCPQSGQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELERVLNFPQSNLCLNREKQDKSCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMTALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELLFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACALHQD--K
+>SEQ20
+MSDMKSGNISMKAI----LIPFLS-LLIPLTP--KFAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKEGCPQPGQVAVIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELERVLNFPQSNLCLNRKKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMTALAPH-PPQKQVYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNARGMCSLAGFTQIVNEARIPACALHQD--K
+>SEQ21
+------------------MIPFLS-LLIPFTP--QSAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDLTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLVKKGCPQPGQVAIISDVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELERVLNFPQSNLCLNREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIKTALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACALHQD--K
+>SEQ22
+----------MKAI----LIPFLS-LLIPLTP--KFAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKEGCPQPGQVAVIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELERVLNFPQSNLCLNRKKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMTALAPH-PPQKQVYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNARGMCSLAGFTQIVNEARIPACALHQD--K
+>SEQ23
+----------MKAI----LIPFLS-LLIPLTP--QSAFAQSEPEP-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLTKKGCPQPGQVAIIADVDERTRKTGEAFDAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFCELERVLNFPQSNLCLNREKQDESCSLTQALPSELKVSAD--NVSLNGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMTALTPH-PPQKQAYGVILPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL------
+>SEQ24
+------------------MIPFLS-LLIPLTP--KSAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKEGCPQPGQVAVIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGAIADFAGHRQTAFRELERVLNFPQSNLCLNRKKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMTALAPH-PPQKQVYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACALHQD--K
+>SEQ25
+--------------------------MIPLTP--QSAFAQSE--P-ELKLESVVIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKKGCPQSGQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELERVLNFPQSNLSLNREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITDSHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLELIMTALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL------
+>SEQ26
+-----------------------------------------------------MIVSRHGVRAPTKATQLMQDVTPDAWPTWPVKLGWLTPRGGELIAYLGHYQRQRLVADGLLAKKGCPQPGQVAIIADVDERTRKTGEAFAAGLAPDCAITVHTQADTSSPDPLFNPLKTGVCQLDNANVTDAILSRAGGSIADFTGHRQTAFRELERVLNFPQSKLCLNREKQDESCSLTQALPSELKVSAD--NVSLTGAVSLASMLTEIFLLQQAQGMPEPGWGRITESHQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLIMTALTPH-PPQKQAYGVTLPTSVLFIAGHDTNLANLGGALELNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQVSLVFQTLQQMRDKTPLSL-NTPPGEVKLTLAGCEERNAQGMCSLAGFTQIVNEARIPACSL------
+>SEQ27
+M---QNGNLAMKVI----LLPFFS-LLLPLTL--SPAYAQNE--P-ELKLESVVIVSRHGVRAPTKATSLMQDVTPNAWPTWPAKLGWLTPRGGELVSYLGHYQRQRLVADGLLAKKGCPKPGQVAIIADIDERTRKTGEAFAAGLAPGCVLPVHTLPDTSRPDPLFNPLKTGICQLDKAKVTGAILNRAGGSIAGFTEHRQTAFRELERVLNFSQSRLCLKREKQGESCSLTQVLPSELNVSSD--NVSLTGAVSLASMLTEIFLLQQAQGMPQPGWGRITDSQQWNTLLSLHNAQFYLLQRTPEVARSRATPLLDLVLTALTAH-GLKKQSHGVMLPTSLLFIVGHDTNLANLGGALGLNWTLPGQPDNTPPGGELVFERWRRLSDNSQWIQASFVFQTLQQMRDKTPLSL-KIRPGEVKLTLAGCKEINAQDMCSLVGFTQIVNKMRIPACSL------
+>SEQ28
+----------MSAS----LIRIIC-VMTLLAA--FPTRAEQN--D-GLQLQSVVIVSRHGVRAPTKLTPLMQNVTPDTWPQWSVPLGWLTPRGGELISLLGDYQRQRLISEGLINAAQCPSAKQVAVIADTDERTRKTGEAFISALAPHCALPVHVQQNLRQTDPLFNPLKTGHCQLDKPTVRAAILKQAGGSIEALNKQYQPAFTTLADVLNLRESPLCQ----QEKRCTLPEALPSELEVSKR--NVSFSGAWGLASTVSEIFLLQQAQGMADPGWGRIKNSEQWQQLLSLHNAQFDLLQRTPEVASSRATPLLDLIIATLTPG-HAGKQMAGISLPTSLLFIAGHDTNLANLGGALGMSWTLPGQPDNTPPGGELVFERWHRATDNTDWIQVSLVYQTLQQMRNVTRLSM-TTPPGKVPLTVNGCQETNSQGMCSLKSFTAVINTIRNPACAL------
+>SEQ29
+----------MKTL----FLHLFL-FIFILMPGVFPLHAQGA--D-KMKLERVVIVSRHGVRAPTKSTPLMQEVTPYPWPQWDVPLGWLTARGGELVTELGRYQKKVLIDKGVLQSHGCPSPDQVAVIADTNQRTRKTGEAFLAGFAPGCQNKVHYQKKVDKKDPLFNPVKTGVCSFNVSKTQAAILARAEGNIERYTQRYDSAFRTLEQVLNFTQSAACKSP--RQPGCTLTGVLPSELSVSPD--NVSLSGAWSLSSTLTEIFLLQEAQGMPEVAWGRIHGEKQWTELLRLHNAQFDLLQRTPDVARTRATPLLDLISRALISD-GATENPYGIKLPVSLLFIAGHDTNIANLSGVFDLNWSLPGQPDNTPPGGELVFERWKRESDNTDWIQISFVYQTLQQMREFKSSSS-FSSPHKIVLTLPSCQDKNAEGMCSLKRFNDIVQTIRVPECAVMADINR
+>SEQ30
+----------MSVAKRNLHLSALTLILGCFTA--GAAPIATP--PAGYTLERVVILSRHGVRSPTKQTQLMNDVTPDKWPLWPVKAGYLTPRGAELVTLMGGFYGDYFRSQGLLS-AGCPVDGSVYAQADVDQRTRLTGQAFLDGIAPDCGLKVHYQADLKKVDPLFHTVEAGVCKLDSAKTHQAVEERLGGPLSDLSQRYAKPFAQMGEVLNFAASPYCKSLQKNGKTCDFATFTANEIKVNEEGTKVSLSGPLALSSTLGEIFLLQNSQAMPDVAWHRLSGEENWVSLLSLHNAQFDLMAKTPYIARHKGTPLLQQIDTALVLQRDAQGQTLPLSPQTKLLFLGGHDTNIANIAGMLGANWQLPQQPDNTPPGGGLVFELWQNPDNHQRYVAVKMFYQTMDQLRNAEKLDMKNNPAKIVPITIEGCENEGDNKLCQLETFQKKVAQVIEPACHI------
+>SEQ31
+----------MSVLENRVRLSGLVLMLSGLAA--ITAPVAAE--PSGYTLERVVILSRHGVRSPTKQTQLMNDVTPDKWPQWPVKAGYLTPRGAELVTLMGGFYGDYFRSLGLLA-AGCPAEGGVYAQADIDQRTRLTGQAFLDGVAPGCGLTVHNQADLKKTDPLFHPVEAGVCKLDAAQTDKAIEEQLGGPLDTVSQRYAKPFAQMGDVLNFAASPYCKSLQQQGKTCDFAHFAANEVNVNKEGTKVTLSGPLALSSTLGEIFLLQNAQAMPEVAWQRLKGAENWVSLLSLHNAQFNLMAKTPYIARHKGTPLLQQIDTALTLQLDAQGQKLPISAQNRVLFLGGHDTNIANIAGMLGADWQLPEQPDNTPPGGGLVFELWQNPDNHQRYVAVKMFYQTMDQLRNAEKLDLKNNPAGIISVAVAGCENNGDDKLCELDTFQKKVAKVIEPACHI------
+>SEQ32
+----------MSVLENRVRLSGLVLMLSGLAA--ITAPVAAE--PSGYTLERVVILSRHGVRSPTKQTQLMNDVTPDKWPQWPVKAGYLTPRGAELVTLMGGFYGDYFRSLGLLA-AGCPAEGVVYAQADIDQRTRLTGQAFLDGVAPGCGLTVHNQADLKKTDPLFHPVEAGVCKLDAAQTDKAIEEQLGGPLDTVSQRYAKPFAQMGDVLNFAASPYCKSLQQQGKTCDFAHFAANEVNVNKEGTKVTLSGPLALSSTLGEIFLLQNAQAMPEVAWQRLKGAENWVSLLSLHNAQFNLMAKTPYIARHKGTPLLQQIDTALTLQLDAQGQKLPISAQNRVLFLGGHDTNIANIAGMLGADWQLPEQPDNTPPGGGLVFELWQNPDNHQRYVAVKMFYQTMDQLRNAEKLDLKNNPAGIISVAVAGCENNGDDKLCELDTFQKKVAKVIEPACHI------
+
+*****
+
+
+We will now use the PHYLIP program specified by PHYLIP_PROG to build a phylogenetic tree of the aligned sequences.
+The phylogenetic tree is a pairwise distance based tree.  First building the protein distance matrix (this may take a while)...
+Completed constructing the protein distance matrix.  The contents of this distance matrix are as follows:
+
+******
+   33
+PROTSEQ     0.000000  0.002328  0.002328  0.002329  0.004673  0.004669
+  0.011741  0.011735  0.014110  0.018906  0.016506  0.016507  0.018906
+  0.018896  0.018888  0.021257  0.014118  0.021260  0.014118  0.016709
+  0.028589  0.019097  0.028589  0.018963  0.031283  0.012009  0.015314
+  0.170935  0.640468  0.851411  1.546000  1.512216  1.513521
+SEQ1        0.002328  0.000000  0.004662  0.004665  0.002332  0.007013
+  0.014107  0.014100  0.016483  0.020717  0.018888  0.018889  0.021297
+  0.021285  0.021277  0.023006  0.016045  0.023653  0.016493  0.019120
+  0.030161  0.021512  0.031011  0.021361  0.033733  0.014430  0.017891
+  0.182491  0.639936  0.845310  1.555222  1.521261  1.522580
+SEQ2        0.002328  0.004662  0.000000  0.004665  0.007018  0.007012
+  0.014107  0.014100  0.016483  0.021296  0.018888  0.018889  0.021296
+  0.021284  0.021276  0.023648  0.016492  0.023653  0.016492  0.019120
+  0.031011  0.021511  0.031011  0.021360  0.033732  0.014429  0.017891
+  0.173932  0.645720  0.857702  1.556554  1.522542  1.523864
+SEQ3        0.002329  0.004665  0.004665  0.000000  0.007023  0.007017
+  0.014117  0.014110  0.016494  0.021311  0.018901  0.018902  0.021311
+  0.021299  0.021291  0.023665  0.016504  0.023669  0.016504  0.019134
+  0.031032  0.021527  0.031032  0.021375  0.033756  0.014440  0.017904
+  0.174035  0.645970  0.857987  1.534487  1.500921  1.502209
+SEQ4        0.004673  0.002332  0.007018  0.007023  0.000000  0.009385
+  0.016519  0.016511  0.018908  0.023751  0.021328  0.021329  0.023751
+  0.023737  0.023728  0.026110  0.018918  0.026115  0.018918  0.021591
+  0.033521  0.023991  0.033521  0.023822  0.036278  0.016898  0.020529
+  0.170685  0.638867  0.840852  1.568542  1.521399  1.522717
+SEQ5        0.004669  0.007013  0.007012  0.007017  0.009385  0.000000
+  0.007013  0.011713  0.009364  0.018870  0.011736  0.011737  0.018870
+  0.023718  0.014102  0.016457  0.011913  0.021220  0.011913  0.016677
+  0.028533  0.023972  0.028533  0.018927  0.031222  0.011986  0.015283
+  0.172871  0.631723  0.852713  1.558832  1.524743  1.526069
+SEQ6        0.011741  0.014107  0.014107  0.014117  0.016519  0.007013
+  0.000000  0.014086  0.002328  0.021275  0.018888  0.018889  0.021275
+  0.026148  0.021276  0.018850  0.014323  0.023630  0.014323  0.023964
+  0.030979  0.026428  0.030979  0.021339  0.033698  0.019292  0.015303
+  0.173169  0.637119  0.859099  1.568791  1.531032  1.532369
+SEQ7        0.011735  0.014100  0.014100  0.014110  0.016511  0.011713
+  0.014086  0.000000  0.016459  0.016488  0.018870  0.018871  0.016488
+  0.021316  0.021256  0.018832  0.011726  0.018835  0.011726  0.019101
+  0.026118  0.021543  0.026118  0.016537  0.028778  0.014415  0.005064
+  0.171743  0.634781  0.839703  1.557980  1.520416  1.521737
+SEQ8        0.014110  0.016483  0.016483  0.016494  0.018908  0.009364
+  0.002328  0.016459  0.000000  0.023675  0.021281  0.021282  0.023675
+  0.028568  0.023676  0.021238  0.016731  0.026032  0.016731  0.026400
+  0.033413  0.028874  0.033413  0.023746  0.036159  0.021737  0.017882
+  0.176161  0.637231  0.864639  1.577038  1.531204  1.532540
+SEQ9        0.018906  0.020717  0.021296  0.021311  0.023751  0.018870
+  0.021275  0.016488  0.023675  0.000000  0.026124  0.026126  0.000010
+  0.013994  0.028536  0.015865  0.018378  0.026077  0.018891  0.016536
+  0.018257  0.023792  0.018764  0.023788  0.021319  0.021775  0.017885
+  0.190870  0.621907  0.837483  1.526899  1.491951  1.493230
+SEQ10       0.016506  0.018888  0.018888  0.018901  0.021328  0.011736
+  0.018888  0.018870  0.021281  0.026124  0.000000  0.004659  0.026124
+  0.031045  0.006996  0.023672  0.019177  0.028487  0.019177  0.023988
+  0.035911  0.031379  0.035911  0.026203  0.038691  0.019312  0.020457
+  0.186528  0.644305  0.864268  1.582558  1.548031  1.549391
+SEQ11       0.016507  0.018889  0.018889  0.018902  0.021329  0.011737
+  0.018889  0.018871  0.021282  0.026126  0.004659  0.000000  0.026126
+  0.031048  0.002327  0.023673  0.019178  0.028489  0.019178  0.023990
+  0.035914  0.031381  0.035914  0.026205  0.038694  0.019313  0.020458
+  0.186602  0.644999  0.865386  1.585167  1.550574  1.551939
+SEQ12       0.018906  0.021297  0.021296  0.021311  0.023751  0.018870
+  0.021275  0.016488  0.023675  0.000010  0.026124  0.026126  0.000000
+  0.013994  0.028536  0.016302  0.018891  0.026077  0.018891  0.016536
+  0.018764  0.023792  0.018764  0.023788  0.021319  0.021775  0.017885
+  0.182399  0.621907  0.837483  1.526899  1.491951  1.493230
+SEQ13       0.018896  0.021285  0.021284  0.021299  0.023737  0.023718
+  0.026148  0.021316  0.028568  0.013994  0.031045  0.031048  0.013994
+  0.000000  0.033477  0.025881  0.023745  0.030990  0.023745  0.021378
+  0.033223  0.023778  0.033223  0.028704  0.035952  0.026766  0.023132
+  0.189840  0.628730  0.853330  1.519367  1.487853  1.489122
+SEQ14       0.018888  0.021277  0.021276  0.021291  0.023728  0.014102
+  0.021276  0.021256  0.023676  0.028536  0.006996  0.002327  0.028536
+  0.033477  0.000000  0.026072  0.021597  0.030901  0.021597  0.026421
+  0.038356  0.033837  0.038356  0.026297  0.041164  0.021755  0.023046
+  0.189605  0.642282  0.865476  1.585007  1.550426  1.551791
+SEQ15       0.021257  0.023006  0.023648  0.023665  0.026110  0.016457
+  0.018850  0.018832  0.021238  0.015865  0.023672  0.023673  0.016302
+  0.025881  0.026072  0.000000  0.013930  0.023629  0.014323  0.023717
+  0.025124  0.019026  0.025821  0.021339  0.028448  0.024180  0.020426
+  0.190683  0.630836  0.854023  1.565887  1.536830  1.538175
+SEQ16       0.014118  0.016045  0.016492  0.016504  0.018918  0.011913
+  0.014323  0.011726  0.016731  0.018378  0.019177  0.019178  0.018891
+  0.023745  0.021597  0.013930  0.000000  0.016479  0.000010  0.021544
+  0.027784  0.021670  0.028565  0.014117  0.031257  0.016862  0.015302
+  0.187665  0.638446  0.843413  1.561012  1.528147  1.529478
+SEQ17       0.021260  0.023653  0.023653  0.023669  0.026115  0.021220
+  0.023630  0.018835  0.026032  0.026077  0.028487  0.028489  0.026077
+  0.030990  0.030901  0.023629  0.016479  0.000000  0.016479  0.028839
+  0.028740  0.029005  0.028740  0.021343  0.026540  0.024185  0.023048
+  0.186353  0.645783  0.854036  1.549318  1.534771  1.536115
+SEQ18       0.014118  0.016493  0.016492  0.016504  0.018918  0.011913
+  0.014323  0.011726  0.016731  0.018891  0.019177  0.019178  0.018891
+  0.023745  0.021597  0.014323  0.000010  0.016479  0.000000  0.021544
+  0.028565  0.021670  0.028565  0.014117  0.031257  0.016862  0.015302
+  0.179163  0.638446  0.843413  1.561012  1.528147  1.529478
+SEQ19       0.016709  0.019120  0.019120  0.019134  0.021591  0.016677
+  0.023964  0.019101  0.026400  0.016536  0.023988  0.023990  0.016536
+  0.021378  0.026421  0.023717  0.021544  0.028839  0.021544  0.000000
+  0.031100  0.016565  0.031100  0.026528  0.028571  0.016898  0.017920
+  0.188004  0.636568  0.871791  1.528581  1.515658  1.516980
+SEQ20       0.028589  0.030161  0.031011  0.031032  0.033521  0.028533
+  0.030979  0.026118  0.033413  0.018257  0.035911  0.035914  0.018764
+  0.033223  0.038356  0.025124  0.027784  0.028740  0.028565  0.031100
+  0.000000  0.033578  0.000010  0.033573  0.011770  0.031714  0.025687
+  0.199747  0.640533  0.862723  1.556714  1.533193  1.534535
+SEQ21       0.019097  0.021512  0.021511  0.021527  0.023991  0.023972
+  0.026428  0.021543  0.028874  0.023792  0.031379  0.031381  0.023792
+  0.023778  0.033837  0.019026  0.021670  0.029005  0.021670  0.016565
+  0.033578  0.000000  0.033578  0.026682  0.031031  0.024292  0.020535
+  0.188993  0.654636  0.873437  1.558711  1.545487  1.546853
+SEQ22       0.028589  0.031011  0.031011  0.031032  0.033521  0.028533
+  0.030979  0.026118  0.033413  0.018764  0.035911  0.035914  0.018764
+  0.033223  0.038356  0.025821  0.028565  0.028740  0.028565  0.031100
+  0.000010  0.033578  0.000000  0.033573  0.011770  0.031714  0.025687
+  0.191282  0.640533  0.862723  1.556714  1.533193  1.534535
+SEQ23       0.018963  0.021361  0.021360  0.021375  0.023822  0.018927
+  0.021339  0.016537  0.023746  0.023788  0.026203  0.026205  0.023788
+  0.028704  0.026297  0.021339  0.014117  0.021343  0.014117  0.026528
+  0.033573  0.026682  0.033573  0.000000  0.036334  0.021843  0.020564
+  0.182963  0.641364  0.856129  1.559600  1.531313  1.532650
+SEQ24       0.031283  0.033733  0.033732  0.033756  0.036278  0.031222
+  0.033698  0.028778  0.036159  0.021319  0.038691  0.038694  0.021319
+  0.035952  0.041164  0.028448  0.031257  0.026540  0.031257  0.028571
+  0.011770  0.031031  0.011770  0.036334  0.000000  0.031640  0.028279
+  0.195166  0.637077  0.867576  1.539747  1.513424  1.514748
+SEQ25       0.012009  0.014430  0.014429  0.014440  0.016898  0.011986
+  0.019292  0.014415  0.021737  0.021775  0.019312  0.019313  0.021775
+  0.026766  0.021755  0.024180  0.016862  0.024185  0.016862  0.016898
+  0.031714  0.024292  0.031714  0.021843  0.031640  0.000000  0.015258
+  0.177325  0.618428  0.830391  1.521222  1.479520  1.480810
+SEQ26       0.015314  0.017891  0.017891  0.017904  0.020529  0.015283
+  0.015303  0.005064  0.017882  0.017885  0.020457  0.020458  0.017885
+  0.023132  0.023046  0.020426  0.015302  0.023048  0.015302  0.017920
+  0.025687  0.020535  0.025687  0.020564  0.028279  0.015258  0.000000
+  0.160717  0.566253  0.769075  1.459042  1.441506  1.442799
+SEQ27       0.170935  0.182491  0.173932  0.174035  0.170685  0.172871
+  0.173169  0.171743  0.176161  0.190870  0.186528  0.186602  0.182399
+  0.189840  0.189605  0.190683  0.187665  0.186353  0.179163  0.188004
+  0.199747  0.188993  0.191282  0.182963  0.195166  0.177325  0.160717
+  0.000000  0.684049  0.834441  1.709601  1.609101  1.610565
+SEQ28       0.640468  0.639936  0.645720  0.645970  0.638867  0.631723
+  0.637119  0.634781  0.637231  0.621907  0.644305  0.644999  0.621907
+  0.628730  0.642282  0.630836  0.638446  0.645783  0.638446  0.636568
+  0.640533  0.654636  0.640533  0.641364  0.637077  0.618428  0.566253
+  0.684049  0.000000  0.865011  1.603797  1.516415  1.517739
+SEQ29       0.851411  0.845310  0.857702  0.857987  0.840852  0.852713
+  0.859099  0.839703  0.864639  0.837483  0.864268  0.865386  0.837483
+  0.853330  0.865476  0.854023  0.843413  0.854036  0.843413  0.871791
+  0.862723  0.873437  0.862723  0.856129  0.867576  0.830391  0.769075
+  0.834441  0.865011  0.000000  1.803179  1.776261  1.778006
+SEQ30       1.546000  1.555222  1.556554  1.534487  1.568542  1.558832
+  1.568791  1.557980  1.577038  1.526899  1.582558  1.585167  1.526899
+  1.519367  1.585007  1.565887  1.561012  1.549318  1.561012  1.528581
+  1.556714  1.558711  1.556714  1.559600  1.539747  1.521222  1.459042
+  1.709601  1.603797  1.803179  0.000000  0.228287  0.229321
+SEQ31       1.512216  1.521261  1.522542  1.500921  1.521399  1.524743
+  1.531032  1.520416  1.531204  1.491951  1.548031  1.550574  1.491951
+  1.487853  1.550426  1.536830  1.528147  1.534771  1.528147  1.515658
+  1.533193  1.545487  1.533193  1.531313  1.513424  1.479520  1.441506
+  1.609101  1.516415  1.776261  0.228287  0.000000  0.002313
+SEQ32       1.513521  1.522580  1.523864  1.502209  1.522717  1.526069
+  1.532369  1.521737  1.532540  1.493230  1.549391  1.551939  1.493230
+  1.489122  1.551791  1.538175  1.529478  1.536115  1.529478  1.516980
+  1.534535  1.546853  1.534535  1.532650  1.514748  1.480810  1.442799
+  1.610565  1.517739  1.778006  0.229321  0.002313  0.000000
+
+*******
+
+Now using the protein distance matrix to construct the phylogenetic tree. This tree will be constructed assuming a molecular clock. No neighbor joining or the UPGMA will be used.
+
+Beginning construction of the phylogenetic tree (this may take a while)...
+Completed construction of the phylogenetic tree.  This tree is given in Newick format below:
+
+******
+(((SEQ32:0.00116,SEQ31:0.00116):0.11324,SEQ30:0.11440):0.65528,((((((SEQ22:0.00001,SEQ20:0.00001):0.00588,SEQ24:0.00588):0.00848,((((((SEQ12:0.00001,SEQ9:0.00001):0.00699,SEQ13:0.00700):0.00183,SEQ19:0.00883):0.00171,(((((SEQ14:0.00116,SEQ11:0.00116):0.00153,SEQ10:0.00269):0.00656,((((SEQ8:0.00116,SEQ6:0.00116):0.00480,((((SEQ2:0.00116,PROTSEQ:0.00116):0.00023,SEQ3:0.00140):0.00047,(SEQ4:0.00117,SEQ1:0.00117):0.00070):0.00130,SEQ5:0.00317):0.00280):0.00130,SEQ25:0.00726):0.00029,((SEQ26:0.00253,SEQ7:0.00253):0.00399,(SEQ18:0.00001,SEQ16:0.00001):0.00652):0.00103):0.00170):0.00050,SEQ23:0.00975):0.00010,SEQ15:0.00986):0.00068):0.00078,SEQ21:0.01131):0.00018,SEQ17:0.01149):0.00288):0.07628,SEQ27:0.09065):0.22718,SEQ28:0.31783):0.10722,SEQ29:0.42505):0.34463);
+*****
+
+The phylogenetic tree in Newick format is being written to the OUTPUT_TREE file of tree.newick.
+
+Completed execution of pips_build_tree_and_alignment.py at Wed Apr  1 17:53:00 2009.

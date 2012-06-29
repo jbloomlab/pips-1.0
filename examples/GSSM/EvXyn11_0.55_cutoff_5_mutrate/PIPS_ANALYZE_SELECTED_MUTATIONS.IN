@@ -1,0 +1,39 @@
+# Anything coming after a pound sign is a comment.
+# Typically there may be one or more comment lines explaining the
+# subject matter of the input file.
+#
+# Each line in this file follows a key-value format.  The first word
+# in the line gives the parameter that is being specified, and the subsequent
+# words give the value of this parameter. 
+#
+# The PROTSEQ key specifies the sequence of the protein to be analyzed.  Typically, this
+# will be a FASTA file in which the sequence of interest is the first entry, as shown below.
+PROTSEQ EvXyn11.fasta
+#
+# The SELECTED_MUTATION key specifies a selected mutation that we wish to analyze.
+# These mutations are indicated in the standard form (i.e. M2A for mutation of residue 2
+# from Met to Ala).  The numbers for these mutations are based on sequential numbering
+# starting with one for the first residue of PROTSEQ.  One or more mutations can be
+# specified by listing the key repeatedly with a single mutation following, as in:
+#  SELECTED_MUTATION M2A
+#  SELECTED_MUTATION F25I
+# Alternatively, these mutations can be listed in a file.  In this case, each line of the file
+# should list a separate mutation in the form M2A, etc.  Lines of the file that begin with #
+# and anything after a # character are considered to be comments, and are ignored.  Values
+# from a file are specified by using the second key FILE and then the file name, as in:
+SELECTED_MUTATION FILE stabilizing_mutations.txt
+#
+# The PREDICTION_FILE key specifies the names of one or more files containing the
+# ddG predictions that we wish to gather for the selected mutations.  These files should
+# be of the format that is output by PIPS_ANALYSIS.PY.  Each key should specify a string
+# (no spaces) giving the name of the prediction method, plus the name of the prediction file.
+# Spaces in the name of the prediction file should be represented as underscores; these are
+# subsequently changed to spaces in the output.
+PREDICTION_FILE CUPSAT CUPSAT_PREDICTIONS.TXT
+PREDICTION_FILE FOLDX FOLDX_PREDICTIONS.TXT
+PREDICTION_FILE CONSENSUS CONSENSUS_PREDICTIONS.TXT
+PREDICTION_FILE PIPS_with_CUPSAT_priors PIPS_PREDICTIONS_PRIORS-CUPSAT.TXT
+PREDICTION_FILE PIPS_with_FOLDX_priors PIPS_PREDICTIONS_PRIORS-FOLDX.TXT
+PREDICTION_FILE PIPS_with_hydrophobicity_priors PIPS_PREDICTIONS_PRIORS-HYDROPHOBICITY.TXT
+PREDICTION_FILE PIPS_with_regularizing_priors PIPS_PREDICTIONS_PRIORS-REGULARIZING.TXT
+#

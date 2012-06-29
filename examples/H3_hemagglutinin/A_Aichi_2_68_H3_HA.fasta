@@ -1,0 +1,10 @@
+>haemagglutinin [Influenza A virus (A/Aichi/2/68(H3N2))].  This sequence almost exactly matches that of the chains in the PDB structure 2HMG.  If this sequence is numbered consecutively from zero (so that the first residue, N-terminal Met, is given the number of 0) then residue 16 is the Gln that is numbered as residue 1 in the HA1 chains (A, C, E) of 2HMG.  Residue 343 is then the Thr that is numbered as the final residue (328) in the HA1 chains of 2HMG.  Residue 344 is the Arg that is cleaved between HA1 and HA2, and does not appear in 2HMG.  Residue 345 is the Gly that is numbered as residue 1 in the HA2 chains (B, D, F) of 2HMG.  Residue 519 is the Gly that is numbered as the final residue (175) in the HA2 chains of 2HMG.  The only mismatch between the downloaded GenBank sequence ("gi|60753|emb|CAA24269.1| haemagglutinin [Influenza A virus (A/Aichi/2/68(H3N2))]") and the 2HMG sequence occurred at residue 161 of this sequence.  That mismatched residue is Gly in the downloaded GenBank sequence, but is Asp at the corresponding position (residue number 146 of the 2HMG HA1 chains A, C, D) in the PDB structure.  So in the sequence downloaded from GenBank, residue 161 has been changed from Gly to Asp in the sequence below.
+MKTIIALSYIFCLALGQDLPGNDNSTATLCLGHHAVPNGTLVKTITDDQIEVTNATELVQSSSTGKICNN
+PHRILDGIDCTLIDALLGDPHCDVFQNETWDLFVERSKAFSNCYPYDVPDYASLRSLVASSGTLEFITEG
+FTWTGVTQNGGSNACKRGPGSDFFSRLNWLTKSGSTYPVLNVTMPNNDNFDKLYIWGIHHPSTNQEQTSL
+YVQASGRVTVSTRRSQQTIIPNIGSRPWVRGLSSRISIYWTIVKPGDVLVINSNGNLIAPRGYFKMRTGK
+SSIMRSDAPIDTCISECITPNGSIPNDKPFQNVNKITYGACPKYVKQNTLKLATGMRNVPEKQTRGLFGA
+IAGFIENGWEGMIDGWYGFRHQNSEGTGQAADLKSTQAAIDQINGKLNRVIEKTNEKFHQIEKEFSEVEG
+RIQDLEKYVEDTKIDLWSYNAELLVALENQHTIDLTDSEMNKLFEKTRRQLRENAEEMGNGCFKIYHKCD
+NACIESIRNGTYDHDVYRDEALNNRFQIKGVELKSGYKDWILWISFAISCFLLCVVLLGFIMWACQRGNI
+RCNICI

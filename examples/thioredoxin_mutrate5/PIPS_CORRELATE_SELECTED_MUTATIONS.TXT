@@ -1,0 +1,542 @@
+Analysis of selected mutations performed by pips_correlate_selected_mutations.py script in directory /Users/bloom/new_pips/pips-1.0/examples/thioredoxin_mutrate5 at Mon Apr 13 14:18:47 2009.
+
+
+The known ddG values for mutation L78K is 3.900000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 3.52.
+	Prediction method FOLDX predicts a ddG of 3.30.
+	Prediction method CONSENSUS predicts a ddG of 5.24.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 9.59.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 8.09.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 8.51.
+	Prediction method PIPS with regularizing priors predicts a ddG of 6.86.
+
+The known ddG values for mutation L78R is 4.500000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 2.35.
+	Prediction method FOLDX predicts a ddG of 1.92.
+	Prediction method CONSENSUS predicts a ddG of 5.24.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 11.55.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 11.06.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 11.82.
+	Prediction method PIPS with regularizing priors predicts a ddG of 11.01.
+
+The known ddG values for mutation L78D is 4.900000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 3.25.
+	Prediction method FOLDX predicts a ddG of 5.36.
+	Prediction method CONSENSUS predicts a ddG of 5.24.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 9.82.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 11.26.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 8.86.
+	Prediction method PIPS with regularizing priors predicts a ddG of 7.50.
+
+The known ddG values for mutation L78E is 3.100000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 3.42.
+	Prediction method FOLDX predicts a ddG of 4.42.
+	Prediction method CONSENSUS predicts a ddG of 5.24.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 9.71.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 9.79.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 8.34.
+	Prediction method PIPS with regularizing priors predicts a ddG of 6.49.
+
+The known ddG values for mutation L42E is 3.800000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 5.99.
+	Prediction method FOLDX predicts a ddG of 5.05.
+	Prediction method CONSENSUS predicts a ddG of 5.23.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 13.48.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 10.83.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 8.84.
+	Prediction method PIPS with regularizing priors predicts a ddG of 7.71.
+
+The known ddG values for mutation D2E is 0.200000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -0.57.
+	Prediction method FOLDX predicts a ddG of 0.02.
+	Prediction method CONSENSUS predicts a ddG of 0.69.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 5.61.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 5.23.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 5.27.
+	Prediction method PIPS with regularizing priors predicts a ddG of 7.50.
+
+The known ddG values for mutation D9E is 0.800000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -0.62.
+	Prediction method FOLDX predicts a ddG of 1.88.
+	Prediction method CONSENSUS predicts a ddG of 4.56.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 5.17.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 5.15.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 5.18.
+	Prediction method PIPS with regularizing priors predicts a ddG of 5.20.
+
+The known ddG values for mutation D10E is 0.000000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -1.93.
+	Prediction method FOLDX predicts a ddG of -0.43.
+	Prediction method CONSENSUS predicts a ddG of 1.44.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -2.30.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -2.31.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -2.21.
+	Prediction method PIPS with regularizing priors predicts a ddG of -1.93.
+
+The known ddG values for mutation D13E is -0.200000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -0.56.
+	Prediction method FOLDX predicts a ddG of 0.47.
+	Prediction method CONSENSUS predicts a ddG of -0.85.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 2.26.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 2.39.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 2.34.
+	Prediction method PIPS with regularizing priors predicts a ddG of 2.45.
+
+The known ddG values for mutation E30D is 0.300000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 0.53.
+	Prediction method FOLDX predicts a ddG of -0.86.
+	Prediction method CONSENSUS predicts a ddG of 4.01.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 4.25.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 4.22.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 4.21.
+	Prediction method PIPS with regularizing priors predicts a ddG of 4.27.
+
+The known ddG values for mutation D43E is -0.200000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -0.74.
+	Prediction method FOLDX predicts a ddG of -0.83.
+	Prediction method CONSENSUS predicts a ddG of 1.02.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -4.32.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -4.37.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -4.31.
+	Prediction method PIPS with regularizing priors predicts a ddG of -4.16.
+
+The known ddG values for mutation E44D is 1.000000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 1.24.
+	Prediction method FOLDX predicts a ddG of 0.53.
+	Prediction method CONSENSUS predicts a ddG of 1.21.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -4.19.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -4.47.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -4.32.
+	Prediction method PIPS with regularizing priors predicts a ddG of -4.12.
+
+The known ddG values for mutation D47E is -0.400000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -0.17.
+	Prediction method FOLDX predicts a ddG of -0.06.
+	Prediction method CONSENSUS predicts a ddG of -0.02.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 1.79.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 1.72.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 1.78.
+	Prediction method PIPS with regularizing priors predicts a ddG of 1.83.
+
+The known ddG values for mutation E48D is 1.300000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 0.25.
+	Prediction method FOLDX predicts a ddG of 0.22.
+	Prediction method CONSENSUS predicts a ddG of 1.59.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -1.71.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -1.98.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -1.90.
+	Prediction method PIPS with regularizing priors predicts a ddG of -1.62.
+
+The known ddG values for mutation D61E is 0.300000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -1.71.
+	Prediction method FOLDX predicts a ddG of 0.06.
+	Prediction method CONSENSUS predicts a ddG of 4.17.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 6.38.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 6.43.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 6.42.
+	Prediction method PIPS with regularizing priors predicts a ddG of 6.41.
+
+The known ddG values for mutation E85D is 1.000000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 1.99.
+	Prediction method FOLDX predicts a ddG of 0.60.
+	Prediction method CONSENSUS predicts a ddG of 3.14.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 3.49.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 3.02.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 3.12.
+	Prediction method PIPS with regularizing priors predicts a ddG of 3.25.
+
+The known ddG values for mutation E101D is 0.600000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 0.67.
+	Prediction method FOLDX predicts a ddG of 0.50.
+	Prediction method CONSENSUS predicts a ddG of 2.40.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -0.98.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -1.07.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -1.10.
+	Prediction method PIPS with regularizing priors predicts a ddG of -0.91.
+
+The known ddG values for mutation D104E is 0.400000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -0.54.
+	Prediction method FOLDX predicts a ddG of 0.51.
+	Prediction method CONSENSUS predicts a ddG of 1.74.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -2.31.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -2.26.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -2.29.
+	Prediction method PIPS with regularizing priors predicts a ddG of -2.16.
+
+The known ddG values for mutation I4V is 0.100000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 1.16.
+	Prediction method FOLDX predicts a ddG of 0.71.
+	Prediction method CONSENSUS predicts a ddG of 2.43.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 4.58.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 4.58.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 4.56.
+	Prediction method PIPS with regularizing priors predicts a ddG of 4.57.
+
+The known ddG values for mutation I5V is 0.600000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 0.49.
+	Prediction method FOLDX predicts a ddG of 0.46.
+	Prediction method CONSENSUS predicts a ddG of -0.10.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -3.69.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -3.68.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -3.63.
+	Prediction method PIPS with regularizing priors predicts a ddG of -3.57.
+
+The known ddG values for mutation V16I is 0.600000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 0.27.
+	Prediction method FOLDX predicts a ddG of 0.65.
+	Prediction method CONSENSUS predicts a ddG of 4.57.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 8.41.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 8.35.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 8.37.
+	Prediction method PIPS with regularizing priors predicts a ddG of 8.44.
+
+The known ddG values for mutation I23V is -0.300000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 2.48.
+	Prediction method FOLDX predicts a ddG of 0.38.
+	Prediction method CONSENSUS predicts a ddG of -3.25.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -6.08.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -6.20.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -6.25.
+	Prediction method PIPS with regularizing priors predicts a ddG of -6.21.
+
+The known ddG values for mutation V25I is 0.800000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 2.36.
+	Prediction method FOLDX predicts a ddG of 1.42.
+	Prediction method CONSENSUS predicts a ddG of 5.19.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 13.78.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 13.33.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 12.81.
+	Prediction method PIPS with regularizing priors predicts a ddG of 13.34.
+
+The known ddG values for mutation I38V is 0.800000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 1.33.
+	Prediction method FOLDX predicts a ddG of 1.26.
+	Prediction method CONSENSUS predicts a ddG of 3.43.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 6.14.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 6.13.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 6.11.
+	Prediction method PIPS with regularizing priors predicts a ddG of 6.13.
+
+The known ddG values for mutation I41V is 0.500000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 0.13.
+	Prediction method FOLDX predicts a ddG of 0.94.
+	Prediction method CONSENSUS predicts a ddG of 1.15.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 3.12.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 3.10.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 3.10.
+	Prediction method PIPS with regularizing priors predicts a ddG of 3.11.
+
+The known ddG values for mutation I45V is 0.900000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 0.65.
+	Prediction method FOLDX predicts a ddG of 1.12.
+	Prediction method CONSENSUS predicts a ddG of 0.36.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -0.33.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -0.38.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -0.56.
+	Prediction method PIPS with regularizing priors predicts a ddG of -0.50.
+
+The known ddG values for mutation V55I is 0.300000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 1.22.
+	Prediction method FOLDX predicts a ddG of -0.57.
+	Prediction method CONSENSUS predicts a ddG of -0.12.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 0.73.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 0.71.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 0.69.
+	Prediction method PIPS with regularizing priors predicts a ddG of 0.70.
+
+The known ddG values for mutation I60V is 0.200000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -0.45.
+	Prediction method FOLDX predicts a ddG of 0.43.
+	Prediction method CONSENSUS predicts a ddG of 0.53.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -4.45.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -4.38.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -4.43.
+	Prediction method PIPS with regularizing priors predicts a ddG of -4.36.
+
+The known ddG values for mutation I72V is -0.100000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 2.76.
+	Prediction method FOLDX predicts a ddG of 1.24.
+	Prediction method CONSENSUS predicts a ddG of 0.30.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 0.11.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 0.57.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 0.22.
+	Prediction method PIPS with regularizing priors predicts a ddG of 0.34.
+
+The known ddG values for mutation I75V is 0.000000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 0.16.
+	Prediction method FOLDX predicts a ddG of 1.07.
+	Prediction method CONSENSUS predicts a ddG of 3.88.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 6.86.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 6.83.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 6.81.
+	Prediction method PIPS with regularizing priors predicts a ddG of 6.84.
+
+The known ddG values for mutation V86I is 0.400000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 1.99.
+	Prediction method FOLDX predicts a ddG of -0.37.
+	Prediction method CONSENSUS predicts a ddG of 2.85.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 3.48.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 3.43.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 3.42.
+	Prediction method PIPS with regularizing priors predicts a ddG of 3.44.
+
+The known ddG values for mutation V91I is 0.300000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 2.00.
+	Prediction method FOLDX predicts a ddG of -1.15.
+	Prediction method CONSENSUS predicts a ddG of 2.71.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 4.54.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 4.50.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 4.54.
+	Prediction method PIPS with regularizing priors predicts a ddG of 4.55.
+
+The known ddG values for mutation D2E is 0.000000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -0.57.
+	Prediction method FOLDX predicts a ddG of 0.02.
+	Prediction method CONSENSUS predicts a ddG of 0.69.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 5.61.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 5.23.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 5.27.
+	Prediction method PIPS with regularizing priors predicts a ddG of 7.50.
+
+The known ddG values for mutation D9E is 1.400000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -0.62.
+	Prediction method FOLDX predicts a ddG of 1.88.
+	Prediction method CONSENSUS predicts a ddG of 4.56.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 5.17.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 5.15.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 5.18.
+	Prediction method PIPS with regularizing priors predicts a ddG of 5.20.
+
+The known ddG values for mutation D10E is 0.200000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -1.93.
+	Prediction method FOLDX predicts a ddG of -0.43.
+	Prediction method CONSENSUS predicts a ddG of 1.44.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -2.30.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -2.31.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -2.21.
+	Prediction method PIPS with regularizing priors predicts a ddG of -1.93.
+
+The known ddG values for mutation D13E is -0.200000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -0.56.
+	Prediction method FOLDX predicts a ddG of 0.47.
+	Prediction method CONSENSUS predicts a ddG of -0.85.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 2.26.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 2.39.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 2.34.
+	Prediction method PIPS with regularizing priors predicts a ddG of 2.45.
+
+The known ddG values for mutation D43E is -0.600000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -0.74.
+	Prediction method FOLDX predicts a ddG of -0.83.
+	Prediction method CONSENSUS predicts a ddG of 1.02.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -4.32.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -4.37.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -4.31.
+	Prediction method PIPS with regularizing priors predicts a ddG of -4.16.
+
+The known ddG values for mutation D47E is -0.300000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -0.17.
+	Prediction method FOLDX predicts a ddG of -0.06.
+	Prediction method CONSENSUS predicts a ddG of -0.02.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 1.79.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 1.72.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 1.78.
+	Prediction method PIPS with regularizing priors predicts a ddG of 1.83.
+
+The known ddG values for mutation D61E is 0.600000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -1.71.
+	Prediction method FOLDX predicts a ddG of 0.06.
+	Prediction method CONSENSUS predicts a ddG of 4.17.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 6.38.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 6.43.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 6.42.
+	Prediction method PIPS with regularizing priors predicts a ddG of 6.41.
+
+The known ddG values for mutation D104E is 0.300000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -0.54.
+	Prediction method FOLDX predicts a ddG of 0.51.
+	Prediction method CONSENSUS predicts a ddG of 1.74.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -2.31.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -2.26.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -2.29.
+	Prediction method PIPS with regularizing priors predicts a ddG of -2.16.
+
+The known ddG values for mutation E30D is 0.200000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 0.53.
+	Prediction method FOLDX predicts a ddG of -0.86.
+	Prediction method CONSENSUS predicts a ddG of 4.01.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 4.25.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 4.22.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 4.21.
+	Prediction method PIPS with regularizing priors predicts a ddG of 4.27.
+
+The known ddG values for mutation E44D is 0.600000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 1.24.
+	Prediction method FOLDX predicts a ddG of 0.53.
+	Prediction method CONSENSUS predicts a ddG of 1.21.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -4.19.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -4.47.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -4.32.
+	Prediction method PIPS with regularizing priors predicts a ddG of -4.12.
+
+The known ddG values for mutation E48D is 1.100000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 0.25.
+	Prediction method FOLDX predicts a ddG of 0.22.
+	Prediction method CONSENSUS predicts a ddG of 1.59.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -1.71.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -1.98.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -1.90.
+	Prediction method PIPS with regularizing priors predicts a ddG of -1.62.
+
+The known ddG values for mutation E85D is 0.900000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 1.99.
+	Prediction method FOLDX predicts a ddG of 0.60.
+	Prediction method CONSENSUS predicts a ddG of 3.14.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 3.49.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 3.02.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 3.12.
+	Prediction method PIPS with regularizing priors predicts a ddG of 3.25.
+
+The known ddG values for mutation E101D is -0.100000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 0.67.
+	Prediction method FOLDX predicts a ddG of 0.50.
+	Prediction method CONSENSUS predicts a ddG of 2.40.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -0.98.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -1.07.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -1.10.
+	Prediction method PIPS with regularizing priors predicts a ddG of -0.91.
+
+The known ddG values for mutation I4V is 0.300000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 1.16.
+	Prediction method FOLDX predicts a ddG of 0.71.
+	Prediction method CONSENSUS predicts a ddG of 2.43.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 4.58.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 4.58.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 4.56.
+	Prediction method PIPS with regularizing priors predicts a ddG of 4.57.
+
+The known ddG values for mutation I5V is 0.700000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 0.49.
+	Prediction method FOLDX predicts a ddG of 0.46.
+	Prediction method CONSENSUS predicts a ddG of -0.10.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -3.69.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -3.68.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -3.63.
+	Prediction method PIPS with regularizing priors predicts a ddG of -3.57.
+
+The known ddG values for mutation I23V is -0.300000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 2.48.
+	Prediction method FOLDX predicts a ddG of 0.38.
+	Prediction method CONSENSUS predicts a ddG of -3.25.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -6.08.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -6.20.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -6.25.
+	Prediction method PIPS with regularizing priors predicts a ddG of -6.21.
+
+The known ddG values for mutation I38V is 1.000000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 1.33.
+	Prediction method FOLDX predicts a ddG of 1.26.
+	Prediction method CONSENSUS predicts a ddG of 3.43.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 6.14.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 6.13.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 6.11.
+	Prediction method PIPS with regularizing priors predicts a ddG of 6.13.
+
+The known ddG values for mutation I41V is 0.700000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 0.13.
+	Prediction method FOLDX predicts a ddG of 0.94.
+	Prediction method CONSENSUS predicts a ddG of 1.15.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 3.12.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 3.10.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 3.10.
+	Prediction method PIPS with regularizing priors predicts a ddG of 3.11.
+
+The known ddG values for mutation I45V is 0.800000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 0.65.
+	Prediction method FOLDX predicts a ddG of 1.12.
+	Prediction method CONSENSUS predicts a ddG of 0.36.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -0.33.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -0.38.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -0.56.
+	Prediction method PIPS with regularizing priors predicts a ddG of -0.50.
+
+The known ddG values for mutation I60V is 0.200000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of -0.45.
+	Prediction method FOLDX predicts a ddG of 0.43.
+	Prediction method CONSENSUS predicts a ddG of 0.53.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -4.45.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -4.38.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -4.43.
+	Prediction method PIPS with regularizing priors predicts a ddG of -4.36.
+
+The known ddG values for mutation I72V is 0.000000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 2.76.
+	Prediction method FOLDX predicts a ddG of 1.24.
+	Prediction method CONSENSUS predicts a ddG of 0.30.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 0.11.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 0.57.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 0.22.
+	Prediction method PIPS with regularizing priors predicts a ddG of 0.34.
+
+The known ddG values for mutation I75V is 0.700000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 0.16.
+	Prediction method FOLDX predicts a ddG of 1.07.
+	Prediction method CONSENSUS predicts a ddG of 3.88.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 6.86.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 6.83.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 6.81.
+	Prediction method PIPS with regularizing priors predicts a ddG of 6.84.
+
+The known ddG values for mutation V16I is 0.800000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 0.27.
+	Prediction method FOLDX predicts a ddG of 0.65.
+	Prediction method CONSENSUS predicts a ddG of 4.57.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 8.41.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 8.35.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 8.37.
+	Prediction method PIPS with regularizing priors predicts a ddG of 8.44.
+
+The known ddG values for mutation V25I is 0.900000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 2.36.
+	Prediction method FOLDX predicts a ddG of 1.42.
+	Prediction method CONSENSUS predicts a ddG of 5.19.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 13.78.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 13.33.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 12.81.
+	Prediction method PIPS with regularizing priors predicts a ddG of 13.34.
+
+The known ddG values for mutation V55I is 0.300000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 1.22.
+	Prediction method FOLDX predicts a ddG of -0.57.
+	Prediction method CONSENSUS predicts a ddG of -0.12.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 0.73.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 0.71.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 0.69.
+	Prediction method PIPS with regularizing priors predicts a ddG of 0.70.
+
+The known ddG values for mutation V86I is 0.400000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 1.99.
+	Prediction method FOLDX predicts a ddG of -0.37.
+	Prediction method CONSENSUS predicts a ddG of 2.85.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 3.48.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 3.43.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 3.42.
+	Prediction method PIPS with regularizing priors predicts a ddG of 3.44.
+
+The known ddG values for mutation V91I is 0.100000; the predicted values are:
+	Prediction method CUPSAT predicts a ddG of 2.00.
+	Prediction method FOLDX predicts a ddG of -1.15.
+	Prediction method CONSENSUS predicts a ddG of 2.71.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 4.54.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 4.50.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 4.54.
+	Prediction method PIPS with regularizing priors predicts a ddG of 4.55.
+
+Here are the Pearson correlation coefficients (R) and associated two-tailed P-values (P) and number of data points (N) for the correlations between the actual ddG values and those predicted by each method.
+	For prediction method CUPSAT, R = 0.554618, P = 0.000020, and N = 59.
+	For prediction method FOLDX, R = 0.810510, P = 0.000000, and N = 59.
+	For prediction method CONSENSUS, R = 0.593226, P = 0.000005, and N = 59.
+	For prediction method PIPS with CUPSAT priors, R = 0.546914, P = 0.000027, and N = 59.
+	For prediction method PIPS with FOLDX priors, R = 0.531239, P = 0.000045, and N = 59.
+	For prediction method PIPS with hydrophobicity priors, R = 0.500828, P = 0.000120, and N = 59.
+	For prediction method PIPS with regularizing priors, R = 0.427592, P = 0.001022, and N = 59.

@@ -1,0 +1,32 @@
+PROTSEQ Hypocrea jecorina CBH1
+SEQ1 gi|70992391|ref|XP_751044.1| 1,4-beta-D-glucan-cellobiohydrolyase [Aspergillus fumigatus Af293]
+SEQ2 gi|119472134|ref|XP_001258278.1| glycosyl hydrolase family 7 protein [Neosartorya fischeri NRRL 181]
+SEQ3 gi|119483864|ref|XP_001261835.1| glycosyl hydrolase family 7 protein [Neosartorya fischeri NRRL 181]
+SEQ4 gi|212538337|ref|XP_002149324.1| 1,4-beta-D-glucan-cellobiohydrolyase, putative [Penicillium marneffei ATCC 18224]
+SEQ5 gi|145230535|ref|XP_001389576.1| 1,4-beta-D-glucan cellobiohydrolase B precursor cbhB-Aspergillus niger
+SEQ6 gi|46107376|ref|XP_380747.1| GUXC_FUSOX Putative exoglucanase type C precursor (Exocellobiohydrolase I) (1,4-beta-cellobiohydrolase) (Beta-glucancellobiohydrolase) [Gibberella zeae PH-1]
+SEQ7 gi|121699984|ref|XP_001268257.1| glycosyl hydrolase family 7 protein [Aspergillus clavatus NRRL 1]
+SEQ8 gi|85108032|ref|XP_962498.1| exoglucanase 1 precursor [Neurospora crassa OR74A]
+SEQ9 gi|67516425|ref|XP_658098.1| hypothetical protein AN0494.2 [Aspergillus nidulans FGSC A4]
+SEQ10 gi|115397177|ref|XP_001214180.1| exoglucanase 1 precursor [Aspergillus terreus NIH2624]
+SEQ11 gi|171676762|ref|XP_001903333.1| unnamed protein product [Podospora anserina]
+SEQ12 gi|154312003|ref|XP_001555330.1| hypothetical protein BC1G_06035 [Botryotinia fuckeliana B05.10]
+SEQ13 gi|156060391|ref|XP_001596118.1| hypothetical protein SS1G_02334 [Sclerotinia sclerotiorum 1980]
+SEQ14 Acremonium thermophilum Cel7A
+SEQ15 Chaetomium thermophilum CBH1
+SEQ16 Chaetomium thermophilum Cel7A
+SEQ17 Chrysosporium lucknowense CBH1
+SEQ18 Humicola grisea var. thermoidea CBH1
+SEQ19 Volvariella volvacea CBH1-1
+SEQ20 Agaricus bisporus CBH1
+SEQ21 Aspergillus aculeatus CBH1
+SEQ22 Aspergillus niger CBHB
+SEQ23 Athelia rolfsii CBH1
+SEQ24 Fusarium oxysporum CBH1
+SEQ25 Hypocrea lixii CBH1
+SEQ26 Hypocrea virens CBH1
+SEQ27 Neurospora crassa CBH1
+SEQ28 Penicillium chrysogenum CBH1
+SEQ29 Penicillium funiculosum XynA
+SEQ30 Trichoderma sp CBH1
+SEQ31 Trichoderma viride CBH1

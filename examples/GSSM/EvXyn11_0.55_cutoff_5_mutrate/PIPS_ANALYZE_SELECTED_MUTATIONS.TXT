@@ -1,0 +1,146 @@
+Analysis of selected mutations performed by pips_analyze_selected_mutations.py script in directory /Users/bloom/new_pips/pips-1.0/examples/GSSM/EvXyn11_0.55_cutoff_5_mutrate at Mon Apr  6 08:25:15 2009.
+
+
+Predicted ddG values for mutation T4L:
+	Prediction method CUPSAT predicts a ddG of 1.35, which ranks as 2041 most stabilizing of 3667 mutations.
+	Prediction method FOLDX predicts a ddG of -0.85, which ranks as 140 most stabilizing of 3667 mutations.
+	Prediction method CONSENSUS predicts a ddG of 0.69, which ranks as 368 most stabilizing of 3686 mutations.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 0.11, which ranks as 387 most stabilizing of 3686 mutations.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -0.96, which ranks as 315 most stabilizing of 3686 mutations.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -0.26, which ranks as 357 most stabilizing of 3686 mutations.
+	Prediction method PIPS with regularizing priors predicts a ddG of 0.44, which ranks as 392 most stabilizing of 3686 mutations.
+
+Predicted ddG values for mutation S9P:
+	Prediction method CUPSAT predicts a ddG of -0.34, which ranks as 972 most stabilizing of 3667 mutations.
+	Prediction method FOLDX predicts a ddG of -1.88, which ranks as 13 most stabilizing of 3667 mutations.
+	Prediction method CONSENSUS predicts a ddG of 2.33, which ranks as 976 most stabilizing of 3686 mutations.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 4.13, which ranks as 811 most stabilizing of 3686 mutations.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 4.05, which ranks as 851 most stabilizing of 3686 mutations.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 4.11, which ranks as 831 most stabilizing of 3686 mutations.
+	Prediction method PIPS with regularizing priors predicts a ddG of 4.16, which ranks as 746 most stabilizing of 3686 mutations.
+
+Predicted ddG values for mutation Q10S:
+	Prediction method CUPSAT predicts a ddG of 0.79, which ranks as 1689 most stabilizing of 3667 mutations.
+	Prediction method FOLDX predicts a ddG of 0.38, which ranks as 1024 most stabilizing of 3667 mutations.
+	Prediction method CONSENSUS predicts a ddG of -0.93, which ranks as 58 most stabilizing of 3686 mutations.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -0.91, which ranks as 283 most stabilizing of 3686 mutations.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -1.67, which ranks as 251 most stabilizing of 3686 mutations.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -1.06, which ranks as 273 most stabilizing of 3686 mutations.
+	Prediction method PIPS with regularizing priors predicts a ddG of -0.63, which ranks as 282 most stabilizing of 3686 mutations.
+
+Predicted ddG values for mutation T13F:
+	Prediction method CUPSAT predicts a ddG of 2.31, which ranks as 2509 most stabilizing of 3667 mutations.
+	Prediction method FOLDX predicts a ddG of -1.60, which ranks as 27 most stabilizing of 3667 mutations.
+	Prediction method CONSENSUS predicts a ddG of 2.17, which ranks as 837 most stabilizing of 3686 mutations.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -2.45, which ranks as 157 most stabilizing of 3686 mutations.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -3.26, which ranks as 134 most stabilizing of 3686 mutations.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -2.87, which ranks as 137 most stabilizing of 3686 mutations.
+	Prediction method PIPS with regularizing priors predicts a ddG of -2.54, which ranks as 138 most stabilizing of 3686 mutations.
+
+Predicted ddG values for mutation T13Y:
+	Prediction method CUPSAT predicts a ddG of 3.12, which ranks as 2742 most stabilizing of 3667 mutations.
+	Prediction method FOLDX predicts a ddG of -1.17, which ranks as 74 most stabilizing of 3667 mutations.
+	Prediction method CONSENSUS predicts a ddG of 1.48, which ranks as 591 most stabilizing of 3686 mutations.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -2.53, which ranks as 150 most stabilizing of 3686 mutations.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -3.21, which ranks as 135 most stabilizing of 3686 mutations.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -2.98, which ranks as 131 most stabilizing of 3686 mutations.
+	Prediction method PIPS with regularizing priors predicts a ddG of -2.61, which ranks as 134 most stabilizing of 3686 mutations.
+
+Predicted ddG values for mutation N14H:
+	Prediction method CUPSAT predicts a ddG of 0.35, which ranks as 1407 most stabilizing of 3667 mutations.
+	Prediction method FOLDX predicts a ddG of 0.97, which ranks as 1450 most stabilizing of 3667 mutations.
+	Prediction method CONSENSUS predicts a ddG of -0.20, which ranks as 137 most stabilizing of 3686 mutations.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 1.00, which ranks as 470 most stabilizing of 3686 mutations.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 0.79, which ranks as 481 most stabilizing of 3686 mutations.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 0.99, which ranks as 476 most stabilizing of 3686 mutations.
+	Prediction method PIPS with regularizing priors predicts a ddG of 1.15, which ranks as 461 most stabilizing of 3686 mutations.
+
+Predicted ddG values for mutation Y18F:
+	Prediction method CUPSAT predicts a ddG of -0.15, which ranks as 1102 most stabilizing of 3667 mutations.
+	Prediction method FOLDX predicts a ddG of -0.74, which ranks as 171 most stabilizing of 3667 mutations.
+	Prediction method CONSENSUS predicts a ddG of 0.96, which ranks as 407 most stabilizing of 3686 mutations.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -4.34, which ranks as 64 most stabilizing of 3686 mutations.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -4.32, which ranks as 75 most stabilizing of 3686 mutations.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -4.29, which ranks as 67 most stabilizing of 3686 mutations.
+	Prediction method PIPS with regularizing priors predicts a ddG of -4.09, which ranks as 62 most stabilizing of 3686 mutations.
+
+Predicted ddG values for mutation S25E:
+	Prediction method CUPSAT predicts a ddG of -0.63, which ranks as 827 most stabilizing of 3667 mutations.
+	Prediction method FOLDX predicts a ddG of -0.47, which ranks as 303 most stabilizing of 3667 mutations.
+	Prediction method CONSENSUS predicts a ddG of 1.95, which ranks as 754 most stabilizing of 3686 mutations.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 9.54, which ranks as 2288 most stabilizing of 3686 mutations.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 8.91, which ranks as 2217 most stabilizing of 3686 mutations.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 9.56, which ranks as 2599 most stabilizing of 3686 mutations.
+	Prediction method PIPS with regularizing priors predicts a ddG of 10.25, which ranks as 2774 most stabilizing of 3686 mutations.
+
+Predicted ddG values for mutation N30V:
+	Prediction method CUPSAT predicts a ddG of -4.39, which ranks as 77 most stabilizing of 3667 mutations.
+	Prediction method FOLDX predicts a ddG of 0.10, which ranks as 771 most stabilizing of 3667 mutations.
+	Prediction method CONSENSUS predicts a ddG of 1.95, which ranks as 750 most stabilizing of 3686 mutations.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 3.94, which ranks as 780 most stabilizing of 3686 mutations.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 4.40, which ranks as 919 most stabilizing of 3686 mutations.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 5.59, which ranks as 1224 most stabilizing of 3686 mutations.
+	Prediction method PIPS with regularizing priors predicts a ddG of 5.47, which ranks as 869 most stabilizing of 3686 mutations.
+
+Predicted ddG values for mutation Q34C:
+	Prediction method CUPSAT predicts a ddG of -1.53, which ranks as 456 most stabilizing of 3667 mutations.
+	Prediction method FOLDX predicts a ddG of 0.15, which ranks as 817 most stabilizing of 3667 mutations.
+	Prediction method CONSENSUS predicts a ddG of 1.79, which ranks as 676 most stabilizing of 3686 mutations.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 8.45, which ranks as 1944 most stabilizing of 3686 mutations.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 7.94, which ranks as 1900 most stabilizing of 3686 mutations.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 9.96, which ranks as 2730 most stabilizing of 3686 mutations.
+	Prediction method PIPS with regularizing priors predicts a ddG of 10.17, which ranks as 2740 most stabilizing of 3686 mutations.
+
+Predicted ddG values for mutation Q34H:
+	Prediction method CUPSAT predicts a ddG of 1.48, which ranks as 2121 most stabilizing of 3667 mutations.
+	Prediction method FOLDX predicts a ddG of 0.61, which ranks as 1208 most stabilizing of 3667 mutations.
+	Prediction method CONSENSUS predicts a ddG of 1.79, which ranks as 678 most stabilizing of 3686 mutations.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of 6.80, which ranks as 1435 most stabilizing of 3686 mutations.
+	Prediction method PIPS with FOLDX priors predicts a ddG of 5.50, which ranks as 1165 most stabilizing of 3686 mutations.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of 5.92, which ranks as 1336 most stabilizing of 3686 mutations.
+	Prediction method PIPS with regularizing priors predicts a ddG of 7.69, which ranks as 1746 most stabilizing of 3686 mutations.
+
+Predicted ddG values for mutation Q34L:
+	Prediction method CUPSAT predicts a ddG of -3.04, which ranks as 187 most stabilizing of 3667 mutations.
+	Prediction method FOLDX predicts a ddG of -0.63, which ranks as 213 most stabilizing of 3667 mutations.
+	Prediction method CONSENSUS predicts a ddG of 0.41, which ranks as 225 most stabilizing of 3686 mutations.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -1.27, which ranks as 250 most stabilizing of 3686 mutations.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -1.58, which ranks as 255 most stabilizing of 3686 mutations.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -0.67, which ranks as 315 most stabilizing of 3686 mutations.
+	Prediction method PIPS with regularizing priors predicts a ddG of -0.12, which ranks as 327 most stabilizing of 3686 mutations.
+
+Predicted ddG values for mutation S35E:
+	Prediction method CUPSAT predicts a ddG of 0.26, which ranks as 1347 most stabilizing of 3667 mutations.
+	Prediction method FOLDX predicts a ddG of -0.59, which ranks as 235 most stabilizing of 3667 mutations.
+	Prediction method CONSENSUS predicts a ddG of 0.88, which ranks as 390 most stabilizing of 3686 mutations.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -5.41, which ranks as 34 most stabilizing of 3686 mutations.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -5.97, which ranks as 28 most stabilizing of 3686 mutations.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -5.59, which ranks as 33 most stabilizing of 3686 mutations.
+	Prediction method PIPS with regularizing priors predicts a ddG of -5.20, which ranks as 35 most stabilizing of 3686 mutations.
+
+Predicted ddG values for mutation S71T:
+	Prediction method CUPSAT predicts a ddG of 2.27, which ranks as 2494 most stabilizing of 3667 mutations.
+	Prediction method FOLDX predicts a ddG of -0.23, which ranks as 478 most stabilizing of 3667 mutations.
+	Prediction method CONSENSUS predicts a ddG of 0.22, which ranks as 201 most stabilizing of 3686 mutations.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -1.16, which ranks as 261 most stabilizing of 3686 mutations.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -1.33, which ranks as 284 most stabilizing of 3686 mutations.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -1.31, which ranks as 252 most stabilizing of 3686 mutations.
+	Prediction method PIPS with regularizing priors predicts a ddG of -1.12, which ranks as 241 most stabilizing of 3686 mutations.
+
+Predicted ddG values for mutation S194H:
+	Prediction method CUPSAT predicts a ddG of -0.62, which ranks as 833 most stabilizing of 3667 mutations.
+	Prediction method FOLDX predicts a ddG of 0.36, which ranks as 1003 most stabilizing of 3667 mutations.
+	Prediction method CONSENSUS predicts a ddG of 1.90, which ranks as 740 most stabilizing of 3686 mutations.
+	Prediction method PIPS with CUPSAT priors predicts a ddG of -0.21, which ranks as 349 most stabilizing of 3686 mutations.
+	Prediction method PIPS with FOLDX priors predicts a ddG of -0.74, which ranks as 334 most stabilizing of 3686 mutations.
+	Prediction method PIPS with hydrophobicity priors predicts a ddG of -0.47, which ranks as 336 most stabilizing of 3686 mutations.
+	Prediction method PIPS with regularizing priors predicts a ddG of 0.09, which ranks as 353 most stabilizing of 3686 mutations.
+
+Here are the mean and median ranks of the selected ddGs for each prediction type:
+	For prediction method CUPSAT, mean rank is 1386 and median is 1347 out of 3667 total ddG values.
+	For prediction method FOLDX, mean rank is 528 and median is 303 out of 3667 total ddG values.
+	For prediction method CONSENSUS, mean rank is 519 and median is 591 out of 3686 total ddG values.
+	For prediction method PIPS with CUPSAT priors, mean rank is 644 and median is 349 out of 3686 total ddG values.
+	For prediction method PIPS with FOLDX priors, mean rank is 622 and median is 315 out of 3686 total ddG values.
+	For prediction method PIPS with hydrophobicity priors, mean rank is 739 and median is 336 out of 3686 total ddG values.
+	For prediction method PIPS with regularizing priors, mean rank is 753 and median is 353 out of 3686 total ddG values.

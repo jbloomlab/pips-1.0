@@ -1,0 +1,30 @@
+# Anything coming after a pound sign is a comment.
+# Typically there may be one or more comment lines explaining the
+# subject matter of the input file.
+#
+# Each line in this file follows a key-value format.  The first word
+# in the line gives the parameter that is being specified, and the subsequent
+# words give the value of this parameter. 
+#
+# The PROTSEQ key specifies the sequence of the protein to be analyzed.  Typically, this
+# will be a FASTA file in which the sequence of interest is the first entry, as shown below.
+PROTSEQ EvXyn11.fasta
+#
+# The PSEUDOCOUNTS key specifies the number of pseudocounts that are added to each amino
+# acid.  This should be an integer >= 0.  Note that if it set to zero, some ddG values
+# will be undefined.
+PSEUDOCOUNTS 1
+#
+# The ALIGNMENT key specifies the multiple sequence alignment of the homologous proteins.
+# This alignment should be given by a FASTA file.
+# The first protein sequence in this alignment must match that specified by PROTSEQ, with
+# the possible addition of some gap characters.  Once the alignment has been read, positions
+# corresponding to gaps in this sequence are stripped away from all sequences.  
+# For example, if the sequences are
+# named "SEQ1" and "SEQ2", the file might look like this:
+#   >SEQ1: this sequence matches that given by PROTSEQ
+#   MT-DYST-FFT
+#   >SEQ2: second sequence
+#   MTFEFSTN-FS
+ALIGNMENT renamed_alignment.fasta
+#

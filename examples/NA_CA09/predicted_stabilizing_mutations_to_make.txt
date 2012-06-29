@@ -1,0 +1,12 @@
+These mutations are for the CA09 NA, numbering the sequence consecutively beginning with one for the first amino acid.
+
+T289M # not near (in primary sequence) any residues defined as being in N2 antigenic sites
+N369K # near (in primary sequence) some residues defined as being in N2 antigenic sites
+V83M  # not near (in primary sequence) any residues defined as being in N2 antigenic sites
+V81Q  # not near (in primary sequence) any residues defined as being in N2 antigenic sites
+I46T  # not near (in primary sequence) any residues defined as being in N2 antigenic sites
+V166A # not near (in primary sequence) any residues defined as being in N2 antigenic sites
+T466D # not near (in primary sequence) any residues defined as being in N2 antigenic sites
+S339N # near (in primary sequence) some residues defined as being in N2 antigenic sites
+P126I # not near (in primary sequence) any residues defined as being in N2 antigenic sites
+G395D # near (in primary sequence) some residues defined as being in N2 antigenic sites

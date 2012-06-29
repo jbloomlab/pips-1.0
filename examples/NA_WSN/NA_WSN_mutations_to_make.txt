@@ -1,0 +1,23 @@
+# Mutations are numbered in sequential numbering scheme starting with 1 at N-terminal Met for A/WSN/33 NA sequence.
+
+N206Q  # This mutation corresponds to the N222Q mutation shown in Figure 2 of Rameix-Welti et al, PLoS Pathogens, 4:e1000103 (2008), and is predicted by PIPS to be slightly stabilizing.  This is residue 221 in the 3BEQ PDB structure.  It is in an antigenic site.
+
+K313E # This mutation corresponds to the K329E mutation shown in Figure 2 of Rameix-Welti et al, PLoS Pathogens, 4:e1000103 (2008), and is predicted by PIPS to be quite stabilizing.  This is residue 329 in the 3BEQ PDB structure.  It is in an antigenic site.
+
+N328D # This mutation is the reverse of the D344N mutation shown in Figure 2 of Rameix-Welti et al, PLoS Pathogens, 4:e1000103 (2008).  This mutation itself is predicted to be moderately destabilizing, so its reverse is predicted to be moderately stabilizing.  This is residue 347 in the 3BEQ PDB structure.  It is in an antigenic site, and is also very near the active site.
+
+G233K # This mutation corresponds to the G249K mutation shown in Figure 2 of Rameix-Welti et al, PLoS Pathogens, 4:e1000103 (2008), and is predicted by PIPS to be moderately stabilizing.  This is residue 248 in the 3BEQ PDB structure.  Although it is on a surface loop in an antigenic-looking area, it is not classified in the homologous position of a N2 antigenic site.
+
+R194G # 209 in 3BEQ numbering scheme  -- far from antigenic sites.  Predicted by PIPS to be highly stabilizing.
+
+T269D # 284 in 3BEQ numbering scheme -- at base of NA, far from antigenic sites.  Predicted by PIPS to be highly stabilizing.
+
+T216A # 231 in 3BEQ numbering scheme -- in interior of NA near base.  Predicted by PIPS to be highly stabilizing.
+
+E198D # 213 in 3BEQ numbering scheme -- on side of NA near base.  Predicted by PIPS to be highly stabilizing.
+
+A141T # 157 in 3BEQ numbering scheme -- along side of NA, not particularly close to any classified antigenic sites.  Predicted by PIPS to be highly stabilizing.
+
+V377I # 397 in 3BEQ numbering scheme -- near base in interior of NA.  Predicted by PIPS to be highly stabilizing.
+
+

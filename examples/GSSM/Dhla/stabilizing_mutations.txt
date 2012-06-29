@@ -1,0 +1,20 @@
+# This file lists the stabilizing mutations described in Table 1 of
+#     "Rapid evolution of reversible denaturation and elevated melting
+#     temperature in a microbial haloalkane dehalogenase."
+#     KA Gray, TH Richardson, K Kretz, JM Short, F Bartnek,
+#     R Knowles, L Kan, PE Swanson, and DE Robertson.
+#     Adv Synth Catal, 343:607-617 (2001)
+# Table 1 gives the mutations numbered in the same scheme used in the
+# 1BN7 PDB structure file.  This file renumbers them so as to match
+# a numbering scheme that sequentiall numbers the protein sequence 
+# begining with 1 at the N-terminal methionine.
+D78G # D89G in Table 1
+F80S # F91S in Table 1
+T148L # T159L in Table 1
+G171V # G182V in Table 1
+G171Q # G182Q in Table 1
+G171A # G182A in Table 1
+I209L # I220L in Table 1
+N227T # N238T in Table 1
+W240Y # W251Y in Table 1
+P291A # P302A in Table 1

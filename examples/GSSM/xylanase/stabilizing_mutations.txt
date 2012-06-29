@@ -1,0 +1,20 @@
+# This file lists the stabilizing mutations found in:
+#   "An evolutionary route to xylanase process fitness." Palackal et al, Protein Science,
+#   13:494-503 (2004).
+#
+# This paper describes using gene site saturation mutagenesis to discover nine single
+# amino acid mutations that increased stability.  All of these mutants retained activity
+# at least roughly comparable to the wildtype with the exception of one of them (called
+# Q36H in the numbering scheme below.  
+# Below are listed the 9 mutations (as
+# given at the top of page 495), renumbered in a sequential numbering scheme were
+# one is assigned to the N-terminal Met of the protein sequence.
+D33F   # D8F in paper's numbering scheme, 0.65 of wildtype initial activity rate
+Q36H   # Q11H in paper's numbering scheme, only 0.35 of wildtype initial activity.
+N37L   # N12L in paper's numbering scheme, 0.68 of wildtype initial activity rate
+G42I   # G17I in paper's numbering scheme, 0.76 of wildtype initial activity rate
+G85H   # G60H in paper's numbering scheme, 1.1 of wildtype initial activity rate
+P89V   # P64V in paper's numbering scheme, 1.0 of wildtype initial activity rate
+S90V   # S65V in paper's numbering scheme, 1.2 of wildtype initial activity rate
+G93A   # G68A in paper's numbering scheme, 0.98 of wildtype initial activity rate
+S104P  # S79P in paper's numbering scheme, 0.84 of wildtype initial activity rate

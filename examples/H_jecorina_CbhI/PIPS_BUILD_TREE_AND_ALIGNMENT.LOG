@@ -1,0 +1,1991 @@
+Beginning execution of pips_build_tree_and_alignment.py at Tue Mar 31 13:26:15 2009.
+Using version 1.0 of PIPS, written by Jesse Bloom.
+Using input/output files in the current directory, which is /Users/bloom/new_pips/pips-1.0/examples/H_jecorina_CbhI
+
+Reading input from PIPS_BUILD_TREE_AND_ALIGNMENT.IN.
+Contents of input file are listed below:
+
+********
+# Anything coming after a pound sign is a comment.
+# Typically there may be one or more comment lines explaining the
+# subject matter of the input file.
+#
+# Each line in this file follows a key-value format.  The first word
+# in the line gives the parameter that is being specified, and the subsequent
+# words give the value of this parameter. 
+#
+# The PROTSEQ key specifies the sequence of the protein to be analyzed.  Typically, this
+# will be a FASTA file in which the sequence of interest is the first entry, as shown below.
+PROTSEQ H_jecorina_CbhI.fasta
+#
+# The OUTPUT_ALIGNMENT key specifies the name of the file to which the aligned protein
+# sequences are written.  This key should therefore be followed by a string giving
+# a valid file name.  If the file already exists, the user will be prompted for confirmation
+# before it is overwritten.  The aligned sequences are written to this file in FASTA format,
+# with the first sequence in the file being the one specified by PROTSEQ.  The sequences
+# are aligned by inserting gap ("-") characters as appropriate.  The sequences that are 
+# aligned include PROTSEQ and all unique sequences specified by HOMOLOGOUS_SEQS
+# that satisfy the criteria established by HOMOLOGY_THRESHOLD.  The headers
+# of these sequences are replaced with short names, that are related to the original headers
+# as described in the file specified by OUTPUT_SEQNAMES.  These names are the ones used
+# in the phylogenetic tree specified by OUTPUT_TREE.
+OUTPUT_ALIGNMENT renamed_alignment.fasta
+#
+# The OUTPUT_TREE key specifies the name of the file to which is written the phylogenetic
+# tree specifying the relationship among the sequences in OUTPUT_ALIGNMENT.  The names
+# of the sequences in this tree match those used in OUTPUT_ALIGNMENT, and are detailed in
+# relation to the original seauence headers by OUTPUT_SEQNAMES.  The tree is
+# in Newick format (http://evolution.gs.washington.edu/phylip/newick_doc.html).  If the
+# specified file already exists, the user is prompted for confirmation before the file
+# is overwritten.
+OUTPUT_TREE tree.newick
+#
+# The OUTPUT_SEQNAMES key specifies the name of a file to which we write the relationship
+# between the new names given to the sequences in OUTPUT_TREE and OUTPUT_ALIGNMENT, and
+# the original sequence names as given in their headers in the FASTA files specified by
+# PROTSEQ and HOMOLOGOUS_SEQS.  The format is simply lines with the new name, a space,
+# and then the original header in the FASTA file. 
+OUTPUT_SEQNAMES seqnames.txt
+#
+# The PHYLIP_PROG key is used to specify information about the PHYLIP program that is
+# used to generate the phylogenetic tree.  This PIPS script is guaranteed to work with 
+# version 3.68 of PHYLIP for Mac OS X, downloaded from 
+# http://evolution.genetics.washington.edu/phylip.html
+# It will probably also work with other versions of PHYLIP on other operating
+# systems, but that has not been actually tested.  There are a number of 
+# strings that are present after the PHYLIP_PROG key.  These strings cannot
+# contain spaces, but can have any other non-whitespace characters.  They are:
+#  * The first string should give the path to which the PHYLIP executables can
+#    be found. 
+#  * The second string is the type of tree that is build.  Currently, the only
+#    supported option is DISTANCE for methods based on pairwise distances
+#    between sequences.  These trees are built using one of the 'fitch',
+#    'kitsch', or 'neighbor' programs of PHYLIP.
+#  * The third string specifies whether or not we are using a molecular clock.
+#    It can have two values, CLOCK or NO_CLOCK depending on whether or not
+#    we assume a molecular clock.  If we are not using a molecular clock,
+#    then the OUTGROUP_SEQ key must be set to a value in order to provide
+#    an outgroup sequence for rooting the tree.
+#  * The fourth string specifies whether or not we use a neighbor joining
+#    method (neighbor joining without a molecular clock, or UPGMA with
+#    a molecular clock).  Neighbor joining is generally faster, but
+#    considered to be less accurate.  The string should be either
+#    NEIGHBOR if we are using neighbor joining / UPGMA or NO_NEIGHBOR
+#    if we are not.  Neighbor joining can lead to negative branch lengths,
+#    so any negative lengths are set to zero.
+PHYLIP_PROG /Users/bloom/phylip-3.68/exe/ DISTANCE CLOCK NO_NEIGHBOR
+#
+# The ALIGNMENT_PROG key is used to specify information about the program used to make
+# the multiple sequence alignment of the protein sequences.  There should be two 
+# strings following the ALIGNMENT_PROG key, specifying the alignment program and a path
+# to the alignment executable.  The two supported alignment programs are
+# MUSCLE (http://www.drive5.com/muscle/index.htm) and PROBCONS
+# (http://probcons.stanford.edu/).  This script has been tested and confirmed to work
+# with version 3.6 of MUSCLE and version 1.12 of PROBCONS.  PROBCONS is the slower
+# program, but in general is considered to be more accurate, so should probably be
+# preferred unless there are time constraints due to the size of the alignment.
+# The specified path should contain executables with the name of either 'muscle'
+# or 'probcons'.  So valid entries would be:
+# ALIGNMENT_PROG MUSCLE /Users/bloom/muscle3.6/
+ALIGNMENT_PROG PROBCONS /Users/bloom/probcons/
+#
+# The HOMOLOGOUS_SEQS key specifies the homologous sequences that are aligned
+# and used to build the phylogenetic tree.  The key should be followed by the
+# names of one or more existing FASTA files.  All of these sequences are read.
+# Any duplicate sequences (identical sequences, NOT necessarily identical headers)
+# have only the first sequence retained, with subsequent duplicates discarded.  These
+# sequences are then screened according to the criteria specified by HOMOLOGY_THRESHOLD,
+# and any sufficiently homologous sequences are retained for the alignment and to 
+# build the phylogenetic tree.  For the alignment, the sequences are renamed
+# as specified by OUTPUT_SEQNAMES
+HOMOLOGOUS_SEQS H_jecorina_CbhI-refseq-blast.fasta CbhI_sequences_from_Pete.fasta
+#
+# The HOMOLOGY_THRESHOLD key specifies the screening of the sequences in HOMOLOGOUS_SEQS.
+# It can be used to only include sequences that have a specified degree of identity with
+# PROTSEQ.  You should specify both an identity cutoff and a gap cutoff.  The identity
+# cutoff, which occurs after the string IDENTITY_CUTOFF, means that we only include
+# sequences in which the fractions of identities among alignable residues is greater than
+# or equal to this cutoff.  The gap cutoff, which comes after the string GAP_CUTOFF,
+# means that we only include sequences in which the fraction of graps is less 
+# than or equal to the indicated cutoff.  These values are computed
+# in pairwise alignments of PROTSEQ with each sequence.  For example, if the sequence
+# specified by PROTSEQ is MGCQT and the pairwise aligned homologous sequence is MG-QA,
+# then the identity is 0.75 and the gap fraction is 0.2.  If you don't want to exclude any
+# of the sequences, then set the identity cutoff to 0.0 and the gap cutoff 1.0, which
+# will include all sequences.
+HOMOLOGY_THRESHOLD IDENTITY_CUTOFF 0.55 GAP_CUTOFF 0.1
+#
+# The OUTGROUP_SEQ key specifies an outgroup sequence used to root the phylogenetic
+# tree if the tree is being computed without a molecular clock.  If the tree is being
+# computed without a molecular clock, then we need an outgroup to root the tree.  In general,
+# the outgroup will be more distantly related to the homologous sequences.  In this case,
+# the value should be the name of a FASTA file.  The first sequence listed in this
+# FASTA file is used as the outgroup sequence.  So for example, this line would look like this:
+# OUTGROUP_SEQ outgroup.fasta
+# On the other hand, if we are not using a molecular clock, not outgroup sequence is 
+# needed to root the tree.  In that case, the value should be NONE, as in:
+OUTGROUP_SEQ NONE
+#
+
+******
+
+
+Reading PROTSEQ protein sequence from H_jecorina_CbhI.fasta...
+This file contains 1 sequence(s).  The first one is being used.
+This protein sequence is as follows:
+>Hypocrea jecorina CBH1
+MYRKLAVISAFLATARAQSACTLQSETHPPLTWQKCSSGGTCTQQTGSVVIDANWRWTHATNSSTNCYDGNTWSSTLCPDNETCAKNCCLDGAAYASTYGVTTSGNSLSIGFVTQSAQKNVGARLYLMASDTTYQEFTLLGNEFSFDVDVSQLPCGLNGALYFVSMDADGGVSKYPTNTAGAKYGTGYCDSQCPRDLKFINGQANVEGWEPSSNNANTGIGGHGSCCSEMDIWEANSISEALTPHPCTTVGQEICEGDGCGGTYSDNRYGGTCDPDGCDWNPYRLGNTSFYGPGSSFTLDTTKKLTVVTQFETSGAINRYYVQNGVTFQQPNAELGSYSGNELNDDYCTAEEAEFGGSSFSDKGGLTQFKKATSGGMVLVMSLWDDYYANMLWLDSTYPTNETSSTPGAVRGSCSTSSGVPAQVESQSPNAKVTFSNIKFGPIGSTGNPSGGNPPGGNRGTTTTRRPATTTGSSPGPTQSHYGQCGGIGYSGPTVCASGTTCQVLNPYYSQCL
+
+OUTPUT_ALIGNMENT specifies that we output the protein alignment to renamed_alignment.fasta.
+
+OUTPUT_TREE specifies that we output the phylogenetic tree to tree.newick.
+
+OUTPUT_SEQNAMES specifies that we output the sequence names to seqnames.txt.
+
+Reading specifications for the phylogenetic tree from PHYLIP_PROG.
+The PHYLIP executables are specified to reside in the directory /Users/bloom/phylip-3.68/exe/The DISTANCE keyword specifies that we will construct a tree based on pairwise sequence distances.
+The CLOCK keyword specifies that we will construct the tree assuming a molecular clock.
+The NO_NEIGHBOR keyword specifies that we will not use neighbor joining or UPGMA.
+
+Reading specifications for the alignment program from ALIGNMENT_PROG.
+PROBCON key specifies that the alignments will be done using PROBCONS.
+The alignment program resides in directory /Users/bloom/probcons/
+
+Reading in the homologous protein sequences specified by HOMOLOGOUS_SEQS.
+These sequences are contained in the following FASTA file(s): H_jecorina_CbhI-refseq-blast.fasta, CbhI_sequences_from_Pete.fasta
+Reading sequences from H_jecorina_CbhI-refseq-blast.fasta...
+Read 341 sequences from H_jecorina_CbhI-refseq-blast.fasta.
+Reading sequences from CbhI_sequences_from_Pete.fasta...
+Read 40 sequences from CbhI_sequences_from_Pete.fasta.
+Read a total of 381 homologous sequences.
+
+Reading the homology thresholds specified by HOMOLOGY_THRESHOLD.
+Homologous sequences will be pairwise aligned with PROTSEQ, and any with less than 0.550000 fraction identities among alignable residues, or with more than 0.100000 fraction gaps, will be excluded.
+
+Reading the outgroup sequence specified by OUTGROUP_SEQ.  This sequence will be used to root the phylogenetic tree if we do not assume a molecular clock; it will not be used if we assume a molecular clock.
+Value of NONE, meaning no outgroup sequence is specified.
+
+HOMOLOGOUS_SEQS specified 381 sequences.  We will now eliminate any duplicates among these sequences...
+Duplicate sequence -- the sequences with the following two headers are identical; purging the latter from the sequence list:
+	>gi|169785739|ref|XP_001827330.1| hypothetical protein [Aspergillus oryzae RIB40]
+	>Aspergillus oryzae RIB40 Endoglucanase
+Duplicate sequence -- the sequences with the following two headers are identical; purging the latter from the sequence list:
+	>gi|67516425|ref|XP_658098.1| hypothetical protein AN0494.2 [Aspergillus nidulans FGSC A4]
+	>Emericella nidulans CBHB
+Duplicate sequence -- the sequence with the header shown below is identical to PROTSEQ:
+	Hypocrea jecorina CBH1
+Duplicate sequence -- the sequence with the header shown below is identical to PROTSEQ:
+	Hypocrea koningii CBH1
+After eliminating the duplicates, there are 377 unique sequences.
+
+Based on the criteria specified by HOMOLOGY_THRESHOLD, we will screen the 377 unique homologous sequences...
+Each sequence will be pairwise aligned with PROTSEQ, and those with a fraction identity of at least 0.550000 among alignable residues, and with a fraction of gaps no greater than 0.100000 will be retained...
+Performing pairwise alignment of PROTSEQ with sequence 1 of 377, which has header:
+	gi|70992391|ref|XP_751044.1| 1,4-beta-D-glucan-cellobiohydrolyase [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.645098 fraction identities, and 0.046729 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 2 of 377, which has header:
+	gi|119472134|ref|XP_001258278.1| glycosyl hydrolase family 7 protein [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.649606 fraction identities, and 0.050467 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 3 of 377, which has header:
+	gi|119483864|ref|XP_001261835.1| glycosyl hydrolase family 7 protein [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.636008 fraction identities, and 0.048417 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 4 of 377, which has header:
+	gi|212538337|ref|XP_002149324.1| 1,4-beta-D-glucan-cellobiohydrolyase, putative [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.646825 fraction identities, and 0.075229 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 5 of 377, which has header:
+	gi|145238722|ref|XP_001392008.1| 1,4-beta-D-glucan cellobiohydrolase A precursor cbhA-Aspergillus niger
+	This sequence aligns to PROTSEQ with 0.667416 fraction identities, and 0.144231 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 6 of 377, which has header:
+	gi|169768818|ref|XP_001818879.1| hypothetical protein [Aspergillus oryzae RIB40]
+	This sequence aligns to PROTSEQ with 0.651007 fraction identities, and 0.158192 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 7 of 377, which has header:
+	gi|145230535|ref|XP_001389576.1| 1,4-beta-D-glucan cellobiohydrolase B precursor cbhB-Aspergillus niger
+	This sequence aligns to PROTSEQ with 0.617647 fraction identities, and 0.053803 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 8 of 377, which has header:
+	gi|70991503|ref|XP_750600.1| cellobiohydrolase celD [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.647856 fraction identities, and 0.151341 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 9 of 377, which has header:
+	gi|119468034|ref|XP_001257823.1| cellobiohydrolase D [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.645598 fraction identities, and 0.151341 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 10 of 377, which has header:
+	gi|46107376|ref|XP_380747.1| GUXC_FUSOX Putative exoglucanase type C precursor (Exocellobiohydrolase I) (1,4-beta-cellobiohydrolase) (Beta-glucancellobiohydrolase) [Gibberella zeae PH-1]
+	This sequence aligns to PROTSEQ with 0.596040 fraction identities, and 0.028846 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 11 of 377, which has header:
+	gi|121699984|ref|XP_001268257.1| glycosyl hydrolase family 7 protein [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.627219 fraction identities, and 0.069725 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 12 of 377, which has header:
+	gi|85108032|ref|XP_962498.1| exoglucanase 1 precursor [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.615385 fraction identities, and 0.037951 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 13 of 377, which has header:
+	gi|67516425|ref|XP_658098.1| hypothetical protein AN0494.2 [Aspergillus nidulans FGSC A4]
+	This sequence aligns to PROTSEQ with 0.594118 fraction identities, and 0.035917 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 14 of 377, which has header:
+	gi|115397177|ref|XP_001214180.1| exoglucanase 1 precursor [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.616438 fraction identities, and 0.058932 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 15 of 377, which has header:
+	gi|39977899|ref|XP_370337.1| hypothetical protein MGG_06834 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.633929 fraction identities, and 0.135135 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 16 of 377, which has header:
+	gi|115390801|ref|XP_001212905.1| exoglucanase 1 precursor [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.628635 fraction identities, and 0.138728 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 17 of 377, which has header:
+	gi|67538012|ref|XP_662780.1| hypothetical protein AN5176.2 [Aspergillus nidulans FGSC A4]
+	This sequence aligns to PROTSEQ with 0.623583 fraction identities, and 0.148649 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 18 of 377, which has header:
+	gi|171676762|ref|XP_001903333.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.584314 fraction identities, and 0.039548 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 19 of 377, which has header:
+	gi|169763962|ref|XP_001727881.1| hypothetical protein [Aspergillus oryzae RIB40]
+	This sequence aligns to PROTSEQ with 0.617978 fraction identities, and 0.149140 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 20 of 377, which has header:
+	gi|156048578|ref|XP_001590256.1| hypothetical protein SS1G_09020 [Sclerotinia sclerotiorum 1980]
+	This sequence aligns to PROTSEQ with 0.641723 fraction identities, and 0.155172 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 21 of 377, which has header:
+	gi|154300584|ref|XP_001550707.1| hypothetical protein BC1G_10880 [Botryotinia fuckeliana B05.10]
+	This sequence aligns to PROTSEQ with 0.634921 fraction identities, and 0.155172 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 22 of 377, which has header:
+	gi|121710012|ref|XP_001272622.1| cellobiohydrolase D [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.619369 fraction identities, and 0.149425 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 23 of 377, which has header:
+	gi|154312003|ref|XP_001555330.1| hypothetical protein BC1G_06035 [Botryotinia fuckeliana B05.10]
+	This sequence aligns to PROTSEQ with 0.586139 fraction identities, and 0.036260 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 24 of 377, which has header:
+	gi|156055188|ref|XP_001593518.1| hypothetical protein SS1G_04945 [Sclerotinia sclerotiorum 1980]
+	This sequence aligns to PROTSEQ with 0.602823 fraction identities, and 0.181518 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 25 of 377, which has header:
+	gi|154292161|ref|XP_001546657.1| hypothetical protein BC1G_14702 [Botryotinia fuckeliana B05.10]
+	This sequence aligns to PROTSEQ with 0.588710 fraction identities, and 0.194805 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 26 of 377, which has header:
+	gi|66828465|ref|XP_647587.1| hypothetical protein [Dictyostelium discoideum AX4]
+	This sequence aligns to PROTSEQ with 0.587444 fraction identities, and 0.148855 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 27 of 377, which has header:
+	gi|156060391|ref|XP_001596118.1| hypothetical protein SS1G_02334 [Sclerotinia sclerotiorum 1980]
+	This sequence aligns to PROTSEQ with 0.600000 fraction identities, and 0.070209 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 28 of 377, which has header:
+	gi|169611094|ref|XP_001798965.1| hypothetical protein SNOG_08656 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.597753 fraction identities, and 0.147510 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 29 of 377, which has header:
+	gi|189206069|ref|XP_001939369.1| exoglucanase 1 precursor [Pyrenophora tritici-repentis Pt-1C-BFP]
+	This sequence aligns to PROTSEQ with 0.571749 fraction identities, and 0.150476 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 30 of 377, which has header:
+	gi|169601100|ref|XP_001793972.1| hypothetical protein SNOG_03404 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.604369 fraction identities, and 0.207692 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 31 of 377, which has header:
+	gi|189193473|ref|XP_001933075.1| exoglucanase 1 precursor [Pyrenophora tritici-repentis Pt-1C-BFP]
+	This sequence aligns to PROTSEQ with 0.590244 fraction identities, and 0.211538 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 32 of 377, which has header:
+	gi|169859458|ref|XP_001836368.1| hypothetical protein CC1G_12409 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.547297 fraction identities, and 0.160681 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 33 of 377, which has header:
+	gi|169870197|ref|XP_001841626.1| hypothetical protein CC1G_13448 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.547297 fraction identities, and 0.160681 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 34 of 377, which has header:
+	gi|169859460|ref|XP_001836369.1| hypothetical protein CC1G_12410 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.542793 fraction identities, and 0.160681 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 35 of 377, which has header:
+	gi|169859462|ref|XP_001836370.1| hypothetical protein CC1G_12411 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.549550 fraction identities, and 0.166979 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 36 of 377, which has header:
+	gi|39973029|ref|XP_367905.1| hypothetical protein MGG_07809 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.541761 fraction identities, and 0.144788 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 37 of 377, which has header:
+	gi|85083281|ref|XP_957090.1| exoglucanase 1 precursor [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.525959 fraction identities, and 0.148077 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 38 of 377, which has header:
+	gi|116200349|ref|XP_001225986.1| hypothetical protein CHGG_08330 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.528217 fraction identities, and 0.148077 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 39 of 377, which has header:
+	gi|39971383|ref|XP_367082.1| hypothetical protein MGG_10712 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.523596 fraction identities, and 0.139265 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 40 of 377, which has header:
+	gi|169615761|ref|XP_001801296.1| hypothetical protein SNOG_11043 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.554479 fraction identities, and 0.225141 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 41 of 377, which has header:
+	gi|171683762|ref|XP_001906823.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.515766 fraction identities, and 0.149425 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 42 of 377, which has header:
+	gi|116181754|ref|XP_001220726.1| hypothetical protein CHGG_01505 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.534247 fraction identities, and 0.168880 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 43 of 377, which has header:
+	gi|171696102|ref|XP_001912975.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.513575 fraction identities, and 0.158095 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 44 of 377, which has header:
+	gi|169859455|ref|XP_001836367.1| hypothetical protein CC1G_12980 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.531414 fraction identities, and 0.277883 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 45 of 377, which has header:
+	gi|164425749|ref|XP_959111.2| endoglucanase EG-1 precursor [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.457746 fraction identities, and 0.194707 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 46 of 377, which has header:
+	gi|70984781|ref|XP_747897.1| endoglucanase [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.491071 fraction identities, and 0.146667 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 47 of 377, which has header:
+	gi|119467101|ref|XP_001257357.1| endoglucanase, putative [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.469027 fraction identities, and 0.147170 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 48 of 377, which has header:
+	gi|116202581|ref|XP_001227102.1| hypothetical protein CHGG_09175 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.639485 fraction identities, and 0.546693 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 49 of 377, which has header:
+	gi|116191879|ref|XP_001221752.1| hypothetical protein CHGG_05657 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.400932 fraction identities, and 0.173410 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 50 of 377, which has header:
+	gi|212545631|ref|XP_002152969.1| endoglucanase, putative [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.477516 fraction identities, and 0.141544 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 51 of 377, which has header:
+	gi|169785739|ref|XP_001827330.1| hypothetical protein [Aspergillus oryzae RIB40]
+	This sequence aligns to PROTSEQ with 0.454321 fraction identities, and 0.227099 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 52 of 377, which has header:
+	gi|121709349|ref|XP_001272393.1| endo-1,4-beta-glucanase [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.449631 fraction identities, and 0.223282 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 53 of 377, which has header:
+	gi|115402419|ref|XP_001217286.1| endoglucanase EG-1 precursor [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.459658 fraction identities, and 0.219466 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 54 of 377, which has header:
+	gi|115402429|ref|XP_001217291.1| endoglucanase EG-1 precursor [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.464444 fraction identities, and 0.157303 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 55 of 377, which has header:
+	gi|121704228|ref|XP_001270378.1| endoglucanase, putative [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.474419 fraction identities, and 0.206642 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 56 of 377, which has header:
+	gi|119488801|ref|XP_001262790.1| endo-1,4-beta-glucanase [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.448101 fraction identities, and 0.247619 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 57 of 377, which has header:
+	gi|70982500|ref|XP_746778.1| endo-1,4-beta-glucanase [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.439394 fraction identities, and 0.244275 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 58 of 377, which has header:
+	gi|145610386|ref|XP_366456.2| hypothetical protein MGG_02532 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.429612 fraction identities, and 0.215238 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 59 of 377, which has header:
+	gi|189198277|ref|XP_001935476.1| endoglucanase 1 [Pyrenophora tritici-repentis Pt-1C-BFP]
+	This sequence aligns to PROTSEQ with 0.453659 fraction identities, and 0.312081 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 60 of 377, which has header:
+	gi|85079837|ref|XP_956431.1| endoglucanase EG-1 precursor [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.442857 fraction identities, and 0.209040 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 61 of 377, which has header:
+	gi|116208318|ref|XP_001229968.1| hypothetical protein CHGG_03452 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.458115 fraction identities, and 0.279245 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 62 of 377, which has header:
+	gi|171677538|ref|XP_001903720.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.414286 fraction identities, and 0.200000 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 63 of 377, which has header:
+	gi|46127751|ref|XP_388429.1| hypothetical protein FG08253.1 [Gibberella zeae PH-1]
+	This sequence aligns to PROTSEQ with 0.400474 fraction identities, and 0.194656 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 64 of 377, which has header:
+	gi|169870199|ref|XP_001841627.1| hypothetical protein CC1G_13449 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.586538 fraction identities, and 0.596117 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 65 of 377, which has header:
+	gi|67525921|ref|XP_661022.1| hypothetical protein AN3418.2 [Aspergillus nidulans FGSC A4]
+	This sequence aligns to PROTSEQ with 0.440098 fraction identities, and 0.234082 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 66 of 377, which has header:
+	gi|171682802|ref|XP_001906344.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.427602 fraction identities, and 0.202166 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 67 of 377, which has header:
+	gi|149209515|ref|XP_001522132.1| hypothetical protein MGCH7_ch7g241 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.433604 fraction identities, and 0.394089 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 68 of 377, which has header:
+	gi|145606094|ref|XP_370166.2| hypothetical protein MGG_06663 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.374134 fraction identities, and 0.195167 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 69 of 377, which has header:
+	gi|116201181|ref|XP_001226402.1| hypothetical protein CHGG_08475 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.387707 fraction identities, and 0.203390 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 70 of 377, which has header:
+	gi|169619477|ref|XP_001803151.1| hypothetical protein SNOG_12935 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.445860 fraction identities, and 0.394990 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 71 of 377, which has header:
+	gi|171678917|ref|XP_001904407.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.359133 fraction identities, and 0.380038 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 72 of 377, which has header:
+	gi|169620119|ref|XP_001803471.1| hypothetical protein SNOG_13261 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.438424 fraction identities, and 0.608108 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 73 of 377, which has header:
+	gi|116202583|ref|XP_001227103.1| hypothetical protein CHGG_09176 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.621622 fraction identities, and 0.855750 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 74 of 377, which has header:
+	gi|116196720|ref|XP_001224172.1| hypothetical protein CHGG_04958 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.506944 fraction identities, and 0.796322 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 75 of 377, which has header:
+	gi|171683669|ref|XP_001906777.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.313665 fraction identities, and 0.409174 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 76 of 377, which has header:
+	gi|85086175|ref|XP_957642.1| hypothetical protein NCU04027 [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.409357 fraction identities, and 0.679174 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 77 of 377, which has header:
+	gi|119497791|ref|XP_001265653.1| xylosidase/glycosyl hydrolase, putative [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.288991 fraction identities, and 0.316614 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 78 of 377, which has header:
+	gi|119483194|ref|XP_001261625.1| glycosyl hydrolase family 45 protein [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.364078 fraction identities, and 0.606119 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 79 of 377, which has header:
+	gi|119501521|ref|XP_001267517.1| Glycosyl hydrolase family 61 [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.303951 fraction identities, and 0.418728 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 80 of 377, which has header:
+	gi|70986694|ref|XP_748837.1| endoglucanase [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.398230 fraction identities, and 0.568702 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 81 of 377, which has header:
+	gi|212541646|ref|XP_002150978.1| endo-1,4-beta-xylanase, putative [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.305085 fraction identities, and 0.374558 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 82 of 377, which has header:
+	gi|171693009|ref|XP_001911429.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.292308 fraction identities, and 0.397032 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 83 of 377, which has header:
+	gi|70992389|ref|XP_751043.1| endoglucanase [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.317680 fraction identities, and 0.339416 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 84 of 377, which has header:
+	gi|171679124|ref|XP_001904510.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.327759 fraction identities, and 0.526899 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 85 of 377, which has header:
+	gi|169783678|ref|XP_001826301.1| hypothetical protein [Aspergillus oryzae RIB40]
+	This sequence aligns to PROTSEQ with 0.270142 fraction identities, and 0.273666 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 86 of 377, which has header:
+	gi|212537781|ref|XP_002149046.1| beta-D-glucoside glucohydrolase [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.272340 fraction identities, and 0.457275 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 87 of 377, which has header:
+	gi|169869382|ref|XP_001841257.1| predicted protein [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.296928 fraction identities, and 0.471119 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 88 of 377, which has header:
+	gi|70992777|ref|XP_751237.1| endo-1,4-beta-xylanase [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.283988 fraction identities, and 0.428325 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 89 of 377, which has header:
+	gi|119472132|ref|XP_001258277.1| cellulase, putative [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.296399 fraction identities, and 0.359929 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 90 of 377, which has header:
+	gi|169862645|ref|XP_001837948.1| hypothetical protein CC1G_09499 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.261411 fraction identities, and 0.331484 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 91 of 377, which has header:
+	gi|119485504|ref|XP_001262186.1| acetyl xylan esterase, putative [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.328358 fraction identities, and 0.386447 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 92 of 377, which has header:
+	gi|164428377|ref|XP_955817.2| hypothetical protein NCU04997 [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.303621 fraction identities, and 0.389456 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 93 of 377, which has header:
+	gi|85110940|ref|XP_963702.1| hypothetical protein NCU00836 [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.320755 fraction identities, and 0.389635 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 94 of 377, which has header:
+	gi|212541612|ref|XP_002150961.1| endoglucanase-5 precursor, putative [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.334437 fraction identities, and 0.449909 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 95 of 377, which has header:
+	gi|121712002|ref|XP_001273616.1| fungal cellulose binding domain protein [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.278638 fraction identities, and 0.389414 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 96 of 377, which has header:
+	gi|116192683|ref|XP_001222154.1| hypothetical protein CHGG_06059 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.319728 fraction identities, and 0.429126 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 97 of 377, which has header:
+	gi|121712000|ref|XP_001273615.1| glycosyl hydrolase family 62 protein [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.253561 fraction identities, and 0.378761 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 98 of 377, which has header:
+	gi|39945810|ref|XP_362442.1| hypothetical protein MGG_08025 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.281106 fraction identities, and 0.751004 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 99 of 377, which has header:
+	gi|156050519|ref|XP_001591221.1| hypothetical protein SS1G_07847 [Sclerotinia sclerotiorum 1980]
+	This sequence aligns to PROTSEQ with 0.298947 fraction identities, and 0.454650 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 100 of 377, which has header:
+	gi|169854451|ref|XP_001833900.1| hypothetical protein CC1G_01577 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.229050 fraction identities, and 0.351449 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 101 of 377, which has header:
+	gi|67900828|ref|XP_680670.1| hypothetical protein AN7401.2 [Aspergillus nidulans FGSC A4]
+	This sequence aligns to PROTSEQ with 0.289634 fraction identities, and 0.392593 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 102 of 377, which has header:
+	gi|213402949|ref|XP_002172247.1| endo-glucanase RCE3 [Schizosaccharomyces japonicus yFS275]
+	This sequence aligns to PROTSEQ with 0.408284 fraction identities, and 0.705575 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 103 of 377, which has header:
+	gi|171685434|ref|XP_001907658.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.281501 fraction identities, and 0.362393 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 104 of 377, which has header:
+	gi|70983864|ref|XP_747458.1| acetyl xylan esterase [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.312500 fraction identities, and 0.386861 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 105 of 377, which has header:
+	gi|115391767|ref|XP_001213388.1| conserved hypothetical protein [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.280757 fraction identities, and 0.420475 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 106 of 377, which has header:
+	gi|115390166|ref|XP_001212588.1| endo-1,4-beta-xylanase precursor [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.291667 fraction identities, and 0.420690 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 107 of 377, which has header:
+	gi|116198875|ref|XP_001225249.1| hypothetical protein CHGG_07593 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.284790 fraction identities, and 0.441230 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 108 of 377, which has header:
+	gi|116208174|ref|XP_001229896.1| hypothetical protein CHGG_03380 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.292056 fraction identities, and 0.518560 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 109 of 377, which has header:
+	gi|212546407|ref|XP_002153357.1| endo-1,4-beta-mannosidase [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.223618 fraction identities, and 0.290553 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 110 of 377, which has header:
+	gi|119474543|ref|XP_001259147.1| endo-1,4-beta-glucanase, putative [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.284830 fraction identities, and 0.399628 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 111 of 377, which has header:
+	gi|119473107|ref|XP_001258500.1| endo-1,4-beta-xylanase, putative [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.283537 fraction identities, and 0.432526 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 112 of 377, which has header:
+	gi|119483862|ref|XP_001261834.1| cellulase, putative [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.269972 fraction identities, and 0.345946 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 113 of 377, which has header:
+	gi|70986018|ref|XP_748511.1| cellobiohydrolase [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.274011 fraction identities, and 0.422512 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 114 of 377, which has header:
+	gi|115401052|ref|XP_001216114.1| exoglucanase 2 precursor [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.288235 fraction identities, and 0.469579 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 115 of 377, which has header:
+	gi|169862695|ref|XP_001837973.1| hypothetical protein CC1G_09524 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.273128 fraction identities, and 0.418694 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 116 of 377, which has header:
+	gi|119473935|ref|XP_001258843.1| cellobiohydrolase, putative [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.258242 fraction identities, and 0.392321 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 117 of 377, which has header:
+	gi|169858192|ref|XP_001835742.1| hypothetical protein CC1G_07166 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.292517 fraction identities, and 0.459559 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 118 of 377, which has header:
+	gi|71001210|ref|XP_755286.1| extracellular endoglucanase/cellulase [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.267470 fraction identities, and 0.278261 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 119 of 377, which has header:
+	gi|156063420|ref|XP_001597632.1| hypothetical protein SS1G_01828 [Sclerotinia sclerotiorum 1980]
+	This sequence aligns to PROTSEQ with 0.332237 fraction identities, and 0.433892 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 120 of 377, which has header:
+	gi|154319199|ref|XP_001558917.1| hypothetical protein BC1G_02551 [Botryotinia fuckeliana B05.10]
+	This sequence aligns to PROTSEQ with 0.405405 fraction identities, and 0.648956 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 121 of 377, which has header:
+	gi|39970025|ref|XP_366403.1| hypothetical protein MGG_10621 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.287081 fraction identities, and 0.309091 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 122 of 377, which has header:
+	gi|212539472|ref|XP_002149891.1| cellobiohydrolase, putative [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.249364 fraction identities, and 0.323580 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 123 of 377, which has header:
+	gi|171680542|ref|XP_001905216.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.247734 fraction identities, and 0.427336 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 124 of 377, which has header:
+	gi|121698987|ref|XP_001267869.1| endoglucanase/cellulase, putative [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.246787 fraction identities, and 0.317544 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 125 of 377, which has header:
+	gi|169862693|ref|XP_001837972.1| hypothetical protein CC1G_09523 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.296791 fraction identities, and 0.351820 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 126 of 377, which has header:
+	gi|121715055|ref|XP_001275137.1| endoglucanase, putative [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.297521 fraction identities, and 0.455568 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 127 of 377, which has header:
+	gi|116178804|ref|XP_001219251.1| hypothetical protein CHGG_00030 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.302405 fraction identities, and 0.541009 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 128 of 377, which has header:
+	gi|212541749|ref|XP_002151029.1| acetyl xylan esterase, putative [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.274691 fraction identities, and 0.405505 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 129 of 377, which has header:
+	gi|116205289|ref|XP_001228455.1| hypothetical protein CHGG_10528 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.275641 fraction identities, and 0.420074 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 130 of 377, which has header:
+	gi|145252938|ref|XP_001397982.1| hypothetical protein An16g06800 [Aspergillus niger]
+	This sequence aligns to PROTSEQ with 0.288515 fraction identities, and 0.375874 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 131 of 377, which has header:
+	gi|115396494|ref|XP_001213886.1| hypothetical protein ATEG_04708 [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.306695 fraction identities, and 0.483259 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 132 of 377, which has header:
+	gi|70986426|ref|XP_748707.1| endo-1,4-beta-glucanase [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.290735 fraction identities, and 0.422509 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 133 of 377, which has header:
+	gi|212539271|ref|XP_002149791.1| endoglucanase, putative [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.271676 fraction identities, and 0.384342 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 134 of 377, which has header:
+	gi|121700300|ref|XP_001268415.1| endo-1,4-beta-xylanase, putative [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.272464 fraction identities, and 0.394737 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 135 of 377, which has header:
+	gi|116195332|ref|XP_001223478.1| hypothetical protein CHGG_04264 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.298592 fraction identities, and 0.340149 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 136 of 377, which has header:
+	gi|115387173|ref|XP_001211092.1| hypothetical protein ATEG_01914 [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.250000 fraction identities, and 0.385199 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 137 of 377, which has header:
+	gi|154320612|ref|XP_001559622.1| hypothetical protein BC1G_01778 [Botryotinia fuckeliana B05.10]
+	This sequence aligns to PROTSEQ with 0.317808 fraction identities, and 0.425197 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 138 of 377, which has header:
+	gi|154318110|ref|XP_001558374.1| predicted protein [Botryotinia fuckeliana B05.10]
+	This sequence aligns to PROTSEQ with 0.313253 fraction identities, and 0.522073 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 139 of 377, which has header:
+	gi|116195334|ref|XP_001223479.1| hypothetical protein CHGG_04265 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.370000 fraction identities, and 0.621212 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 140 of 377, which has header:
+	gi|115395858|ref|XP_001213568.1| endoglucanase 3 precursor [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.246114 fraction identities, and 0.336770 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 141 of 377, which has header:
+	gi|46139389|ref|XP_391385.1| hypothetical protein FG11209.1 [Gibberella zeae PH-1]
+	This sequence aligns to PROTSEQ with 0.287703 fraction identities, and 0.559755 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 142 of 377, which has header:
+	gi|46127251|ref|XP_388179.1| hypothetical protein FG08003.1 [Gibberella zeae PH-1]
+	This sequence aligns to PROTSEQ with 0.265714 fraction identities, and 0.381625 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 143 of 377, which has header:
+	gi|115397179|ref|XP_001214181.1| exoglucanase 1 precursor [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.297814 fraction identities, and 0.342908 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 144 of 377, which has header:
+	gi|169862217|ref|XP_001837739.1| hypothetical protein CC1G_06945 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.310897 fraction identities, and 0.414634 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 145 of 377, which has header:
+	gi|145230537|ref|XP_001389577.1| hypothetical protein An01g11670 [Aspergillus niger]
+	This sequence aligns to PROTSEQ with 0.257218 fraction identities, and 0.297048 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 146 of 377, which has header:
+	gi|169624058|ref|XP_001805435.1| hypothetical protein SNOG_15279 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.276968 fraction identities, and 0.375228 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 147 of 377, which has header:
+	gi|189206888|ref|XP_001939778.1| cellobiose dehydrogenase [Pyrenophora tritici-repentis Pt-1C-BFP]
+	This sequence aligns to PROTSEQ with 0.278509 fraction identities, and 0.504348 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 148 of 377, which has header:
+	gi|156049937|ref|XP_001590930.1| predicted protein [Sclerotinia sclerotiorum 1980]
+	This sequence aligns to PROTSEQ with 0.297619 fraction identities, and 0.534196 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 149 of 377, which has header:
+	gi|169851646|ref|XP_001832512.1| hypothetical protein CC1G_03526 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.281346 fraction identities, and 0.371154 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 150 of 377, which has header:
+	gi|212541757|ref|XP_002151033.1| endoglucanase, putative [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.294363 fraction identities, and 0.456300 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 151 of 377, which has header:
+	gi|169862519|ref|XP_001837886.1| hypothetical protein CC1G_10307 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.289916 fraction identities, and 0.543186 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 152 of 377, which has header:
+	gi|70983912|ref|XP_747482.1| endoglucanase [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.263473 fraction identities, and 0.367424 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 153 of 377, which has header:
+	gi|169846068|ref|XP_001829750.1| hypothetical protein CC1G_05959 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.263291 fraction identities, and 0.292115 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 154 of 377, which has header:
+	gi|145607910|ref|XP_001408167.1| hypothetical protein MGG_13625 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.285235 fraction identities, and 0.486207 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 155 of 377, which has header:
+	gi|119480833|ref|XP_001260445.1| endoglucanase/cellulase, putative [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.283544 fraction identities, and 0.351396 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 156 of 377, which has header:
+	gi|115401646|ref|XP_001216411.1| hypothetical protein ATEG_07790 [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.268293 fraction identities, and 0.398165 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 157 of 377, which has header:
+	gi|145250957|ref|XP_001396992.1| hypothetical protein An15g04570 [Aspergillus niger]
+	This sequence aligns to PROTSEQ with 0.292063 fraction identities, and 0.414498 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 158 of 377, which has header:
+	gi|85119231|ref|XP_965598.1| hypothetical protein NCU02916 [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.306306 fraction identities, and 0.382189 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 159 of 377, which has header:
+	gi|115401906|ref|XP_001216541.1| conserved hypothetical protein [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.262195 fraction identities, and 0.410072 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 160 of 377, which has header:
+	gi|169860444|ref|XP_001836857.1| hypothetical protein CC1G_04170 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.289773 fraction identities, and 0.417219 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 161 of 377, which has header:
+	gi|169846070|ref|XP_001829751.1| hypothetical protein CC1G_05960 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.289086 fraction identities, and 0.447883 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 162 of 377, which has header:
+	gi|119483746|ref|XP_001261776.1| endoglucanase, putative [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.278000 fraction identities, and 0.417928 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 163 of 377, which has header:
+	gi|169851652|ref|XP_001832515.1| hypothetical protein CC1G_03529 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.286184 fraction identities, and 0.440147 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 164 of 377, which has header:
+	gi|145249108|ref|XP_001400893.1| hypothetical protein An14g02670 [Aspergillus niger]
+	This sequence aligns to PROTSEQ with 0.271605 fraction identities, and 0.397770 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 165 of 377, which has header:
+	gi|169850453|ref|XP_001831922.1| hypothetical protein CC1G_12897 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.265152 fraction identities, and 0.537653 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 166 of 377, which has header:
+	gi|85081067|ref|XP_956657.1| acetylxylan esterase precursor [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.313492 fraction identities, and 0.550802 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 167 of 377, which has header:
+	gi|212539976|ref|XP_002150143.1| endo-1,4-beta-xylanase 1 precursor, putative [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.304183 fraction identities, and 0.512059 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 168 of 377, which has header:
+	gi|169617193|ref|XP_001802011.1| hypothetical protein SNOG_11773 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.265363 fraction identities, and 0.459215 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 169 of 377, which has header:
+	gi|171676497|ref|XP_001903201.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.309091 fraction identities, and 0.476190 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 170 of 377, which has header:
+	gi|119487196|ref|XP_001262453.1| fungal cellulose binding domain protein [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.273458 fraction identities, and 0.318099 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 171 of 377, which has header:
+	gi|169846059|ref|XP_001829746.1| hypothetical protein CC1G_09635 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.269022 fraction identities, and 0.366609 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 172 of 377, which has header:
+	gi|189188194|ref|XP_001930436.1| endoglucanase B [Pyrenophora tritici-repentis Pt-1C-BFP]
+	This sequence aligns to PROTSEQ with 0.295775 fraction identities, and 0.486994 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 173 of 377, which has header:
+	gi|70982029|ref|XP_746543.1| polyhydroxybutyrate depolymerase [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.269634 fraction identities, and 0.347009 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 174 of 377, which has header:
+	gi|171677676|ref|XP_001903789.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.278351 fraction identities, and 0.444656 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 175 of 377, which has header:
+	gi|121715874|ref|XP_001275546.1| cellulose hydrolase, putative [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.288828 fraction identities, and 0.441400 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 176 of 377, which has header:
+	gi|39941218|ref|XP_360146.1| hypothetical protein MGG_05520 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.252078 fraction identities, and 0.435055 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 177 of 377, which has header:
+	gi|171684031|ref|XP_001906957.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.312741 fraction identities, and 0.530797 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 178 of 377, which has header:
+	gi|169622513|ref|XP_001804665.1| hypothetical protein SNOG_14481 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.307420 fraction identities, and 0.492832 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 179 of 377, which has header:
+	gi|169860442|ref|XP_001836856.1| hypothetical protein CC1G_04169 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.279412 fraction identities, and 0.448947 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 180 of 377, which has header:
+	gi|145251019|ref|XP_001397023.1| hypothetical protein An15g04900 [Aspergillus niger]
+	This sequence aligns to PROTSEQ with 0.255495 fraction identities, and 0.351159 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 181 of 377, which has header:
+	gi|156051031|ref|XP_001591477.1| hypothetical protein SS1G_08104 [Sclerotinia sclerotiorum 1980]
+	This sequence aligns to PROTSEQ with 0.314079 fraction identities, and 0.483209 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 182 of 377, which has header:
+	gi|169854305|ref|XP_001833827.1| hypothetical protein CC1G_01504 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.253333 fraction identities, and 0.351211 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 183 of 377, which has header:
+	gi|212541552|ref|XP_002150931.1| Acidic endochitinase precursor, putative [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.295890 fraction identities, and 0.353982 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 184 of 377, which has header:
+	gi|189193871|ref|XP_001933274.1| endoglucanase II [Pyrenophora tritici-repentis Pt-1C-BFP]
+	This sequence aligns to PROTSEQ with 0.261290 fraction identities, and 0.409524 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 185 of 377, which has header:
+	gi|67522290|ref|XP_659206.1| hypothetical protein AN1602.2 [Aspergillus nidulans FGSC A4]
+	This sequence aligns to PROTSEQ with 0.268750 fraction identities, and 0.418182 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 186 of 377, which has header:
+	gi|85074607|ref|XP_960770.1| exoglucanase 2 precursor [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.261456 fraction identities, and 0.407348 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 187 of 377, which has header:
+	gi|116178792|ref|XP_001219245.1| hypothetical protein CHGG_00024 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.333333 fraction identities, and 0.549195 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 188 of 377, which has header:
+	gi|85090094|ref|XP_958254.1| endoglucanase IV precursor [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.261261 fraction identities, and 0.393443 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 189 of 377, which has header:
+	gi|116205203|ref|XP_001228412.1| hypothetical protein CHGG_10485 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.307947 fraction identities, and 0.465487 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 190 of 377, which has header:
+	gi|169859796|ref|XP_001836535.1| hypothetical protein CC1G_10029 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.311189 fraction identities, and 0.525705 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 191 of 377, which has header:
+	gi|116201193|ref|XP_001226408.1| hypothetical protein CHGG_08481 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.335849 fraction identities, and 0.513761 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 192 of 377, which has header:
+	gi|169851644|ref|XP_001832511.1| hypothetical protein CC1G_03525 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.294118 fraction identities, and 0.489399 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 193 of 377, which has header:
+	gi|116179352|ref|XP_001219525.1| hypothetical protein CHGG_00304 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.253968 fraction identities, and 0.455017 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 194 of 377, which has header:
+	gi|121711880|ref|XP_001273555.1| endo-1,4-beta-glucanase, putative [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.260736 fraction identities, and 0.398524 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 195 of 377, which has header:
+	gi|145246118|ref|XP_001395308.1| hypothetical protein An12g02220 [Aspergillus niger]
+	This sequence aligns to PROTSEQ with 0.275362 fraction identities, and 0.449761 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 196 of 377, which has header:
+	gi|154304807|ref|XP_001552807.1| hypothetical protein BC1G_08989 [Botryotinia fuckeliana B05.10]
+	This sequence aligns to PROTSEQ with 0.287462 fraction identities, and 0.491446 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 197 of 377, which has header:
+	gi|171678729|ref|XP_001904314.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.275758 fraction identities, and 0.367816 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 198 of 377, which has header:
+	gi|85090755|ref|XP_958569.1| hypothetical protein NCU05955 [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.279678 fraction identities, and 0.433295 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 199 of 377, which has header:
+	gi|212539978|ref|XP_002150144.1| acetyl xylan esterase (Axe1), putative [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.336000 fraction identities, and 0.546279 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 200 of 377, which has header:
+	gi|119485741|ref|XP_001262213.1| endoglucanase, putative [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.273273 fraction identities, and 0.369318 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 201 of 377, which has header:
+	gi|212539808|ref|XP_002150059.1| endoglucanase, putative [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.339130 fraction identities, and 0.560229 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 202 of 377, which has header:
+	gi|85113565|ref|XP_964544.1| hypothetical protein NCU00710 [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.280597 fraction identities, and 0.419411 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 203 of 377, which has header:
+	gi|75859132|ref|XP_868906.1| hypothetical protein AN9524.2 [Aspergillus nidulans FGSC A4]
+	This sequence aligns to PROTSEQ with 0.271930 fraction identities, and 0.403141 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 204 of 377, which has header:
+	gi|39946206|ref|XP_362640.1| hypothetical protein MGG_08409 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.311189 fraction identities, and 0.452107 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 205 of 377, which has header:
+	gi|116204507|ref|XP_001228064.1| hypothetical protein CHGG_10137 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.259136 fraction identities, and 0.481034 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 206 of 377, which has header:
+	gi|169846072|ref|XP_001829752.1| hypothetical protein CC1G_05961 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.289720 fraction identities, and 0.492089 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 207 of 377, which has header:
+	gi|116199201|ref|XP_001225412.1| hypothetical protein CHGG_07756 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.291971 fraction identities, and 0.497248 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 208 of 377, which has header:
+	gi|212536648|ref|XP_002148480.1| conserved hypothetical protein [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.256757 fraction identities, and 0.335727 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 209 of 377, which has header:
+	gi|169607837|ref|XP_001797338.1| hypothetical protein SNOG_06980 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.229032 fraction identities, and 0.458988 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 210 of 377, which has header:
+	gi|169845834|ref|XP_001829635.1| hypothetical protein CC1G_08790 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.251908 fraction identities, and 0.518382 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 211 of 377, which has header:
+	gi|115396496|ref|XP_001213887.1| acetylxylan esterase precursor [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.345679 fraction identities, and 0.562162 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 212 of 377, which has header:
+	gi|154292153|ref|XP_001546653.1| hypothetical protein BC1G_14698 [Botryotinia fuckeliana B05.10]
+	This sequence aligns to PROTSEQ with 0.221519 fraction identities, and 0.226754 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 213 of 377, which has header:
+	gi|67538224|ref|XP_662886.1| hypothetical protein AN5282.2 [Aspergillus nidulans FGSC A4]
+	This sequence aligns to PROTSEQ with 0.257669 fraction identities, and 0.488226 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 214 of 377, which has header:
+	gi|119473547|ref|XP_001258649.1| acetyl xylan esterase (Axe1), putative [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.321705 fraction identities, and 0.528336 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 215 of 377, which has header:
+	gi|67537782|ref|XP_662665.1| hypothetical protein AN5061.2 [Aspergillus nidulans FGSC A4]
+	This sequence aligns to PROTSEQ with 0.284444 fraction identities, and 0.499444 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 216 of 377, which has header:
+	gi|169846881|ref|XP_001830154.1| hypothetical protein CC1G_09314 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.228070 fraction identities, and 0.442997 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 217 of 377, which has header:
+	gi|70988657|ref|XP_749187.1| cellulose-binding GDSL lipase/acylhydrolase [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.273333 fraction identities, and 0.498328 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 218 of 377, which has header:
+	gi|116193969|ref|XP_001222797.1| hypothetical protein CHGG_06702 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.336770 fraction identities, and 0.453008 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 219 of 377, which has header:
+	gi|171676366|ref|XP_001903136.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.224274 fraction identities, and 0.383740 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 220 of 377, which has header:
+	gi|169867023|ref|XP_001840093.1| hypothetical protein CC1G_12850 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.257576 fraction identities, and 0.407540 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 221 of 377, which has header:
+	gi|171694598|ref|XP_001912223.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.306122 fraction identities, and 0.478723 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 222 of 377, which has header:
+	gi|19114898|ref|NP_593986.1| fungal cellulose binding domain protein [Schizosaccharomyces pombe 972h-]
+	This sequence aligns to PROTSEQ with 0.403846 fraction identities, and 0.828383 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 223 of 377, which has header:
+	gi|169862697|ref|XP_001837974.1| hypothetical protein CC1G_09525 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.273523 fraction identities, and 0.415601 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 224 of 377, which has header:
+	gi|85092689|ref|XP_959499.1| hypothetical protein NCU02240 [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.359184 fraction identities, and 0.584746 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 225 of 377, which has header:
+	gi|171682216|ref|XP_001906051.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.313305 fraction identities, and 0.489035 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 226 of 377, which has header:
+	gi|154304809|ref|XP_001552808.1| hypothetical protein BC1G_08990 [Botryotinia fuckeliana B05.10]
+	This sequence aligns to PROTSEQ with 0.280967 fraction identities, and 0.441821 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 227 of 377, which has header:
+	gi|169619068|ref|XP_001802947.1| hypothetical protein SNOG_12727 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.328814 fraction identities, and 0.427184 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 228 of 377, which has header:
+	gi|156065763|ref|XP_001598803.1| hypothetical protein SS1G_00892 [Sclerotinia sclerotiorum 1980]
+	This sequence aligns to PROTSEQ with 0.251462 fraction identities, and 0.422297 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 229 of 377, which has header:
+	gi|119470730|ref|XP_001258070.1| fungal cellulose binding domain protein [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.262997 fraction identities, and 0.372361 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 230 of 377, which has header:
+	gi|70985713|ref|XP_748362.1| acetyl xylan esterase (Axe1) [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.298969 fraction identities, and 0.433852 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 231 of 377, which has header:
+	gi|121699982|ref|XP_001268256.1| cellulase, putative [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.283237 fraction identities, and 0.383244 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 232 of 377, which has header:
+	gi|121710996|ref|XP_001273114.1| fungal cellulose binding domain protein [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.252475 fraction identities, and 0.613767 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 233 of 377, which has header:
+	gi|171678828|ref|XP_001904363.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.316265 fraction identities, and 0.438240 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 234 of 377, which has header:
+	gi|121715087|ref|XP_001275153.1| endo-1,4-beta-mannosidase, putative [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.266667 fraction identities, and 0.428808 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 235 of 377, which has header:
+	gi|171695530|ref|XP_001912689.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.301829 fraction identities, and 0.409009 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 236 of 377, which has header:
+	gi|121712204|ref|XP_001273717.1| cellobiohydrolase, putative [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.245125 fraction identities, and 0.419094 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 237 of 377, which has header:
+	gi|156065471|ref|XP_001598657.1| hypothetical protein SS1G_00746 [Sclerotinia sclerotiorum 1980]
+	This sequence aligns to PROTSEQ with 0.261838 fraction identities, and 0.395623 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 238 of 377, which has header:
+	gi|121720080|ref|XP_001276738.1| endoglucanase, putative [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.241071 fraction identities, and 0.366038 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 239 of 377, which has header:
+	gi|116200434|ref|XP_001226029.1| hypothetical protein CHGG_10762 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.290141 fraction identities, and 0.447900 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 240 of 377, which has header:
+	gi|171685522|ref|XP_001907702.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.276190 fraction identities, and 0.400000 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 241 of 377, which has header:
+	gi|169864346|ref|XP_001838782.1| hypothetical protein CC1G_08946 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.302158 fraction identities, and 0.474480 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 242 of 377, which has header:
+	gi|70984483|ref|XP_747748.1| swollenin [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.281768 fraction identities, and 0.443932 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 243 of 377, which has header:
+	gi|46139579|ref|XP_391480.1| endoxylanase D [Gibberella zeae PH-1]
+	This sequence aligns to PROTSEQ with 0.243902 fraction identities, and 0.420495 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 244 of 377, which has header:
+	gi|116192715|ref|XP_001222170.1| hypothetical protein CHGG_06075 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.287500 fraction identities, and 0.390476 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 245 of 377, which has header:
+	gi|145616252|ref|XP_001415304.1| hypothetical protein MGG_13549 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.321070 fraction identities, and 0.447320 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 246 of 377, which has header:
+	gi|85078092|ref|XP_956109.1| hypothetical protein NCU08760 [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.283489 fraction identities, and 0.398876 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 247 of 377, which has header:
+	gi|171684255|ref|XP_001907069.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.291096 fraction identities, and 0.431907 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 248 of 377, which has header:
+	gi|145228635|ref|XP_001388626.1| hypothetical protein An01g01870 [Aspergillus niger]
+	This sequence aligns to PROTSEQ with 0.309524 fraction identities, and 0.493421 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 249 of 377, which has header:
+	gi|39946208|ref|XP_362641.1| hypothetical protein MGG_08408 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.366782 fraction identities, and 0.493870 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 250 of 377, which has header:
+	gi|169859197|ref|XP_001836239.1| hypothetical protein CC1G_06324 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.227528 fraction identities, and 0.360862 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 251 of 377, which has header:
+	gi|39968305|ref|XP_365543.1| xylanase family 10 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.248485 fraction identities, and 0.413854 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 252 of 377, which has header:
+	gi|156058750|ref|XP_001595298.1| hypothetical protein SS1G_03387 [Sclerotinia sclerotiorum 1980]
+	This sequence aligns to PROTSEQ with 0.228188 fraction identities, and 0.315467 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 253 of 377, which has header:
+	gi|171677388|ref|XP_001903645.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.260638 fraction identities, and 0.335689 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 254 of 377, which has header:
+	gi|46115906|ref|XP_383971.1| hypothetical protein FG03795.1 [Gibberella zeae PH-1]
+	This sequence aligns to PROTSEQ with 0.241983 fraction identities, and 0.378623 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 255 of 377, which has header:
+	gi|46137791|ref|XP_390587.1| hypothetical protein FG10411.1 [Gibberella zeae PH-1]
+	This sequence aligns to PROTSEQ with 0.270936 fraction identities, and 0.382979 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 256 of 377, which has header:
+	gi|85118747|ref|XP_965498.1| hypothetical protein NCU01867 [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.298413 fraction identities, and 0.418819 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 257 of 377, which has header:
+	gi|169616458|ref|XP_001801644.1| hypothetical protein SNOG_11401 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.222798 fraction identities, and 0.333333 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 258 of 377, which has header:
+	gi|46127267|ref|XP_388187.1| hypothetical protein FG08011.1 [Gibberella zeae PH-1]
+	This sequence aligns to PROTSEQ with 0.298561 fraction identities, and 0.476460 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 259 of 377, which has header:
+	gi|70991989|ref|XP_750843.1| endoglucanase [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.247706 fraction identities, and 0.366279 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 260 of 377, which has header:
+	gi|169856114|ref|XP_001834719.1| hypothetical protein CC1G_05856 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.255937 fraction identities, and 0.366221 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 261 of 377, which has header:
+	gi|171676434|ref|XP_001903170.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.272472 fraction identities, and 0.444618 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 262 of 377, which has header:
+	gi|119467430|ref|XP_001257521.1| fungal cellulose binding domain protein [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.260638 fraction identities, and 0.389610 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 263 of 377, which has header:
+	gi|169766226|ref|XP_001817584.1| hypothetical protein [Aspergillus oryzae RIB40]
+	This sequence aligns to PROTSEQ with 0.242775 fraction identities, and 0.352060 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 264 of 377, which has header:
+	gi|171691372|ref|XP_001910611.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.298343 fraction identities, and 0.383305 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 265 of 377, which has header:
+	gi|189200539|ref|XP_001936606.1| endoglucanase II [Pyrenophora tritici-repentis Pt-1C-BFP]
+	This sequence aligns to PROTSEQ with 0.278689 fraction identities, and 0.461131 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 266 of 377, which has header:
+	gi|116198749|ref|XP_001225186.1| hypothetical protein CHGG_07530 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.281818 fraction identities, and 0.452736 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 267 of 377, which has header:
+	gi|169784466|ref|XP_001826694.1| hypothetical protein [Aspergillus oryzae RIB40]
+	This sequence aligns to PROTSEQ with 0.298701 fraction identities, and 0.422139 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 268 of 377, which has header:
+	gi|116202991|ref|XP_001227307.1| hypothetical protein CHGG_09380 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.320000 fraction identities, and 0.485981 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 269 of 377, which has header:
+	gi|116202789|ref|XP_001227206.1| hypothetical protein CHGG_09279 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.300000 fraction identities, and 0.544627 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 270 of 377, which has header:
+	gi|85083355|ref|XP_957107.1| endoglucanase V [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.289199 fraction identities, and 0.447013 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 271 of 377, which has header:
+	gi|171685626|ref|XP_001907754.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.287671 fraction identities, and 0.513873 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 272 of 377, which has header:
+	gi|212532981|ref|XP_002146647.1| extracellular glycosyl hydrolase/cellulase, putative [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.263473 fraction identities, and 0.407801 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 273 of 377, which has header:
+	gi|156045950|ref|XP_001589530.1| hypothetical protein SS1G_09251 [Sclerotinia sclerotiorum 1980]
+	This sequence aligns to PROTSEQ with 0.256410 fraction identities, and 0.402299 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 274 of 377, which has header:
+	gi|171677338|ref|XP_001903620.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.274306 fraction identities, and 0.450382 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 275 of 377, which has header:
+	gi|115397335|ref|XP_001214259.1| conserved hypothetical protein [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.271028 fraction identities, and 0.403346 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 276 of 377, which has header:
+	gi|116201413|ref|XP_001226518.1| hypothetical protein CHGG_08591 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.248042 fraction identities, and 0.304900 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 277 of 377, which has header:
+	gi|85111901|ref|XP_964159.1| endoglucanase 3 precursor [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.261830 fraction identities, and 0.459044 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 278 of 377, which has header:
+	gi|169848044|ref|XP_001830730.1| hypothetical protein CC1G_03267 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.303303 fraction identities, and 0.396739 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 279 of 377, which has header:
+	gi|39944716|ref|XP_361895.1| endoglucanase [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.285235 fraction identities, and 0.431298 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 280 of 377, which has header:
+	gi|189194773|ref|XP_001933725.1| fungal cellulose binding domain containing protein [Pyrenophora tritici-repentis Pt-1C-BFP]
+	This sequence aligns to PROTSEQ with 0.284345 fraction identities, and 0.416045 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 281 of 377, which has header:
+	gi|85090296|ref|XP_958348.1| hypothetical protein NCU09764 [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.272973 fraction identities, and 0.324818 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 282 of 377, which has header:
+	gi|116203333|ref|XP_001227478.1| hypothetical protein CHGG_09551 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.295652 fraction identities, and 0.381720 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 283 of 377, which has header:
+	gi|70983951|ref|XP_747501.1| endo-1,4-beta-mannosidase [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.254593 fraction identities, and 0.362876 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 284 of 377, which has header:
+	gi|156059212|ref|XP_001595529.1| hypothetical protein SS1G_03618 [Sclerotinia sclerotiorum 1980]
+	This sequence aligns to PROTSEQ with 0.363296 fraction identities, and 0.493359 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 285 of 377, which has header:
+	gi|116200458|ref|XP_001226041.1| hypothetical protein CHGG_10774 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.232092 fraction identities, and 0.452978 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 286 of 377, which has header:
+	gi|116181368|ref|XP_001220533.1| hypothetical protein CHGG_01312 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.296296 fraction identities, and 0.411978 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 287 of 377, which has header:
+	gi|145608220|ref|XP_001408450.1| hypothetical protein MGG_12733 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.325000 fraction identities, and 0.541985 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 288 of 377, which has header:
+	gi|171677165|ref|XP_001903534.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.299003 fraction identities, and 0.455696 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 289 of 377, which has header:
+	gi|116181120|ref|XP_001220409.1| hypothetical protein CHGG_01188 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.211268 fraction identities, and 0.345018 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 290 of 377, which has header:
+	gi|171683157|ref|XP_001906521.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.290735 fraction identities, and 0.400383 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 291 of 377, which has header:
+	gi|145341690|ref|XP_001415938.1| predicted protein [Ostreococcus lucimarinus CCE9901]
+	This sequence aligns to PROTSEQ with 0.274809 fraction identities, and 0.363047 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 292 of 377, which has header:
+	gi|171679531|ref|XP_001904712.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.316000 fraction identities, and 0.555950 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 293 of 377, which has header:
+	gi|145616662|ref|XP_361272.2| hypothetical protein MGG_03746 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.310105 fraction identities, and 0.503460 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 294 of 377, which has header:
+	gi|154317376|ref|XP_001558008.1| hypothetical protein BC1G_03590 [Botryotinia fuckeliana B05.10]
+	This sequence aligns to PROTSEQ with 0.361538 fraction identities, and 0.513109 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 295 of 377, which has header:
+	gi|169858218|ref|XP_001835755.1| hypothetical protein CC1G_07179 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.321799 fraction identities, and 0.470696 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 296 of 377, which has header:
+	gi|39944092|ref|XP_361583.1| hypothetical protein MGG_04057 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.252595 fraction identities, and 0.439922 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 297 of 377, which has header:
+	gi|119485791|ref|XP_001262238.1| endo-1,4-beta-mannosidase, putative [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.240000 fraction identities, and 0.434572 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 298 of 377, which has header:
+	gi|145607780|ref|XP_365863.2| hypothetical protein MGG_10083 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.271255 fraction identities, and 0.525000 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 299 of 377, which has header:
+	gi|116202353|ref|XP_001226988.1| hypothetical protein CHGG_09061 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.277662 fraction identities, and 0.450688 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 300 of 377, which has header:
+	gi|189199310|ref|XP_001935992.1| conserved hypothetical protein [Pyrenophora tritici-repentis Pt-1C-BFP]
+	This sequence aligns to PROTSEQ with 0.270833 fraction identities, and 0.540230 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 301 of 377, which has header:
+	gi|116195572|ref|XP_001223598.1| hypothetical protein CHGG_04384 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.294326 fraction identities, and 0.464896 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 302 of 377, which has header:
+	gi|170096418|ref|XP_001879429.1| glycoside hydrolase family 5 protein [Laccaria bicolor S238N-H82]
+	This sequence aligns to PROTSEQ with 0.260504 fraction identities, and 0.352087 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 303 of 377, which has header:
+	gi|169860440|ref|XP_001836855.1| hypothetical protein CC1G_04168 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.258900 fraction identities, and 0.469983 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 304 of 377, which has header:
+	gi|116208244|ref|XP_001229931.1| hypothetical protein CHGG_03415 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.272436 fraction identities, and 0.407970 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 305 of 377, which has header:
+	gi|46133891|ref|XP_389261.1| hypothetical protein FG09085.1 [Gibberella zeae PH-1]
+	This sequence aligns to PROTSEQ with 0.265509 fraction identities, and 0.555678 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 306 of 377, which has header:
+	gi|116201321|ref|XP_001226472.1| hypothetical protein CHGG_08545 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.302632 fraction identities, and 0.442202 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 307 of 377, which has header:
+	gi|171679102|ref|XP_001904499.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.300000 fraction identities, and 0.563700 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 308 of 377, which has header:
+	gi|169846166|ref|XP_001829799.1| predicted protein [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.474576 fraction identities, and 0.895018 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 309 of 377, which has header:
+	gi|115390200|ref|XP_001212605.1| hypothetical protein ATEG_03427 [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.239468 fraction identities, and 0.201770 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 310 of 377, which has header:
+	gi|171695776|ref|XP_001912812.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.214925 fraction identities, and 0.409171 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 311 of 377, which has header:
+	gi|119497789|ref|XP_001265652.1| glycosyl hydrolase family 62 protein [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.235465 fraction identities, and 0.390071 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 312 of 377, which has header:
+	gi|154313516|ref|XP_001556084.1| hypothetical protein BC1G_05455 [Botryotinia fuckeliana B05.10]
+	This sequence aligns to PROTSEQ with 0.281818 fraction identities, and 0.397810 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 313 of 377, which has header:
+	gi|171681493|ref|XP_001905690.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.240418 fraction identities, and 0.520067 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 314 of 377, which has header:
+	gi|145603548|ref|XP_001404656.1| hypothetical protein MGG_13241 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.272109 fraction identities, and 0.430233 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 315 of 377, which has header:
+	gi|156031017|ref|XP_001584834.1| hypothetical protein SS1G_14289 [Sclerotinia sclerotiorum 1980]
+	This sequence aligns to PROTSEQ with 0.260000 fraction identities, and 0.554367 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 316 of 377, which has header:
+	gi|169869008|ref|XP_001841073.1| hypothetical protein CC1G_04917 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.286184 fraction identities, and 0.416507 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 317 of 377, which has header:
+	gi|121712511|ref|XP_001273867.1| acetyl xylan esterase (Axe1), putative [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.313380 fraction identities, and 0.448544 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 318 of 377, which has header:
+	gi|189197303|ref|XP_001934989.1| endo-1,4-beta-xylanase [Pyrenophora tritici-repentis Pt-1C-BFP]
+	This sequence aligns to PROTSEQ with 0.245342 fraction identities, and 0.474715 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 319 of 377, which has header:
+	gi|46136977|ref|XP_390180.1| hypothetical protein FG10004.1 [Gibberella zeae PH-1]
+	This sequence aligns to PROTSEQ with 0.242857 fraction identities, and 0.349442 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 320 of 377, which has header:
+	gi|70988747|ref|XP_749229.1| extracellular glycosyl hydrolase/cellulase [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.239645 fraction identities, and 0.408056 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 321 of 377, which has header:
+	gi|156065761|ref|XP_001598802.1| hypothetical protein SS1G_00891 [Sclerotinia sclerotiorum 1980]
+	This sequence aligns to PROTSEQ with 0.253012 fraction identities, and 0.441077 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 322 of 377, which has header:
+	gi|145616638|ref|XP_001402560.1| hypothetical protein MGG_09792 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.285185 fraction identities, and 0.497207 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 323 of 377, which has header:
+	gi|171681485|ref|XP_001905686.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.282282 fraction identities, and 0.493151 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 324 of 377, which has header:
+	gi|171677500|ref|XP_001903701.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.284091 fraction identities, and 0.573506 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 325 of 377, which has header:
+	gi|169855573|ref|XP_001834453.1| hypothetical protein CC1G_02189 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.299652 fraction identities, and 0.513559 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 326 of 377, which has header:
+	gi|39966419|ref|XP_365195.1| hypothetical protein MGG_10040 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.288344 fraction identities, and 0.381404 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 327 of 377, which has header:
+	gi|116205385|ref|XP_001228503.1| hypothetical protein CHGG_10576 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.302115 fraction identities, and 0.373106 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 328 of 377, which has header:
+	gi|145616732|ref|XP_360402.2| hypothetical protein MGG_11036 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.273523 fraction identities, and 0.511230 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 329 of 377, which has header:
+	gi|73961121|ref|XP_547433.2| PREDICTED: similar to N-acetylneuraminate pyruvate lyase [Canis familiaris]
+	This sequence aligns to PROTSEQ with 0.290698 fraction identities, and 0.797170 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 330 of 377, which has header:
+	gi|154291856|ref|XP_001546507.1| hypothetical protein BC1G_14944 [Botryotinia fuckeliana B05.10]
+	This sequence aligns to PROTSEQ with 0.269565 fraction identities, and 0.414261 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 331 of 377, which has header:
+	gi|194663866|ref|XP_001249465.2| PREDICTED: similar to intersectin 1 long form [Bos taurus]
+	This sequence aligns to PROTSEQ with 0.256674 fraction identities, and 0.720436 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 332 of 377, which has header:
+	gi|85083182|ref|XP_957069.1| hypothetical protein NCU04500 [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.317416 fraction identities, and 0.403685 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 333 of 377, which has header:
+	gi|169851362|ref|XP_001832371.1| predicted protein [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.313559 fraction identities, and 0.577061 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 334 of 377, which has header:
+	gi|189201655|ref|XP_001937164.1| choline dehydrogenase [Pyrenophora tritici-repentis Pt-1C-BFP]
+	This sequence aligns to PROTSEQ with 0.268344 fraction identities, and 0.510267 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 335 of 377, which has header:
+	gi|149369677|ref|ZP_01889529.1| hypothetical protein SCB49_07617 [unidentified eubacterium SCB49]
+	This sequence aligns to PROTSEQ with 0.285421 fraction identities, and 0.737325 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 336 of 377, which has header:
+	gi|115449749|ref|NP_001048543.1| Os02g0820500 [Oryza sativa (japonica cultivar-group)]
+	This sequence aligns to PROTSEQ with 0.274336 fraction identities, and 0.816558 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 337 of 377, which has header:
+	gi|39955797|ref|XP_364191.1| hypothetical protein MGG_09036 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.280000 fraction identities, and 0.437716 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 338 of 377, which has header:
+	gi|145613086|ref|XP_362817.2| hypothetical protein MGG_08231 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.270423 fraction identities, and 0.352190 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 339 of 377, which has header:
+	gi|154293970|ref|XP_001547429.1| hypothetical protein BC1G_14164 [Botryotinia fuckeliana B05.10]
+	This sequence aligns to PROTSEQ with 0.268687 fraction identities, and 0.441939 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 340 of 377, which has header:
+	gi|46111553|ref|XP_382834.1| hypothetical protein FG02658.1 [Gibberella zeae PH-1]
+	This sequence aligns to PROTSEQ with 0.278638 fraction identities, and 0.433333 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 341 of 377, which has header:
+	gi|85089887|ref|XP_958156.1| hypothetical protein NCU09416 [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.257627 fraction identities, and 0.516393 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 342 of 377, which has header:
+	Acremonium thermophilum Cel7A
+	This sequence aligns to PROTSEQ with 0.644401 fraction identities, and 0.034156 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 343 of 377, which has header:
+	Acremonium thermophilum Cel7B
+	This sequence aligns to PROTSEQ with 0.602679 fraction identities, and 0.145038 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 344 of 377, which has header:
+	Chaetomium thermophilum CBH1
+	This sequence aligns to PROTSEQ with 0.609804 fraction identities, and 0.043152 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 345 of 377, which has header:
+	Chaetomium thermophilum Cel7A
+	This sequence aligns to PROTSEQ with 0.609804 fraction identities, and 0.046729 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 346 of 377, which has header:
+	Chrysosporium lucknowense CBH1
+	This sequence aligns to PROTSEQ with 0.617647 fraction identities, and 0.035917 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 347 of 377, which has header:
+	Humicola grisea var. thermoidea EG1
+	This sequence aligns to PROTSEQ with 0.420428 fraction identities, and 0.201139 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 348 of 377, which has header:
+	Humicola grisea var. thermoidea CBH1.2
+	This sequence aligns to PROTSEQ with 0.524887 fraction identities, and 0.153257 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 349 of 377, which has header:
+	Humicola grisea var. thermoidea CBH1
+	This sequence aligns to PROTSEQ with 0.590551 fraction identities, and 0.041509 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 350 of 377, which has header:
+	Humicola grisea var. thermoidea Exo1
+	This sequence aligns to PROTSEQ with 0.522624 fraction identities, and 0.153257 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 351 of 377, which has header:
+	Humicola insolens Cel7B
+	This sequence aligns to PROTSEQ with 0.421995 fraction identities, and 0.253817 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 352 of 377, which has header:
+	Melanocarpus albomyces Cel7B
+	This sequence aligns to PROTSEQ with 0.512415 fraction identities, and 0.151341 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 353 of 377, which has header:
+	Talaromyces emersonii CBH1
+	This sequence aligns to PROTSEQ with 0.662921 fraction identities, and 0.149140 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 354 of 377, which has header:
+	Thermoascus aurantiacus CBH1
+	This sequence aligns to PROTSEQ with 0.654018 fraction identities, and 0.141762 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 355 of 377, which has header:
+	Volvariella volvacea CBH1-1
+	This sequence aligns to PROTSEQ with 0.578000 fraction identities, and 0.047619 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 356 of 377, which has header:
+	Volvariella volvacea CBH1 Frameshift
+	This sequence aligns to PROTSEQ with 0.529774 fraction identities, and 0.133452 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 357 of 377, which has header:
+	Volvariella volvacea CBH1-2
+	This sequence aligns to PROTSEQ with 0.579775 fraction identities, and 0.153992 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 358 of 377, which has header:
+	Agaricus bisporus CBH1
+	This sequence aligns to PROTSEQ with 0.571717 fraction identities, and 0.055344 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 359 of 377, which has header:
+	Aspergillus aculeatus CBH1
+	This sequence aligns to PROTSEQ with 0.611002 fraction identities, and 0.064338 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 360 of 377, which has header:
+	Aspergillus niger CBHB
+	This sequence aligns to PROTSEQ with 0.617647 fraction identities, and 0.053803 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 361 of 377, which has header:
+	Aspergillus niger CBHA
+	This sequence aligns to PROTSEQ with 0.669663 fraction identities, and 0.144231 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 362 of 377, which has header:
+	Aspergillus oryzae KBN616 Endoglucanase
+	This sequence aligns to PROTSEQ with 0.451852 fraction identities, and 0.227099 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 363 of 377, which has header:
+	Athelia rolfsii CBH1
+	This sequence aligns to PROTSEQ with 0.561265 fraction identities, and 0.057728 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 364 of 377, which has header:
+	Emericella nidulans Endoglucanase
+	This sequence aligns to PROTSEQ with 0.432763 fraction identities, and 0.234082 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 365 of 377, which has header:
+	Fusarium oxysporum Endoglucanase
+	This sequence aligns to PROTSEQ with 0.411483 fraction identities, and 0.202290 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 366 of 377, which has header:
+	Fusarium oxysporum CBH1
+	This sequence aligns to PROTSEQ with 0.589744 fraction identities, and 0.025000 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 367 of 377, which has header:
+	Hypocrea jecorina Endoglucanase
+	This sequence aligns to PROTSEQ with 0.507937 fraction identities, and 0.169492 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 368 of 377, which has header:
+	Hypocrea jecorina Cel7B
+	This sequence aligns to PROTSEQ with 0.505643 fraction identities, and 0.162571 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 369 of 377, which has header:
+	Hypocrea lixii CBH1
+	This sequence aligns to PROTSEQ with 0.821782 fraction identities, and 0.015595 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 370 of 377, which has header:
+	Hypocrea virens CBH1
+	This sequence aligns to PROTSEQ with 0.847525 fraction identities, and 0.015595 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 371 of 377, which has header:
+	Neurospora crassa CBH1
+	This sequence aligns to PROTSEQ with 0.594810 fraction identities, and 0.051136 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 372 of 377, which has header:
+	Penicillium chrysogenum CBH1
+	This sequence aligns to PROTSEQ with 0.605882 fraction identities, and 0.041353 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 373 of 377, which has header:
+	Penicillium funiculosum XynA
+	This sequence aligns to PROTSEQ with 0.641026 fraction identities, and 0.052336 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 374 of 377, which has header:
+	Schizophyllum commune Cel1
+	This sequence aligns to PROTSEQ with 0.563063 fraction identities, and 0.152672 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 375 of 377, which has header:
+	Trichoderma longibrachiatum Endoglucanase
+	This sequence aligns to PROTSEQ with 0.492099 fraction identities, and 0.168856 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 376 of 377, which has header:
+	Trichoderma sp CBH1
+	This sequence aligns to PROTSEQ with 0.970760 fraction identities, and 0.001946 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 377 of 377, which has header:
+	Trichoderma viride CBH1
+	This sequence aligns to PROTSEQ with 0.947368 fraction identities, and 0.000000 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+After screening for sequences satisfying HOMOLOGY_THRESHOLD, 31 unique homologous sequences remain.
+
+We will now build a multiple sequence alignment (MSA) of all of the relevant sequences.
+The first sequence in the MSA will be PROTSEQ.
+The MSA will then include the 31 screened unique homologous sequences.
+This MSA will not include an outgroup sequence, since OUTGROUP_SEQ was set to NONE, and since no outgroup is needed since we are not using a molecular clock.
+The MSA will include a total of 32 sequences.  These sequences have all been given short names that are acceptable to PHYLIP.  A table relating these new names to the original sequence headers has been written to the OUTPUT_SEQNAMES file of seqnames.txt.
+
+Here are the contents of the OUTPUT_SEQNAMES file of seqnames.txt:
+
+******
+PROTSEQ Hypocrea jecorina CBH1
+SEQ1 gi|70992391|ref|XP_751044.1| 1,4-beta-D-glucan-cellobiohydrolyase [Aspergillus fumigatus Af293]
+SEQ2 gi|119472134|ref|XP_001258278.1| glycosyl hydrolase family 7 protein [Neosartorya fischeri NRRL 181]
+SEQ3 gi|119483864|ref|XP_001261835.1| glycosyl hydrolase family 7 protein [Neosartorya fischeri NRRL 181]
+SEQ4 gi|212538337|ref|XP_002149324.1| 1,4-beta-D-glucan-cellobiohydrolyase, putative [Penicillium marneffei ATCC 18224]
+SEQ5 gi|145230535|ref|XP_001389576.1| 1,4-beta-D-glucan cellobiohydrolase B precursor cbhB-Aspergillus niger
+SEQ6 gi|46107376|ref|XP_380747.1| GUXC_FUSOX Putative exoglucanase type C precursor (Exocellobiohydrolase I) (1,4-beta-cellobiohydrolase) (Beta-glucancellobiohydrolase) [Gibberella zeae PH-1]
+SEQ7 gi|121699984|ref|XP_001268257.1| glycosyl hydrolase family 7 protein [Aspergillus clavatus NRRL 1]
+SEQ8 gi|85108032|ref|XP_962498.1| exoglucanase 1 precursor [Neurospora crassa OR74A]
+SEQ9 gi|67516425|ref|XP_658098.1| hypothetical protein AN0494.2 [Aspergillus nidulans FGSC A4]
+SEQ10 gi|115397177|ref|XP_001214180.1| exoglucanase 1 precursor [Aspergillus terreus NIH2624]
+SEQ11 gi|171676762|ref|XP_001903333.1| unnamed protein product [Podospora anserina]
+SEQ12 gi|154312003|ref|XP_001555330.1| hypothetical protein BC1G_06035 [Botryotinia fuckeliana B05.10]
+SEQ13 gi|156060391|ref|XP_001596118.1| hypothetical protein SS1G_02334 [Sclerotinia sclerotiorum 1980]
+SEQ14 Acremonium thermophilum Cel7A
+SEQ15 Chaetomium thermophilum CBH1
+SEQ16 Chaetomium thermophilum Cel7A
+SEQ17 Chrysosporium lucknowense CBH1
+SEQ18 Humicola grisea var. thermoidea CBH1
+SEQ19 Volvariella volvacea CBH1-1
+SEQ20 Agaricus bisporus CBH1
+SEQ21 Aspergillus aculeatus CBH1
+SEQ22 Aspergillus niger CBHB
+SEQ23 Athelia rolfsii CBH1
+SEQ24 Fusarium oxysporum CBH1
+SEQ25 Hypocrea lixii CBH1
+SEQ26 Hypocrea virens CBH1
+SEQ27 Neurospora crassa CBH1
+SEQ28 Penicillium chrysogenum CBH1
+SEQ29 Penicillium funiculosum XynA
+SEQ30 Trichoderma sp CBH1
+SEQ31 Trichoderma viride CBH1
+
+******
+
+Now constructing the MSA (this may take a while)...
+Completed aligning the sequences.  Now writing this alignment to the OUTPUT_ALIGNMENT file of renamed_alignment.fasta.
+
+Here are the contents of the OUTPUT_ALIGNMENT file of renamed_alignment.fasta:
+
+******
+>PROTSEQ
+---------M--------Y-RK-LAVISAFLA-TARAQSACTLQSETHPPLTWQKCSSGGTCTQQTGSVVIDANWRWTHATNSSTNCYDGNTWSSTLCPDNETCAKNCCLDGAAYASTYGVTTSGNSLSIGFVTQSA-QKNVGARLYLMAS--DTTYQEFTLLGNEFSFDVDVSQLPCGLNGALYFVSMDADGGVSKYPTNTAGAKYGTGYCDSQCPRDLKFINGQANVEGWEPSSNNANTGIGGHGSCCSEMDIWEANSISEALTPHPCTTVGQEICEGDGCGGTYS--DNRYGGTCDPDGCDWNPYRLGNTSFYGPG--SSFT-LDTTKKLTVVTQFETS--------GAINRYYVQNGVTFQQPNAELGSY-S-G--NELNDDYCTAEEAEFGGS-SFSDKGGLTQFKKATSGGMVLVMSLWDDYYANMLWLDSTYPTNETSSTPGAVRGSCSTSSGVPAQVESQSPNAKVTFSNIKFGPIGST-GNP--S-GGN--PPG-G--N----R-G-----T-------TTTRR-------P--A-TTTG--SSP--G-----PTQSHYGQCGGIGYSGPTVCASGTTCQVLNPYYSQCL--
+>SEQ1
+MLASTFSYRM--------Y-KT-ALILAALLG-SGQAQQVGTSQAEVHPSMTWQSCTAGGSCTTNNGKVVIDANWRWVHKVGDYTNCYTGNTWDTTICPDDATCASNCALEGANYESTYGVTASGNSLRLNFVTTSQ-QKNIGSRLYMMKD--DSTYEMFKLLNQEFTFDVDVSNLPCGLNGALYFVAMDADGGMSKYPTNKAGAKYGTGYCDSQCPRDLKFINGQANVEGWQPSSNDANAGTGNHGSCCAEMDIWEANSISTAFTPHPCDTPGQVMCTGDACGGTYS--SDRYGGTCDPDGCDFNSFRQGNKTFYGPG--M--T-VDTKSKFTVVTQFITDDGTSSGTLKEIKRFYVQNGKVIPNSESTWTGV-S-G--NSITTEYCTAQKSLFQDQNVFEKHGGLEGMGAALAQGMVLVMSLWDDHSANMLWLDSNYPTTASSTTPGVARGTCDISSGVPADVEANHPDAYVVYSNIKVGPIGST-FNS--G-GSN--PGG-G--TTTT------------------TTTQ-------P-TTTTTTA--GNPGGT-----GVAQHYGQCGGIGWTGPTTCASPYTCQKLNDYYSQCL--
+>SEQ2
+MLASTFSYRM--------Y-KT-ALILAALLG-SGQAQQVGTSQAEVHPSMTWQSCTAGGSCTTNNGKVVIDANWRWVHKVGDYTNCYTGNTWDKTLCPDDATCASNCALEGANYQSTYGATTSGDSLRLNFVTTSQ-QKNIGSRLYMMKD--DTTYEMFKLLNQEFTFDVDVSNLPCGLNGALYFVAMDADGGMSKYPTNKAGAKYGTGYCDSQCPRDLKFINGQANVEGWQPSSNDANAGTGNHGSCCAEMDIWEANSISTAFTPHPCDTPGQVMCTGDACGGTYS--SDRYGGTCDPDGCDFNSFRQGNKTFYGPG--M--T-VDTKSKFTVVTQFITDDGTASGTLKEIKRFYVQNGKVIPNSESTWSGV-G-G--NSITNDYCTAQKSLFKDQNVFAKHGGMEGMGAALAQGMVLVMSLWDDHAANMLWLDSNYPTTASSSTPGVARGTCDISSGVPADVEANHPDASVVYSNIKVGPIGST-FNS--G-GSN--PGG-G--TT--------------------TTAK-------P-TTTTTTA--GSPGGT-----GVAQHYGQCGGNGWQGPTTCASPYTCQKLNDFYSQCL--
+>SEQ3
+---------MASAISFQVY-RS-ALILSAFLPSITQAQQIGTYTTETHPSMTWETCTSGGSCATNQGSVVMDANWRWVHQVGSTTNCYTGNTWDTSICDTDETCATECAVDGADYESTYGVTTSGSQIRLNFVTQNSNGANVGSRLYMMAD--NTHYQMFKLLNQEFTFDVDVSNLPCGLNGALYFVTMDEDGGVSKYPNNKAGAQYGVGYCDSQCPRDLKFIQGQANVEGWTPSSNNENTGLGNYGSCCAELDIWESNSISQALTPHPCDTATNTMCTGDACGGTYS--SDRYAGTCDPDGCDFNPYRMGNTTFYGPG--K--T-IDTNSPFTVVTQFITDDGTDTGTLSEIRRYYVQNGVTYAQPDSDISGI-T-G--NAINADYCTAENTVFDGPGTFAKHGGFSAMSEAMSTGMVLVMSLWDDYYADMLWLDSTYPTNASSSTPGAVRGSCSTDSGVPATIESESPDSYVTYSNIKVGPIGST-FSS--G-SGS--GSSGS--GSSG-S-A-------------STSTT-------S--TKTTAA--TSTS-T-----AVAQHYSQCGGQDWTGPTTCVSPYTCQVQNAYYSQCL--
+>SEQ4
+MSA-LNSFTM--------Y-KS-AIILGSLLA-TAGAQQIGTLTTETHPPLTWSTCKSGGSCTSNSGSIVLDANWRWVHSVNSSTNCYTGNTWNTNICDTDASCAQDCALDGADYSGTYGITTSGNSLRLNFVTS----SNVGSRTYLMAD--NTHYQMFDLLNQEFTFTVDVSNLPCGLNGALYFVTMDADGGISKYPNNKAGAQYGVGYCDSQCPRDLKFIAGQANIEGWAPSSKNNNTGIGNHGSCCSELDIWEANSFSEALTPHPCDTPGLTVCTGDNCGGTYS--NNRYAGTCDPDGCDFNPYRLGVTDFYGSG--K--T-IDTTKPFTVVTQFVTNDGTSTGTLSEIRRYYVQNGVVHPQPSSKISGV-S-G--NVINSDFCAAEISTFGETASFTNHGGLPKMSAGISAGMVLVMSLWDDYDVNMLWLDSTYPTNAT-GTPGAARGSCATTSGDPKTLESQSGSSYVIYSDIKVGPFNST-FSG--T-GST--TGS-T--TTTT-TKP---STSM---SS-TSTTT-------K--TSTSTA--STSTGT-----GVAAHWGQCGGQGWTGPTACASGFTCTVVNPYYSQCL--
+>SEQ5
+---------MSS---FQVY--R-AALLLSILA-TANAQQVGTYTTETHPSLTWQTCTSDGSCTTNDGEVVIDANWRWVHSTSSATNCYTGNEWDTSICTDDVTCAANCALDGATYEATYGVTTSGSELRLNFVTQGS-SKNIGSRLYLMSD--DSNYELFKLLGQEFTFDVDVSNLPCGLNGALYFVAMDADGGTSEYSGNKAGAKYGTGYCDSQCPRDLKFINGEANCDGWEPSSNNVNTGVGDHGSCCAEMDVWEANSISNAFTAHPCDSVSQTMCDGDSCGGTYSASGDRYSGTCDPDGCDYNPYRLGNTDFYGPG--L--T-VDTNSPFTVVTQFITDDGTSSGTLTEIKRLYVQNGEVIANGASTYSSV-N-G--SSITSAFCESEKTLFGDENVFDKHGGLEGMGEAMAKGMVLVLSLWDDYAADMLWLDSDYPVNSSASTPGVARGTCSTDSGVPATVEAESPNAYVTYSNIKFGPIGST-YSS--G-SSS--GSG-S--SSSS-S-S----TTT---KATSTTLK-------T--TSTTSS--GSSS-T-----SAAQAYGQCGGQGWTGPTTCVSGYTCTYENAYYSQCL--
+>SEQ6
+---------M--------Y-RA-IATASALIA-AVRAQQVCSLTQESKPSLNWSKCTSSG-CSNVKGSVTIDANWRWTHQVSGSTNCYTGNKWDTSVCTSGKVCAEKCCLDGADYASTYGITSSGDQLSLSFVTKGPYSTNIGSRTYLMED--ENTYQMFQLLGNEFTFDVDVSNIGCGLNGALYFVSMDADGGKAKYPGNKAGAKYGTGYCDAQCPRDVKFINGQANSDGWQPSDSDVNGGIGNLGTCCPEMDIWEANSISTAYTPHPCTKLTQHSCTGDSCGGTYS--NDRYGGTCDADGCDFNSYRQGNKTFYGPGSGF--N-VDTTKKVTVVTQFHKG---SNGRLSEITRLYVQNGKVIANSESKIAGV-P-G--NSLTADFCTKQKKVFNDPDDFTKKGAWSGMSDALEAPMVLVMSLWHDHHSNMLWLDSTYPTDS--TKLGSQRGSCSTSSGVPADLEKNVPNSKVAFSNIKFGPIGST-YKS--D-GTT--PTN-P--TN---------------------P--------SE--P-SNTA---NPN-P-----GTVDQWGQCGGSNYSGPTACKSGFTCKKINDFYSQCQ--
+>SEQ7
+MLPSTISYRI--------Y-KN-ALFFAALFG-AVQAQKVGTSKAEVHPSMAWQTCAADGTCTTKNGKVVIDANWRWVHDVKGYTNCYTGNTWNAELCPDNESCAENCALEGADYAATYGATTSGNALSLKFVTQSQ-QKNIGSRLYMMKD--DNTYETFKLLNQEFTFDVDVSNLPCGLNGALYFVSMDADGGLSRYTGNEAGAKYGTGYCDSQCPRDLKFINGLANVEGWTPSSSDANAGNGGHGSCCAEMDIWEANSISTAYTPHPCDTPGQAMCNGDSCGGTYS--SDRYGGTCDPDGCDFNSYRQGNKSFYGPG--M--T-VDTKKKMTVVTQFLTNDGTATGTLSEIKRFYVQDGKVIANSESTWPNL-G-G--NSLTNDFCKAQKTVFGDMDTFSKHGGMEGMGAALAEGMVLVMSLWDDHNSNMLWLDSNSPTTGTSTTPGVARGSCDISSGDPKDLEANHPDASVVYSNIKVGPIGST-FNS--G-GSN--PGG-S--TTTT-KPA----TS-------TTTTK-------ATTTATTNT--TGPTGT-----GVAQPWAQCGGIGYSGPTQCAAPYTCTKQNDYYSQCL--
+>SEQ8
+---------M--------L-AK-FAALAALVA-SANAQAVCSLTAETHPSLNWSKCTSSG-CTNVAGSITVDANWRWTHITSGSTNCYSGNEWDTSLCSTNTDCATKCCVDGAEYSSTYGIQTSGNSLSLQFVTKGSYSTNIGSRTYLMNG--ADAYQGFELLGNEFTFDVDVSGTGCGLNGALYFVSMDLDGGKAKYTNNKAGAKYGTGYCDAQCPRDLKYINGIANVEGWTPSTNDANAGIGDHGTCCSEMDIWEANKVSTAFTPHPCTTIEQHMCEGDSCGGTYS--DDRYGGTCDADGCDFNSYRMGNTTFYGEG--K--T-VDTSSKFTVVTQFIKD---SAGDLAEIKRFYVQNGKVIENSQSNVDGV-S-G--NSITQSFCNAQKTAFGDIDDFNKKGGLKQMGKALAKPMVLVMSIWDDHAANMLWLDSTYPVE---GGPGAYRGECPTTSGVPAEVEANAPNSKVIFSNIKFGPIGST-FSGGSS-GTP--PSN-P--SSSV-K-P-----V-------TSTAK-------P--SSTSTA--SNPS-G-----TGAAHWAQCGGIGFSGPTTCQSPYTCQKINDYYSQCV--
+>SEQ9
+---------MAS--SFQLY-KA-LLFFSSLLS-AVQAQKVGTQQAEVHPGLTWQTCTSSGSCTTVNGEVTIDANWRWLHTVNGYTNCYTGNEWDTSICTSNEVCAEQCAVDGANYASTYGITTSGSSLRLNFVTQSQ-QKNIGSRVYLMDD--EDTYTMFYLLNKEFTFDVDVSELPCGLNGAVYFVSMDADGGKSRYATNEAGAKYGTGYCDSQCPRDLKFINGVANVEGWESSDTNPNGGVGNHGSCCAEMDIWEANSISTAFTPHPCDTPGQTLCTGDSCGGTYS--NDRYGGTCDPDGCDFNSYRQGNKTFYGPG--L--T-VDTNSPVTVVTQFLTDDNTDTGTLSEIKRFYVQNGVVIPNSESTYPAN-P-G--NSITTEFCESQKELFGDVDVFSAHGGMAGMGAALEQGMVLVLSLWDDNYSNMLWLDSNYPTDADPTQPGIARGTCPTDSGVPSEVEAQYPNAYVVYSNIKFGPIGST-FGN--G-GGS--GPT-----TTV-----------------TTSTA-------T--STTSSA--TSTA-T-----GQAQHWEQCGGNGWTGPTVCASPWACTVVNSWYSQCL--
+>SEQ10
+---------MPS--TYDIY-KK-LLLLASFLS-ASQAQQVGTSKAEVHPSLTWQTCTSGGSCTTVNGKVVVDANWRWVHNVDGYNNCYTGNTWDTTLCPDDETCASNCALEGADYSGTYGVTTSGNSLRLNFVTQAS-QKNIGSRLYLMED--DSTYKMFKLLNQEFTFDVDVSNLPCGLNGAVYFVSMDADGGMAKYPANKAGAKYGTGYCDSQCPRDLKFINGMANVEGWEPSANDANAGTGNHGSCCAEMDIWEANSISTAYTPHPCDTPGQVMCTGDSCGGTYS--SDRYGGTCDPDGCDFNSYRQGNKTFYGPG--M--T-VDTKSKITVVTQFLTNDGTASGTLSEIKRFYVQNGKVIPNSESTWSGV-S-G--NSITTAYCNAQKTLFGDTDVFTKHGGMEGMGAALAEGMVLVLSLWDDHNSNMLWLDSNYPTDKPSTTPGVARGSCDISSGDPKDVEANDANAYVVYSNIKVGPIGST-FSG--S-TGG--GSS-S--STTATS-K---TTTTSATKTTTTTTK-------T--TTTTSA--SSTS-T-----GGAQHWAQCGGIGWTGPTTCVAPYTCQKQNDYYSQCL--
+>SEQ11
+---------MV-------S-AK-FAALAALVA-SASAQQVCSLTPESHPPLTWQRCSAGGSCTNVAGSVTLDSNWRWTHTLQGSTNCYSGNEWDTSICTTGTKCAQNCCVEGAEYAATYGITTSGNQLNLKFVTEGKYSTNVGSRTYLMEN--ATKYQGFNLLGNEFTFDVDVSNIGCGLNGALYFVSMDLDGGLAKYSGNKAGAKYGTGYCDAQCPRDIKFINGEANIEGWNPSTNDVNAGAGRYGTCCSEMDIWEANNMATAYTPHSCTILDQSRCEGESCGGTYS--SDRYGGVCDPDGCDFNSYRMGNKEFYGKG--K--T-VDTTKKMTVVTQFLKN---AAGELSEIKRFYVQNGVVIPNSVSSIPGV-PNQ--NSITQDWCDAQKIAFGDPDDNTAKGGLRQMGLALDKPMVLVMSIWNDHAAHMLWLDSTYPVDA-AGRPGAERGACPTTSGVPSEVEAEAPNSNVAFSNIKFGPIGST-FNS--G--ST--NPN-PISSSTA-TTP----TS-------T--RVS--STSTA--A-QTPT--SAP--G-----GTVPRWGQCGGQGYTGPTQCVAPYTCVVSNQWYSQCL--
+>SEQ12
+---------MI-------S--K-VLAFTSLLA-AARAQQAGTLTTETHPPLSVSQCTASG-CTTSAQSIVVDANWRWLHSTTGSTNCYTGNTWDKTLCPDGATCAANCALDGADYSGVYGITTSGNSIKLNFVTKGA-NTNVGSRTYLMAAGSTTQYQMLKLLNQEFTFDVDVSNLPCGLNGALYFAAMDADGGLSRFPTNKAGAKYGTGYCDAQCPQDIKFINGVANSVGWTPSSNDVNAGAGQYGSCCSEMDIWEANKISAAYTPHPCSVDTQTRCTGTDCGI-----GARYSSLCDADGCDFNSYRQGNTSFYGAG--L--T-VNTNKVFTVVTQFITNDGTASGTLKEIRRFYVQNGVVIPNSQSTIAGV-P-G--NSITDSFCAAQKTAFGDTNEFATKGGLATMSKALAKGMVLVMSIWDDHTANMLWLDAPYPATKSPSAPGVTRGSCSATSGNPVDVEANSPGSSVTFSNIKWGPINST-YTG--S--GA--APS-V----PG-T-T--------------TV---------S--SAPAST--ATSG-A-----GGVAKYAQCGGSGYSGATACVSGSTCVALNPYYSQCQ--
+>SEQ13
+---------MI-------S--R-VLAISSLLA-AARAQQIGTNTAEVHPALT---------------SIVIDANWRWLHTTSGYTNCYTGNSWDATLCPDAVTCAANCALDGADYSGTYGITTSGNSLKLNFVTKGA-NTNVGSRTYLMAAGSKTQYQLLKLLGQEFTFDVDVSNLPCGLNGALYFAEMDADGGVSRFPTNKAGAQYGTGYCDAQCPQDIKFINGQANSVGWTPSSNDVNTGTGQYGSCCSEMDIWEANKISAAYTPHPCSVDGQTRCTGTDCGI-----GARYSSLCDADGCDFNSYRMGDTGFYGAG--L--T-VDTSKVFTVVTQFITNDGTTSGTLSEIRRFYVQNGKVIPNSQSKVTGV-S-G--NSITDSFCAAQKTAFGDTNEFATKGGLATMSKALAKGMVLVMSIWDDHSANMLWLDAPYPASKSPSAAGVSRGSCSASSGVPADVEANSPGASVTYSNIKWGPINST-YSA--G-TGS--NTG-S--G-SG-S-T--------------TTLV-------S--SVPSST--PT-S-T-----TGVPKYGQCGGSGYTGPTNCI-GSTCVSMGQYYSQCQ--
+>SEQ14
+---------M--------Y-TK-FAALAALVA-TVRGQAACSLTAETHPSLQWQKCTAPGSCTTVSGQVTIDANWRWLHQTNSSTNCYTGNEWDTSICSSDTDCATKCCLDGADYTGTYGVTASGNSLNLKFVTQGPYSKNIGSRMYLMES--ESKYQGFTLLGQEFTFDVDVSNLGCGLNGALYFVSMDLDGGVSKYTTNKAGAKYGTGYCDSQCPRDLKFINGQANIDGWQPSSNDANAGLGNHGSCCSEMDIWEANKVSAAYTPHPCTTIGQTMCTGDDCGGTYS--SDRYAGICDPDGCDFNSYRMGDTSFYGPG--K--T-VDTGSKFTVVTQFLTG---SDGNLSEIKRFYVQNGKVIPNSESKIAGV-S-G--NSITTDFCTAQKTAFGDTNVFEERGGLAQMGKALAEPMVLVLSVWDDHAVNMLWLDSTYPTDS--TKPGAARGDCPITSGVPADVESQAPNSNVIYSNIRFGPINST-YTGTPS-GGN--PPG-G--GTTT-T-T-----T-------TTTSK-------P--SGPTTT--TNPS-G-----PQQTHWGQCGGQGWTGPTVCQSPYTCKYSNDWYSQCL--
+>SEQ15
+---------MM-------Y-KK-FAALAALVA-GAAAQQACSLTTETHPRLTWKRCTSGGNCSTVNGAVTIDANWRWTHTVSGSTNCYTGNEWDTSICSDGKSCAQTCCVDGADYSSTYGITTSGDSLNLKFVTKHQHGTNVGSRVYLMEN--DTKYQMFELLGNEFTFDVDVSNLGCGLNGALYFVSMDADGGMSKYSGNKAGAKYGTGYCDAQCPRDLKFINGEANIENWTPSTNDANAGFGRYGSCCSEMDIWDANNMATAFTPHPCTIIGQSRCEGNSCGGTYS--SERYAGVCDPDGCDFNAYRQGDKTFYGKG--M--T-VDTTKKMTVVTQFHKN---SAGVLSEIKRFYVQDGKIIANAESKIPGN-P-G--NSITQEWCDAQKVAFGDIDDFNRKGGMAQMSKALEGPMVLVMSVWDDHYANMLWLDSTYPIDK-AGTPGAERGACPTTSGVPAEIEAQVPNSNVIFSNIRFGPIGST-VPG--LDGST--PSN-P--TATV-APP----TS-------TTTSVR--SSTTQ--I-STPT--SQPG-G-----CTTQKWGQCGGIGYTGCTNCVAGTTCTELNPWYSQCL--
+>SEQ16
+---------MM-------Y-KK-FAALAALVA-GASAQQACSLTAENHPSLTWKRCTSGGSCSTVNGAVTIDANWRWTHTVSGSTNCYTGNQWDTSLCTDGKSCAQTCCVDGADYSSTYGITTSGDSLNLKFVTKHQYGTNVGSRVYLMEN--DTKYQMFELLGNEFTFDVDVSNLGCGLNGALYFVSMDADGGMSKYSGNKAGAKYGTGYCDAQCPRDLKFINGEANVGNWTPSTNDANAGFGRYGSCCSEMDVWEANNMATAFTPHPCTTVGQSRCEADTCGGTYS--SDRYAGVCDPDGCDFNAYRQGDKTFYGKG--M--T-VDTNKKMTVVTQFHKN---SAGVLSEIKRFYVQDGKIIANAESKIPGN-P-G--NSITQEYCDAQKVAFSNTDDFNRKGGMAQMSKALAGPMVLVMSVWDDHYANMLWLDSTYPIDQ-AGAPGAERGACPTTSGVPAEIEAQVPNSNVIFSNIRFGPIGST-VPG--LDGSN--PGN-P--TTTV-VPP----AS-------TSTSRPTSSTSSP--V-STPT--GQPG-G-----CTTQKWGQCGGIGYTGCTNCVAGTTCTQLNPWYSQCL--
+>SEQ17
+---------M--------Y-AK-FATLAALVA-GAAAQNACTLTAENHPSLTWSKCTSGGSCTSVQGSITIDANWRWTHRTDSATNCYEGNKWDTSYCSDGPSCASKCCIDGADYSSTYGITTSGNSLNLKFVTKGQYSTNIGSRTYLMES--DTKYQMFQLLGNEFTFDVDVSNLGCGLNGALYFVSMDADGGMSKYSGNKAGAKYGTGYCDSQCPRDLKFINGEANVENWQSSTNDANAGTGKYGSCCSEMDVWEANNMAAAFTPHPCXVIGQSRCEGDSCGGTYS--TDRYAGICDPDGCDFNSYRQGNKTFYGKG--M--T-VDTTKKITVVTQFLKN---SAGELSEIKRFYVQNGKVIPNSESTIPGV-E-G--NSITQDWCDRQKAAFGDVTDXQDKGGMVQMGKALAGPMVLVMSIWDDHAVNMLWLDSTWPIDG-AGKPGAERGACPTTSGVPAEVEAEAPNSNVIFSNIRFGPIGST-VSG--L-PDG--GSG-----NPN-P-P-------------VSSST-------P--VPSSSTTSSGSS-GPTGGTGVAKHYEQCGGIGFTGPTQCESPYTCTKLNDWYSQCL--
+>SEQ18
+---------M--------RTAK-FATLAALVA-SAAAQQACSLTTERHPSLSWKKCTAGGQCQTVQASITLDSNWRWTHQVSGSTNCYTGNKWDTSICTDAKSCAQNCCVDGADYTSTYGITTNGDSLSLKFVTKGQYSTNVGSRTYLMDG--EDKYQTFELLGNEFTFDVDVSNIGCGLNGALYFVSMDADGGLSRYPGNKAGAKYGTGYCDAQCPRDIKFINGEANIEGWTGSTNDPNAGAGRYGTCCSEMDIWEANNMATAFTPHPCTIIGQSRCEGDSCGGTYS--NERYAGVCDPDGCDFNSYRQGNKTFYGKG--M--T-VDTTKKITVVTQFLKD---ANGDLGEIKRFYVQDGKIIPNSESTIPGV-E-G--NSITQDWCDRQKVAFGDIDDFNRKGGMKQMGKALAGPMVLVMSIWDDHASNMLWLDSTFPVDA-AGKPGAERGACPTTSGVPAEVEAEAPNSNVVFSNIRFGPIGST-VAG--L-PGA--GNGGNNGGNPP-P-P-------------TTTTS-------S--APATTT--TASA-G-----PKAGRWQQCGGIGFTGPTQCEEPYTCTKLNDWYSQCL--
+>SEQ19
+---------M--------F-PKSSLLVLSFLA-TAYAQQVGTQTAEVHPSLNWARCTSSG-CTNVAGSVTLDANWRWLHTTSGYTNCYTGNSWNTTLCPDGATCAQNCALDGANYQSTCGITTSGNALTLKFVTQGE-QKNIGSRVYLMAS--ESRYEMFGLLNKEFTFDVDVSNLPCGLNGALYFSSMDADGGMAKNPGNKAGAKYGTGYCDSQCPRDIKFINGEANVAGWNGSPNDTNAGTGNWGACCNEMDIWEANSISAAYTPHPCTVQGLSRCSGTACG---T--NDRYGTVCDPDGCDFNSYRMGDKTYYGPG--G--TGVDTRSKFTVVTQFLTNNNSSSGTLSEIRRLYVQNGRVVQNSKVNIPGM-S-NTLDSITTGFCDSQKTAFGDTRSFQNKGGMSAMGQALGAGMVLVLSVWDDHAANMLWLDSNYPVDADPSKPGIARGTCSTTSGKPTDVEQSAANSSVTFSNIKFGDIGTT-YTG--G-SVTTTPGN-P--GTT--------------------------------------T--STAP-G-----AVQTKWGQCGGQGWTGPTRCESGSTCTVVNQWYSQCI--
+>SEQ20
+---------M--------F-PRSILLALSLTA-VALGQQVGTNMAENHPSLTWQRCTSSG-CQNVNGKVTLDANWRWTHRINDFTNCYTGNEWDTSICPDGVTCAENCALDGADYAGTYGVTSSGTALTLKFVTESQ-QKNIGSRLYLMAD--DSNYEIFNLLNKEFTFDVDVSKLPCGLNGALYFSEMAADGGMS--STNTAGAKYGTGYCDSQCPRDIKFIDGEANSEGWEGSPNDVNAGTGNFGACCGEMDIWEANSISSAYTPHPCREPGLQRCEGNTCS---V--NDRYATECDPDGCDFNSFRMGDKSFYGPG--M--T-VDTNQPITVVTQFITDNGSDNGNLQEIRRIYVQNGQVIQNSNVNIPGIDS-G--NSISAEFCDQAKEAFGDERSFQDRGGLSGMGSALDRGMVLVLSIWDDHAVNMLWLDSDYPLDASPSQPGISRGTCSRDSGKPEDVEANAGGVQVVYSNIKFGDINST-FNN--N-GGG--GGN-P--SPT--------------------------------------T--TRPN-S-----PAQTMWGQCGGQGWTGPTACQSPSTCHVINDFYSQCF--
+>SEQ21
+---------MVD--SFSIY--K-TALLLSMLA-TSNAQQVGTYTAETHPSLTWQTCSGSGSCTTTSGSVVIDANWRWVHEVGGYTNCYSGNTWDSSICSTDTTCASECALEGATYESTYGVTTSGSSLRLNFVTTAS-QKNIGSRLYLLAD--DSTYETFKLFNREFTFDVDVSNLPCGLNGALYFVSMDADGGVSRFPTNKAGAKYGTGYCDSQCPRDLKFIDGQANIEGWEPSSTDVNAGTGNHGSCCPEMDIWEANSISSAFTAHPCDSVQQTMCTGDTCGGTYSDTTDRYSGTCDPDGCDFNPYRFGNTNFYGPG--K--T-VDNSKPFTVVTQFITHDGTDTGTLTEIRRLYVQNGVVIGNGPSTYTAA-S-G--NSITESFCKAEKTLFGDTNVFETHGGLSAMGDALGDGMVLVLSLWDDHAADMLWLDSDYPTTSCASSPGVARGTCPTTTGNATYVEANYPNSYVTYSNIKFGTLNST-YSG--T-SSG--GSS-S--SSTT-L-TTKASTST---TSSKTTTT-------T--SKTSTT--SSSS-T-----NVAQLYGQCGGQGWTGPTTCASG-TCTKQNDYYSQCL--
+>SEQ22
+---------MSS---FQIY--R-AALLLSILA-TANAQQVGTYTTETHPSLTWQTCTSDGSCTTNDGEVVIDANWRWVHSTSSATNCYTGNEWDTSICTDDVTCAANCALDGATYEATYGVTTSGSELRLNFVTQGS-SKNIGSRLYLMSD--DSNYELFKLLGQEFTFDVDVSNLPCGLNGALYFVAMDADGGTSEYSGNKAGAKYGTGYCDSQCPRDLKFINGEANCDGWEPSSNNVNTGVGDHGSCCAEMDVWEANSISNAFTAHPCDSVSQTMCDGDSCGGTYSASGDRYSGTCDPDGCDYNPYRLGNTDFYGPG--L--T-VDTNSPFTVVTQFITDDGTSSGTLTEIKRLYVQNGEVIANGASTYSSV-N-G--SSITSAFCESEKTLFGDENVFDKHGGLEGMGEAMAKGMVLVLSLWDDYAADMLWLDSDYPVNSSASTPGVARGTCSTDSGVPATVEAESPNAYVTYSNIKFGPIGST-YSS--G-SSS--GSG-S--SSSS-S-S----TTT---KATSTTLK-------T--TSTTSS--GSSS-T-----SAAQAYGQCGGQGWTGPTTCVSGYTCTYENAYYSQCL--
+>SEQ23
+---------M--------F-PAAALLSFTLLA-VASAQQIGTNTAEVHPSLTVSQCTTSGGCTSSTQSIVLDANWRWLHSTSGYTNCYTGNQWNSDLCPDPDTCATNCALDGASYESTYGISTDGNAVTLNFVTQGS-QTNVGSRVYLLSD--DTHYQTFSLLNKEFSFDVDASNIGCGINGAVYFVQMDADGGLSKYSSNKAGAQYGTGYCDSQCPQDIKFINGEANLLDWNATS--ANSGTGSYGSCCPEMDIWEANKYAAAYTPHPCSVSGQTRCTGTSCGA--G--SERYDGYCDKDGCDFNSWRMGNETFLGPG--M--T-IDTNKKFTIVTQFITDDNTANGTLSEIRRLYVQGGTVIQNSVANQPNIPK-V--NSITDSFCTAQKTEFGDQDYFGTIGGLSQMGKAMS-DMVLVMSIWDDYDAEMLWLDSNYPTSGSASTPGISRGPCSATSGLPATVESQQASASVTYSNIKWGDIGST-YSG--S-GSS--GSS-S--SSSS-SAA---SAS----TS-THTSA-------A-ATATSSA--AAAT-G-----SPVPAYGQCGGQSYTGSTTCASPYVCKVSNAYYSQCLPA
+>SEQ24
+---------M--------Y-RI-VATASALIA-AARAQQVCSLNTETKPALTWSKCTSSG-CSDVKGSVVIDANWRWTHQTSGSTNCYTGNKWDTSICTDGKTCAEKCCLDGADYSGTYGITSSGNQLSLGFVTNGPYSKNIGSRTYLMEN--ENTYQMFQLLGNEFTFDVDVSGIGCGLNGAPHFVSMDEDGGKAKYSGNKAGAKYGTGYCDAQCPRDVKFINGVANSEGWKPSDSDVNAGVGNLGTCCPEMDIWEANSISTAFTPHPCTKLTQHSCTGDSCGGTYS--SDRYGGTCDADGCDFNAYRQGNKTFYGPGSNF--N-IDTTKKMTVVTQFHKG---SNGRLSEITRLYVQNGKVIANSESKIAGN-P-G--SSLTSDFCSKQKSVFGDIDDFSKKGGWNGMSDALSAPMVLVMSLWHDHHSNMLWLDSTYPTDS--TKVGSQRGSCATTSGKPSDLERDVPNSKVSFSNIKFGPIGST-YKS--D-GTT--PNP-P--ASSS-------------------T--------TG--S-STPT---NPP-A-----GSVDQWGQCGGQNYSGPTTCKSPFTCKKINDFYSQCQ--
+>SEQ25
+---------M--------Y-RK-LAVISAFLA-AARAQQVCTQQAETHPPLTWQKCTASG-CTPQQGSVVLDANWRWTHDTKSTTNCYDGNTWSSTLCPDDATCAKNCCLDGANYSGTYGVTTSGDALTLQFVTA----SNVGSRLYLMAN--DSTYQEFTLSGNEFSFDVDVSQLPCGLNGALYFVSMDADGGQSKYPGNAAGAKYGTGYCDSQCPRDLKFINGQANVEGWEPSSNNANTGVGGHGSCCSEMDIWEANSISEALTPHPCETVGQTMCSGDSCGGTYS--NDRYGGTCDPDGCDWNPYRLGNTSFYGPG--SSFA-LDTTKKLTVVTQFATD--------GSISRYYVQNGVKFQQPNAQVGSY-S-G--NTINTDYCAAEQTAFGGT-SFTDKGGLAQINKAFQGGMVLVMSLWDDYAVNMLWLDSTYPTNATASTPGAKRGSCSTSSGVPAQVEAQSPNSKVIYSNIRFGPIGST-GGN--T-GSN--PPG-----------------T-------STTRA-------P--P-SSTG--SSP--T-----ATQTHYGQCGGTGWTGPTRCASGYTCQVLNPFYSQCL--
+>SEQ26
+---------M--------Y-QK-LAVISAFLA-AARAQQVCTQQAETHPPLTWQKCSSSG-CTAQSGSVVLDANWRWTHDVKSTTNCYDGNTWSKTLCPDDATCAKNCCLDGAAYSSTYGITTSSDSLTINFVTQ----SNVGARLYLMAT--DTSYQEFTLSGNEFSFDVDVSQLPCGLNGALYFVSMDADGGQSKYPTNAAGAKYGTGYCDSQCPRDLKFINGQANVDGWQPSSNNANTGIGGHGSCCSEMDIWEANSISQAVTPHPCETVGQTMCSGDGCGGTYS--SDRYGGTCDPDGCDWNPYRLGNTTFYGPG--SGFT-LDTTKKMTVVTQFATS--------GAISRYYVQNGVKFQQPNAQLSGY-S-G--NTLNSDYCAAEQAAFGGT-SFTDKGGLTQFNKALSGGMVLVMSLWDDYYANMLWLDSTYPTNATASTPGAKRGSCSTSSGVPSQIESQSPNAKVVFSNIRFGPIGST-GGS--T-GNP--PPG-----------------T-------STTRL-------P--P-SSTG--SSP--G-----PTQTHYGQCGGIGYSGPTQCVSGTTCQVLNPFYSQCL--
+>SEQ27
+---------M--------R-AS-LLAFSLAAA-VAGGQQAGTLTAKRHPSLTWQKCTRGG-CPTLNTTMVLDANWRWTHATSGSTKCYTGNKWQATLCPDGKSCAANCALDGADYTGTYGITGSGWSLTLQFVTD-----NVGARAYLMAD--DTQYQMLELLNQELWFDVDMSNIPCGLNGALYLSAMDADGGMRKYPTNKAGAKYATGYCDAQCPRDLKYINGIANVEGWTPSTNDAN-GIGDHGSCCSEMDIWEANKVSTAFTPHPCTTIEQHMCEGDSCGGTYS--DDRYGVLCDADGCDFNSYRMGNTTFYGEG--K--T-VDTSSKFTVVTQFIKD---SAGDLAEIKAFYVQNGKVIENSQSNVDGV-S-G--NSITQSFCKSQKTAFGDIDDFNKKGGLKQMGKALAQAMVLVMSIWDDHAANMLWLDSTYPVP---KVPGAYRGSGPTTSGVPAEVDANAPNSKVAFSNIKFGHLGISPFSGGSS-GTP--PSN-P--SSSA-S-P-----T-------SSTAK-------P--SSTSTA--SNPS-G-----TGAAHWAQCGGIGFSGPTTCPEPYTCAKDHDIYSQCV--
+>SEQ28
+---------MASTLSFKIY-KN-ALLLAAFLG-AAQAQQVGTSTAEVHPSLTWQKCTAGGSCTSQSGKVVIDSNWRWVHNTGGYTNCYTGNDWDRTLCPDDVTCATNCALDGADYKGTYGVTASGSSLRLNFVTQAS-QKNIGSRLYLMAD--DSKYEMFQLLNQEFTFDVDVSNLPCGLNGALYFVAMDEDGGMARYPTNKAGAKYGTGYCDAQCPRDLKFINGQANVEGWEPSSSDVNGGTGNYGSCCAEMDIWEANSISTAFTPHPCDDPAQTRCTGDSCGGTYS--SDRYGGTCDPDGCDFNPYRMGNQSFYGPS--K--I-VDTESPFTVVTQFITNDGTSTGTLSEIKRFYVQNGKVIPQSVSTISAV-T-G--NSITDSFCSAQKTAFKDTDVFAKHGGMAGMGAGLAEGMVLVMSLWDDHAANMLWLDSTYPTSASSTTPGAARGSCDISSGEPSDVEANHSNAYVVYSNIKVGPLGST-FGS--T-D-S--G---S--GTTT-T-K-------------VTTTT-------A--TKTTTT--TGPS-T-----TGAAHYAQCGGQNWTGPTTCASPYTCQRQGDYYSQCL--
+>SEQ29
+MSA-LNSFNM--------Y-KS-ALILGSLLA-TAGAQQIGTYTAETHPSLSWSTCKSGGSCTTNSGAITLDANWRWVHGVNTSTNCYTGNTWNTAICDTDASCAQDCALDGADYSGTYGITTSGNSLRLNFVTG----SNVGSRTYLMAD--NTHYQIFDLLNQEFTFTVDVSNLPCGLNGALYFVTMDADGGVSKYPNNKAGAQYGVGYCDSQCPRDLKFIAGQANVEGWTPSTNNSNTGIGNHGSCCAELDIWEANSISEALTPHPCDTPGLTVCTADDCGGTYS--SNRYAGTCDPDGCDFNPYRLGVTDFYGSG--K--T-VDTTKPFTVVTQFVTDDGTSSGSLSEIRRYYVQNGVVIPQPSSKISGI-S-G--NVINSDFCAAELSAFGETASFTNHGGLKNMGSALEAGMVLVMSLWDDYSVNMLWLDSTYPANET-GTPGAARGSCPTTSGNPKTVESQSGSSYVVFSDIKVGPFNST-FSG--G-TS---TGG-S--TTTT-ASG-------------TTSTK-------A--STTSTS--STSTGT-----GVAAHWGQCGGQGWTGPTTCASGTTCTVVNPYYSQCL--
+>SEQ30
+---------M--------Y-RK-LAVISAFLA-TARAQSACTLQTETHPSLTWQKCSSGGTCTQQTGSVVIDANWRWTHATNSSTNCYDGNTWSSTLCPDNETCAKNCCLDGAAYASTYGVTTSADSLSIGFVTQSA-QKNVGARLYLMAS--DTTYQEFTLLGNEFSFDVDVSQLPCGLNGALYFVSMDADGGVSKYPTNTAGAKYGTGYCDSQCPRDLKFINGQANVEGWEPSSNNANTGIGGHGSCCSEMDIWEANSISEALTPHPCTTVGQEICEGDGCGGTYS--NDRYGGTCDPDGCDWNPYRLGNTSFYGPG--SSFT-LDTTKKLTVVTQFETS--------GAINRYYVQNGVTYKQPNAELGSY-S-G--NELNDDYCTAEESEFGGS-SFSDKGGLTQFKKATSGGMVLVMSLWDDYYANMLWLDSTYPTNETSSTPGAVRGSCSTSSGVPAQLESQSPNAKVVYSNIKFGPIGST-GNP--S-GGN--PPG-G--N----P-P----GT-------TTTRR-------P--A-TTTG--SSP--G-----PTQTHYGQCGGIGYSGPTVCASGTTCQVLNEYYSQCL--
+>SEQ31
+---------M--------Y-QK-LALISAFLA-TARAQSACTLQAETHPPLTWQKCSSGGTCTQQTGSVVIDANWRWTHATNSSTNCYDGNTWSSTLCPDNETCAKNCCLDGAAYASTYGVTTSADSLSIGFVTQSA-QKNVGARLYLMAS--DTTYQEFTLLGNEFSFDVDVSQLPCGLNGALYFVSMDADGGVTKYPTNTAGAKYGTGYCDSQCPRDLKFINGQANVEGWEPSSNNANTGIGGHGSCCSEMDIWEANSISEALTPHPCTTVGQEICEGDSCGGTYS--GDRYGGTCDPDGCDWNPYRLGNTSFYGPG--SSFT-LDTTKKLTVVTQFETS--------GAINRYYVQNGVTFQQPNAELGDY-S-G--NSLDDDYCAAEEAEFGGS-SFSDKGGLTQFKKATSGGMVLVMSLWDDYYANMLWLDSTYPTDETSSTPGAVRGSSSTSSGVPAQLESNSPNAKVVYSNIKFGPIGST-GNP--S-GGN--PPG-G--N----P-P-----G-------TTTPR-------P--A-TSTG--SSP--G-----PTQTHYGQCGGIGYIGPTVCASGSTCQVLNPYYSQCL--
+
+*****
+
+
+We will now use the PHYLIP program specified by PHYLIP_PROG to build a phylogenetic tree of the aligned sequences.
+The phylogenetic tree is a pairwise distance based tree.  First building the protein distance matrix (this may take a while)...
+Completed constructing the protein distance matrix.  The contents of this distance matrix are as follows:
+
+******
+   32
+PROTSEQ     0.000000  0.667671  0.668941  0.650243  0.659991  0.721771
+  0.821460  0.729395  0.728921  0.795213  0.717420  0.827779  0.830215
+  0.814059  0.628821  0.728997  0.716433  0.747350  0.852007  0.849572
+  0.948126  0.790265  0.721771  0.939702  0.822114  0.231904  0.189233
+  0.842788  0.764319  0.665516  0.032303  0.056803
+SEQ1        0.667671  0.000000  0.046639  0.483240  0.598470  0.425242
+  0.690695  0.271419  0.669496  0.426393  0.217986  0.795789  0.683058
+  0.638759  0.512908  0.707100  0.663647  0.642574  0.753996  0.662162
+  0.656707  0.431827  0.425242  0.767746  0.732088  0.624131  0.672593
+  0.692574  0.289004  0.555532  0.654708  0.669782
+SEQ2        0.668941  0.046639  0.000000  0.492330  0.626237  0.442195
+  0.705769  0.260497  0.680895  0.447186  0.232169  0.797113  0.648751
+  0.633786  0.560245  0.726118  0.670830  0.638931  0.743917  0.668308
+  0.688476  0.466618  0.442195  0.756594  0.754375  0.615505  0.649327
+  0.698287  0.297884  0.583094  0.647815  0.663482
+SEQ3        0.650243  0.483240  0.492330  0.000000  0.426865  0.444589
+  0.846607  0.670305  0.852194  0.620318  0.538380  0.888965  0.779209
+  0.726660  0.729619  0.868489  0.870999  0.858446  0.915457  0.851049
+  0.894995  0.536332  0.447503  0.772551  0.861079  0.615755  0.633941
+  0.901052  0.485307  0.435973  0.640781  0.684509
+SEQ4        0.659991  0.598470  0.626237  0.426865  0.000000  0.619228
+  0.861046  0.701518  0.819266  0.684808  0.603315  0.810236  0.697651
+  0.717816  0.692025  0.770551  0.798956  0.784547  0.899236  0.756892
+  0.875071  0.567915  0.619228  0.833903  0.867668  0.577055  0.615687
+  0.884117  0.575270  0.136844  0.658756  0.671278
+SEQ5        0.721771  0.425242  0.442195  0.444589  0.619228  0.000000
+  0.808243  0.583698  0.705218  0.532763  0.452636  0.771783  0.699555
+  0.606690  0.604087  0.785743  0.777236  0.709349  0.819441  0.700151
+  0.696260  0.381963  0.001801  0.708374  0.760377  0.636800  0.721052
+  0.774381  0.479606  0.574977  0.730211  0.740613
+SEQ6        0.821460  0.690695  0.705769  0.846607  0.861046  0.808243
+  0.000000  0.725734  0.541034  0.671681  0.705014  0.594234  0.801158
+  0.793284  0.594916  0.575814  0.575386  0.607585  0.597029  0.762292
+  0.839819  0.842891  0.808243  1.003970  0.172475  0.765619  0.760708
+  0.780157  0.760085  0.888238  0.803756  0.818992
+SEQ7        0.729395  0.271419  0.260497  0.670305  0.701518  0.583698
+  0.725734  0.000000  0.763576  0.469585  0.280234  0.777020  0.765164
+  0.746589  0.653128  0.712263  0.695410  0.722902  0.723835  0.742538
+  0.786310  0.585309  0.583698  0.797328  0.713997  0.717621  0.746263
+  0.789860  0.397766  0.666936  0.716472  0.721647
+SEQ8        0.728921  0.669496  0.680895  0.852194  0.819266  0.705218
+  0.541034  0.763576  0.000000  0.744356  0.628023  0.447279  0.704006
+  0.715856  0.431978  0.500897  0.499414  0.431973  0.445111  0.707930
+  0.888588  0.730455  0.705218  0.879570  0.550792  0.715316  0.742089
+  0.313759  0.692526  0.776859  0.734794  0.730755
+SEQ9        0.795213  0.426393  0.447186  0.620318  0.684808  0.532763
+  0.671681  0.469585  0.744356  0.000000  0.378148  0.757702  0.826815
+  0.821603  0.612742  0.692618  0.707526  0.709352  0.720873  0.657140
+  0.662854  0.566880  0.532536  0.833459  0.720385  0.729313  0.779484
+  0.874332  0.507805  0.645773  0.796228  0.785426
+SEQ10       0.717420  0.217986  0.232169  0.538380  0.603315  0.452636
+  0.705014  0.280234  0.628023  0.378148  0.000000  0.739215  0.648002
+  0.617815  0.540940  0.675756  0.668881  0.609657  0.692472  0.602398
+  0.670522  0.465064  0.449690  0.765741  0.693238  0.668652  0.696734
+  0.652932  0.288592  0.557159  0.712781  0.701883
+SEQ11       0.827779  0.795789  0.797113  0.888965  0.810236  0.771783
+  0.594234  0.777020  0.447279  0.757702  0.739215  0.000000  0.723559
+  0.742973  0.533890  0.380794  0.412242  0.407331  0.368125  0.646243
+  0.813404  0.825165  0.771783  0.849341  0.611252  0.759133  0.767771
+  0.720253  0.764482  0.797822  0.849858  0.842349
+SEQ12       0.830215  0.683058  0.648751  0.779209  0.697651  0.699555
+  0.801158  0.765164  0.704006  0.826815  0.648002  0.723559  0.000000
+  0.183333  0.672871  0.737446  0.752238  0.731048  0.740410  0.645061
+  0.820515  0.677602  0.699555  0.655758  0.795570  0.800114  0.798459
+  0.703516  0.648402  0.687290  0.871507  0.853151
+SEQ13       0.814059  0.638759  0.633786  0.726660  0.717816  0.606690
+  0.793284  0.746589  0.715856  0.821603  0.617815  0.742973  0.183333
+  0.000000  0.642317  0.745477  0.760979  0.756239  0.779358  0.604667
+  0.745606  0.658958  0.606690  0.608580  0.818062  0.763847  0.783361
+  0.679877  0.567738  0.659655  0.833930  0.808607
+SEQ14       0.628821  0.512908  0.560245  0.729619  0.692025  0.604087
+  0.594916  0.653128  0.431978  0.612742  0.540940  0.533890  0.672871
+  0.642317  0.000000  0.538510  0.530112  0.454498  0.533618  0.610135
+  0.707835  0.616834  0.604087  0.866725  0.618830  0.593311  0.653305
+  0.662554  0.541537  0.661783  0.619195  0.645557
+SEQ15       0.728997  0.707100  0.726118  0.868489  0.770551  0.785743
+  0.575814  0.712263  0.500897  0.692618  0.675756  0.380794  0.737446
+  0.745477  0.538510  0.000000  0.083676  0.316840  0.314119  0.692643
+  0.883408  0.857538  0.785743  0.929708  0.568051  0.696320  0.665900
+  0.665965  0.828663  0.766144  0.732639  0.734525
+SEQ16       0.716433  0.663647  0.670830  0.870999  0.798956  0.777236
+  0.575386  0.695410  0.499414  0.707526  0.668881  0.412242  0.752238
+  0.760979  0.530112  0.083676  0.000000  0.315911  0.350550  0.683650
+  0.884265  0.865773  0.777236  0.934128  0.597962  0.696371  0.660784
+  0.659891  0.810576  0.761135  0.717763  0.719799
+SEQ17       0.747350  0.642574  0.638931  0.858446  0.784547  0.709349
+  0.607585  0.722902  0.431973  0.709352  0.609657  0.407331  0.731048
+  0.756239  0.454498  0.316840  0.315911  0.000000  0.253271  0.653405
+  0.790344  0.770591  0.709349  0.874220  0.622690  0.676193  0.707923
+  0.654228  0.711618  0.770711  0.741811  0.732785
+SEQ18       0.852007  0.753996  0.743917  0.915457  0.899236  0.819441
+  0.597029  0.723835  0.445111  0.720873  0.692472  0.368125  0.740410
+  0.779358  0.533618  0.314119  0.350550  0.253271  0.000000  0.716019
+  0.854967  0.893173  0.819441  0.913834  0.619545  0.773127  0.803284
+  0.605471  0.793543  0.847506  0.827803  0.844359
+SEQ19       0.849572  0.662162  0.668308  0.851049  0.756892  0.700151
+  0.762292  0.742538  0.707930  0.657140  0.602398  0.646243  0.645061
+  0.604667  0.610135  0.692643  0.683650  0.653405  0.716019  0.000000
+  0.484215  0.681555  0.700151  0.678983  0.778761  0.741131  0.791621
+  0.780743  0.662360  0.711116  0.865672  0.844933
+SEQ20       0.948126  0.656707  0.688476  0.894995  0.875071  0.696260
+  0.839819  0.786310  0.888588  0.662854  0.670522  0.813404  0.820515
+  0.745606  0.707835  0.883408  0.884265  0.790344  0.854967  0.484215
+  0.000000  0.723823  0.696260  0.847027  0.880825  0.845969  0.932448
+  0.882392  0.687710  0.802516  0.932997  0.913273
+SEQ21       0.790265  0.431827  0.466618  0.536332  0.567915  0.381963
+  0.842891  0.585309  0.730455  0.566880  0.465064  0.825165  0.677602
+  0.658958  0.616834  0.857538  0.865773  0.770591  0.893173  0.681555
+  0.723823  0.000000  0.379195  0.760458  0.851179  0.697111  0.761045
+  0.829150  0.446634  0.560565  0.791680  0.784761
+SEQ22       0.721771  0.425242  0.442195  0.447503  0.619228  0.001801
+  0.808243  0.583698  0.705218  0.532536  0.449690  0.771783  0.699555
+  0.606690  0.604087  0.785743  0.777236  0.709349  0.819441  0.700151
+  0.696260  0.379195  0.000000  0.708374  0.760377  0.636800  0.721052
+  0.774381  0.476533  0.574977  0.730211  0.740613
+SEQ23       0.939702  0.767746  0.756594  0.772551  0.833903  0.708374
+  1.003970  0.797328  0.879570  0.833459  0.765741  0.849341  0.655758
+  0.608580  0.866725  0.929708  0.934128  0.874220  0.913834  0.678983
+  0.847027  0.760458  0.708374  0.000000  0.981629  0.921356  0.950866
+  0.915312  0.740984  0.882718  0.957852  0.949116
+SEQ24       0.822114  0.732088  0.754375  0.861079  0.867668  0.760377
+  0.172475  0.713997  0.550792  0.720385  0.693238  0.611252  0.795570
+  0.818062  0.618830  0.568051  0.597962  0.622690  0.619545  0.778761
+  0.880825  0.851179  0.760377  0.981629  0.000000  0.786456  0.790724
+  0.779337  0.723255  0.919003  0.813469  0.833335
+SEQ25       0.231904  0.624131  0.615505  0.615755  0.577055  0.636800
+  0.765619  0.717621  0.715316  0.729313  0.668652  0.759133  0.800114
+  0.763847  0.593311  0.696320  0.696371  0.676193  0.773127  0.741131
+  0.845969  0.697111  0.636800  0.921356  0.786456  0.000000  0.145591
+  0.825788  0.654947  0.604498  0.236808  0.247141
+SEQ26       0.189233  0.672593  0.649327  0.633941  0.615687  0.721052
+  0.760708  0.746263  0.742089  0.779484  0.696734  0.767771  0.798459
+  0.783361  0.653305  0.665900  0.660784  0.707923  0.803284  0.791621
+  0.932448  0.761045  0.721052  0.950866  0.790724  0.145591  0.000000
+  0.855760  0.725378  0.616859  0.194788  0.202006
+SEQ27       0.842788  0.692574  0.698287  0.901052  0.884117  0.774381
+  0.780157  0.789860  0.313759  0.874332  0.652932  0.720253  0.703516
+  0.679877  0.662554  0.665965  0.659891  0.654228  0.605471  0.780743
+  0.882392  0.829150  0.774381  0.915312  0.779337  0.825788  0.855760
+  0.000000  0.679038  0.837270  0.839325  0.840493
+SEQ28       0.764319  0.289004  0.297884  0.485307  0.575270  0.479606
+  0.760085  0.397766  0.692526  0.507805  0.288592  0.764482  0.648402
+  0.567738  0.541537  0.828663  0.810576  0.711618  0.793543  0.662360
+  0.687710  0.446634  0.476533  0.740984  0.723255  0.654947  0.725378
+  0.679038  0.000000  0.593225  0.752849  0.745660
+SEQ29       0.665516  0.555532  0.583094  0.435973  0.136844  0.574977
+  0.888238  0.666936  0.776859  0.645773  0.557159  0.797822  0.687290
+  0.659655  0.661783  0.766144  0.761135  0.770711  0.847506  0.711116
+  0.802516  0.560565  0.574977  0.882718  0.919003  0.604498  0.616859
+  0.837270  0.593225  0.000000  0.688168  0.707253
+SEQ30       0.032303  0.654708  0.647815  0.640781  0.658756  0.730211
+  0.803756  0.716472  0.734794  0.796228  0.712781  0.849858  0.871507
+  0.833930  0.619195  0.732639  0.717763  0.741811  0.827803  0.865672
+  0.932997  0.791680  0.730211  0.957852  0.813469  0.236808  0.194788
+  0.839325  0.752849  0.688168  0.000000  0.047903
+SEQ31       0.056803  0.669782  0.663482  0.684509  0.671278  0.740613
+  0.818992  0.721647  0.730755  0.785426  0.701883  0.842349  0.853151
+  0.808607  0.645557  0.734525  0.719799  0.732785  0.844359  0.844933
+  0.913273  0.784761  0.740613  0.949116  0.833335  0.247141  0.202006
+  0.840493  0.745660  0.707253  0.047903  0.000000
+
+*******
+
+Now using the protein distance matrix to construct the phylogenetic tree. This tree will be constructed assuming a molecular clock. No neighbor joining or the UPGMA will be used.
+
+Beginning construction of the phylogenetic tree (this may take a while)...
+Completed construction of the phylogenetic tree.  This tree is given in Newick format below:
+
+******
+(((SEQ20:0.24211,SEQ19:0.24211):0.12725,(((SEQ24:0.08624,SEQ6:0.08624):0.21544,((((SEQ18:0.12664,SEQ17:0.12664):0.03489,(SEQ16:0.04184,SEQ15:0.04184):0.11969):0.03368,SEQ11:0.19520):0.06564,((SEQ27:0.15688,SEQ8:0.15688):0.09350,SEQ14:0.25038):0.01046):0.04083):0.06537,((((SEQ30:0.01615,PROTSEQ:0.01615):0.00965,SEQ31:0.02580):0.08040,(SEQ26:0.07280,SEQ25:0.07280):0.03341):0.24461,((SEQ13:0.09167,SEQ12:0.09167):0.24548,((((SEQ22:0.00090,SEQ5:0.00090):0.18938,SEQ21:0.19028):0.04786,(((((SEQ2:0.02332,SEQ1:0.02332):0.08900,SEQ10:0.11232):0.02280,SEQ7:0.13512):0.01880,SEQ28:0.15391):0.06465,SEQ9:0.21857):0.01958):0.04293,((SEQ29:0.06842,SEQ4:0.06842):0.14724,SEQ3:0.21566):0.06541):0.05607):0.01367):0.01624):0.00231):0.03609,SEQ23:0.40545);
+*****
+
+The phylogenetic tree in Newick format is being written to the OUTPUT_TREE file of tree.newick.
+
+Completed execution of pips_build_tree_and_alignment.py at Tue Mar 31 13:32:56 2009.

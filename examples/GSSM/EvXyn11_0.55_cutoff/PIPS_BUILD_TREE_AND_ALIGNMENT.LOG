@@ -1,0 +1,1511 @@
+Beginning execution of pips_build_tree_and_alignment.py at Sat Apr  4 13:36:43 2009.
+Using version 1.0 of PIPS, written by Jesse Bloom.
+Using input/output files in the current directory, which is /Users/bloom/new_pips/pips-1.0/examples/GSSM/EvXyn11_0.55_cutoff
+
+Reading input from PIPS_BUILD_TREE_AND_ALIGNMENT.IN.
+Contents of input file are listed below:
+
+********
+# Anything coming after a pound sign is a comment.
+# Typically there may be one or more comment lines explaining the
+# subject matter of the input file.
+#
+# Each line in this file follows a key-value format.  The first word
+# in the line gives the parameter that is being specified, and the subsequent
+# words give the value of this parameter. 
+#
+# The PROTSEQ key specifies the sequence of the protein to be analyzed.  Typically, this
+# will be a FASTA file in which the sequence of interest is the first entry, as shown below.
+PROTSEQ EvXyn11.fasta
+#
+# The OUTPUT_ALIGNMENT key specifies the name of the file to which the aligned protein
+# sequences are written.  This key should therefore be followed by a string giving
+# a valid file name.  If the file already exists, the user will be prompted for confirmation
+# before it is overwritten.  The aligned sequences are written to this file in FASTA format,
+# with the first sequence in the file being the one specified by PROTSEQ.  The sequences
+# are aligned by inserting gap ("-") characters as appropriate.  The sequences that are 
+# aligned include PROTSEQ and all unique sequences specified by HOMOLOGOUS_SEQS
+# that satisfy the criteria established by HOMOLOGY_THRESHOLD.  The headers
+# of these sequences are replaced with short names, that are related to the original headers
+# as described in the file specified by OUTPUT_SEQNAMES.  These names are the ones used
+# in the phylogenetic tree specified by OUTPUT_TREE.
+OUTPUT_ALIGNMENT renamed_alignment.fasta
+#
+# The OUTPUT_TREE key specifies the name of the file to which is written the phylogenetic
+# tree specifying the relationship among the sequences in OUTPUT_ALIGNMENT.  The names
+# of the sequences in this tree match those used in OUTPUT_ALIGNMENT, and are detailed in
+# relation to the original seauence headers by OUTPUT_SEQNAMES.  The tree is
+# in Newick format (http://evolution.gs.washington.edu/phylip/newick_doc.html).  If the
+# specified file already exists, the user is prompted for confirmation before the file
+# is overwritten.
+OUTPUT_TREE tree.newick
+#
+# The OUTPUT_SEQNAMES key specifies the name of a file to which we write the relationship
+# between the new names given to the sequences in OUTPUT_TREE and OUTPUT_ALIGNMENT, and
+# the original sequence names as given in their headers in the FASTA files specified by
+# PROTSEQ and HOMOLOGOUS_SEQS.  The format is simply lines with the new name, a space,
+# and then the original header in the FASTA file. 
+OUTPUT_SEQNAMES seqnames.txt
+#
+# The PHYLIP_PROG key is used to specify information about the PHYLIP program that is
+# used to generate the phylogenetic tree.  This PIPS script is guaranteed to work with 
+# version 3.68 of PHYLIP for Mac OS X, downloaded from 
+# http://evolution.genetics.washington.edu/phylip.html
+# It will probably also work with other versions of PHYLIP on other operating
+# systems, but that has not been actually tested.  There are a number of 
+# strings that are present after the PHYLIP_PROG key.  These strings cannot
+# contain spaces, but can have any other non-whitespace characters.  They are:
+#  * The first string should give the path to which the PHYLIP executables can
+#    be found. 
+#  * The second string is the type of tree that is build.  Currently, the only
+#    supported option is DISTANCE for methods based on pairwise distances
+#    between sequences.  These trees are built using one of the 'fitch',
+#    'kitsch', or 'neighbor' programs of PHYLIP.
+#  * The third string specifies whether or not we are using a molecular clock.
+#    It can have two values, CLOCK or NO_CLOCK depending on whether or not
+#    we assume a molecular clock.  If we are not using a molecular clock,
+#    then the OUTGROUP_SEQ key must be set to a value in order to provide
+#    an outgroup sequence for rooting the tree.
+#  * The fourth string specifies whether or not we use a neighbor joining
+#    method (neighbor joining without a molecular clock, or UPGMA with
+#    a molecular clock).  Neighbor joining is generally faster, but
+#    considered to be less accurate.  The string should be either
+#    NEIGHBOR if we are using neighbor joining / UPGMA or NO_NEIGHBOR
+#    if we are not.  Neighbor joining can lead to negative branch lengths,
+#    so any negative lengths are set to zero.
+PHYLIP_PROG /Users/bloom/phylip-3.68/exe/ DISTANCE CLOCK NO_NEIGHBOR
+#
+# The ALIGNMENT_PROG key is used to specify information about the program used to make
+# the multiple sequence alignment of the protein sequences.  There should be two 
+# strings following the ALIGNMENT_PROG key, specifying the alignment program and a path
+# to the alignment executable.  The two supported alignment programs are
+# MUSCLE (http://www.drive5.com/muscle/index.htm) and PROBCONS
+# (http://probcons.stanford.edu/).  This script has been tested and confirmed to work
+# with version 3.6 of MUSCLE and version 1.12 of PROBCONS.  PROBCONS is the slower
+# program, but in general is considered to be more accurate, so should probably be
+# preferred unless there are time constraints due to the size of the alignment.
+# The specified path should contain executables with the name of either 'muscle'
+# or 'probcons'.  So valid entries would be:
+# ALIGNMENT_PROG MUSCLE /Users/bloom/muscle3.6/
+ALIGNMENT_PROG PROBCONS /Users/bloom/probcons/
+#
+# The HOMOLOGOUS_SEQS key specifies the homologous sequences that are aligned
+# and used to build the phylogenetic tree.  The key should be followed by the
+# names of one or more existing FASTA files.  All of these sequences are read.
+# Any duplicate sequences (identical sequences, NOT necessarily identical headers)
+# have only the first sequence retained, with subsequent duplicates discarded.  These
+# sequences are then screened according to the criteria specified by HOMOLOGY_THRESHOLD,
+# and any sufficiently homologous sequences are retained for the alignment and to 
+# build the phylogenetic tree.  For the alignment, the sequences are renamed
+# as specified by OUTPUT_SEQNAMES
+HOMOLOGOUS_SEQS EvXyn11-refseq-blast.fasta
+#
+# The HOMOLOGY_THRESHOLD key specifies the screening of the sequences in HOMOLOGOUS_SEQS.
+# It can be used to only include sequences that have a specified degree of identity with
+# PROTSEQ.  You should specify both an identity cutoff and a gap cutoff.  The identity
+# cutoff, which occurs after the string IDENTITY_CUTOFF, means that we only include
+# sequences in which the fractions of identities among alignable residues is greater than
+# or equal to this cutoff.  The gap cutoff, which comes after the string GAP_CUTOFF,
+# means that we only include sequences in which the fraction of graps is less 
+# than or equal to the indicated cutoff.  These values are computed
+# in pairwise alignments of PROTSEQ with each sequence.  For example, if the sequence
+# specified by PROTSEQ is MGCQT and the pairwise aligned homologous sequence is MG-QA,
+# then the identity is 0.75 and the gap fraction is 0.2.  If you don't want to exclude any
+# of the sequences, then set the identity cutoff to 0.0 and the gap cutoff 1.0, which
+# will include all sequences.
+HOMOLOGY_THRESHOLD IDENTITY_CUTOFF 0.5 GAP_CUTOFF 0.7
+#
+# The OUTGROUP_SEQ key specifies an outgroup sequence used to root the phylogenetic
+# tree if the tree is being computed without a molecular clock.  If the tree is being
+# computed without a molecular clock, then we need an outgroup to root the tree.  In general,
+# the outgroup will be more distantly related to the homologous sequences.  In this case,
+# the value should be the name of a FASTA file.  The first sequence listed in this
+# FASTA file is used as the outgroup sequence.  So for example, this line would look like this:
+# OUTGROUP_SEQ outgroup.fasta
+# On the other hand, if we are not using a molecular clock, not outgroup sequence is 
+# needed to root the tree.  In that case, the value should be NONE, as in:
+OUTGROUP_SEQ NONE
+#
+
+******
+
+
+Reading PROTSEQ protein sequence from EvXyn11.fasta...
+This file contains 1 sequence(s).  The first one is being used.
+This protein sequence is as follows:
+>EvXyn11: this is the sequence taken from the Genbank entry indicated at the end of this header.  The sequence shown here corresponds to the catalytic domain described in J. Biol. Chem., 283:22557 in that the N-terminal signal peptide and the C-terminal domain have been removed, and the 194 residue catalytic domain retained.  Genbank entry: gi|182406872|gb|ACB87630.1| glycosyl hydrolase family 11 precursor [uncultured bacterium]
+NAQTCLTSSQTGTNNGFYYSFWKDSPGTVNFCLQSGGRYTSNWSGINNWVGGKGWQTGSRRNITYSGSFNSPGNGYLALYGWTTNPLVEYYVVDSWGSWRPPGSDGTFLGTVNSDGGTYDIYRAQRVNAPSIIGNATFYQYWSVRQSKRVGGTITTGNHFDAWASVGLNLGTHNYQIMATEGYQSSGSSDITVS
+
+OUTPUT_ALIGNMENT specifies that we output the protein alignment to renamed_alignment.fasta.
+
+OUTPUT_TREE specifies that we output the phylogenetic tree to tree.newick.
+
+OUTPUT_SEQNAMES specifies that we output the sequence names to seqnames.txt.
+
+Reading specifications for the phylogenetic tree from PHYLIP_PROG.
+The PHYLIP executables are specified to reside in the directory /Users/bloom/phylip-3.68/exe/The DISTANCE keyword specifies that we will construct a tree based on pairwise sequence distances.
+The CLOCK keyword specifies that we will construct the tree assuming a molecular clock.
+The NO_NEIGHBOR keyword specifies that we will not use neighbor joining or UPGMA.
+
+Reading specifications for the alignment program from ALIGNMENT_PROG.
+PROBCON key specifies that the alignments will be done using PROBCONS.
+The alignment program resides in directory /Users/bloom/probcons/
+
+Reading in the homologous protein sequences specified by HOMOLOGOUS_SEQS.
+These sequences are contained in the following FASTA file(s): EvXyn11-refseq-blast.fasta
+Reading sequences from EvXyn11-refseq-blast.fasta...
+Read 116 sequences from EvXyn11-refseq-blast.fasta.
+Read a total of 116 homologous sequences.
+
+Reading the homology thresholds specified by HOMOLOGY_THRESHOLD.
+Homologous sequences will be pairwise aligned with PROTSEQ, and any with less than 0.500000 fraction identities among alignable residues, or with more than 0.700000 fraction gaps, will be excluded.
+
+Reading the outgroup sequence specified by OUTGROUP_SEQ.  This sequence will be used to root the phylogenetic tree if we do not assume a molecular clock; it will not be used if we assume a molecular clock.
+Value of NONE, meaning no outgroup sequence is specified.
+
+HOMOLOGOUS_SEQS specified 116 sequences.  We will now eliminate any duplicates among these sequences...
+After eliminating the duplicates, there are 116 unique sequences.
+
+Based on the criteria specified by HOMOLOGY_THRESHOLD, we will screen the 116 unique homologous sequences...
+Each sequence will be pairwise aligned with PROTSEQ, and those with a fraction identity of at least 0.500000 among alignable residues, and with a fraction of gaps no greater than 0.700000 will be retained...
+Performing pairwise alignment of PROTSEQ with sequence 1 of 116, which has header:
+	gi|90022703|ref|YP_528530.1| xylanase/chitin deacetylase-like [Saccharophagus degradans 2-40]
+	This sequence aligns to PROTSEQ with 0.744792 fraction identities, and 0.750325 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 2 of 116, which has header:
+	gi|72161617|ref|YP_289274.1| xylanase [Thermobifida fusca YX]
+	This sequence aligns to PROTSEQ with 0.638743 fraction identities, and 0.439883 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 3 of 116, which has header:
+	gi|197786683|ref|YP_002209436.1| bifunctional xylanase/deacetylase [Streptomyces sviceus ATCC 29083]
+	This sequence aligns to PROTSEQ with 0.654450 fraction identities, and 0.239044 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 4 of 116, which has header:
+	gi|115400988|ref|XP_001216082.1| endo-1,4-beta-xylanase A precursor [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.668394 fraction identities, and 0.168103 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 5 of 116, which has header:
+	gi|169778667|ref|XP_001823798.1| hypothetical protein [Aspergillus oryzae RIB40]
+	This sequence aligns to PROTSEQ with 0.663212 fraction identities, and 0.171674 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 6 of 116, which has header:
+	gi|21220761|ref|NP_626540.1| secreted endo-1,4-beta-xylanase B (xylanase B) [Streptomyces coelicolor A3(2)]
+	This sequence aligns to PROTSEQ with 0.654450 fraction identities, and 0.434911 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 7 of 116, which has header:
+	gi|70985697|ref|XP_748354.1| endo-1,4-beta-xylanase (XlnA) [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.652850 fraction identities, and 0.157205 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 8 of 116, which has header:
+	gi|145228427|ref|XP_001388522.1| endo-1,4-xylanase xynB-Aspergillus niger
+	This sequence aligns to PROTSEQ with 0.652850 fraction identities, and 0.146018 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 9 of 116, which has header:
+	gi|119473525|ref|XP_001258638.1| endo-1,4-beta-xylanase (XlnA), putative [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.652850 fraction identities, and 0.157205 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 10 of 116, which has header:
+	gi|67526311|ref|XP_661217.1| XYN1_EMENI Endo-1,4-beta-xylanase 1 precursor (Xylanase 1) (1,4-beta-D-xylan xylanohydrolase 1) [Aspergillus nidulans FGSC A4]
+	This sequence aligns to PROTSEQ with 0.637306 fraction identities, and 0.146018 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 11 of 116, which has header:
+	gi|121712323|ref|XP_001273773.1| endo-1,4-beta-xylanase (XlnA), putative [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.637306 fraction identities, and 0.160870 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 12 of 116, which has header:
+	gi|164424328|ref|XP_957450.2| endo-1,4-beta-xylanase 2 precursor [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.611399 fraction identities, and 0.243137 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 13 of 116, which has header:
+	gi|67904756|ref|XP_682634.1| XYN2_EMENI Endo-1,4-beta-xylanase 2 precursor (Xylanase 2) (1,4-beta-D-xylan xylanohydrolase 2) [Aspergillus nidulans FGSC A4]
+	This sequence aligns to PROTSEQ with 0.611399 fraction identities, and 0.130631 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 14 of 116, which has header:
+	gi|169768392|ref|XP_001818666.1| hypothetical protein [Aspergillus oryzae RIB40]
+	This sequence aligns to PROTSEQ with 0.611399 fraction identities, and 0.130631 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 15 of 116, which has header:
+	gi|119472529|ref|XP_001258363.1| endo-1,4-beta-xylanase (XynG1), putative [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.621762 fraction identities, and 0.130631 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 16 of 116, which has header:
+	gi|156059212|ref|XP_001595529.1| hypothetical protein SS1G_03618 [Sclerotinia sclerotiorum 1980]
+	This sequence aligns to PROTSEQ with 0.590674 fraction identities, and 0.315603 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 17 of 116, which has header:
+	gi|119473557|ref|XP_001258654.1| glycosyl hydrolases family 11 protein [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.611399 fraction identities, and 0.416918 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 18 of 116, which has header:
+	gi|85111872|ref|XP_964145.1| endo-1,4-beta-xylanase A precursor [Neurospora crassa OR74A]
+	This sequence aligns to PROTSEQ with 0.616580 fraction identities, and 0.126697 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 19 of 116, which has header:
+	gi|154317376|ref|XP_001558008.1| hypothetical protein BC1G_03590 [Botryotinia fuckeliana B05.10]
+	This sequence aligns to PROTSEQ with 0.595855 fraction identities, and 0.315603 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 20 of 116, which has header:
+	gi|70985723|ref|XP_748367.1| endo-1,4-beta-xylanase [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.611399 fraction identities, and 0.385350 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 21 of 116, which has header:
+	gi|121700014|ref|XP_001268272.1| endo-1,4-beta-xylanase (XynG1), putative [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.580311 fraction identities, and 0.295620 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 22 of 116, which has header:
+	gi|70992503|ref|XP_751100.1| endo-1,4-beta-xylanase (XynG1) [Aspergillus fumigatus Af293]
+	This sequence aligns to PROTSEQ with 0.595855 fraction identities, and 0.130631 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 23 of 116, which has header:
+	gi|171694656|ref|XP_001912252.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.611399 fraction identities, and 0.138393 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 24 of 116, which has header:
+	gi|21218669|ref|NP_624448.1| endo-1,4-beta-xylanase (secreted protein) [Streptomyces coelicolor A3(2)]
+	This sequence aligns to PROTSEQ with 0.642105 fraction identities, and 0.224490 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 25 of 116, which has header:
+	gi|115397059|ref|XP_001214121.1| endo-1,4-beta-xylanase B precursor [Aspergillus terreus NIH2624]
+	This sequence aligns to PROTSEQ with 0.580311 fraction identities, and 0.126697 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 26 of 116, which has header:
+	gi|192361681|ref|YP_001984213.1| endo-1,4-beta-xylanase, xyn11B [Cellvibrio japonicus Ueda107]
+	This sequence aligns to PROTSEQ with 0.661458 fraction identities, and 0.465181 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 27 of 116, which has header:
+	gi|192360336|ref|YP_001984214.1| endo-1,4-beta-xylanase, esterase, xyn11A [Cellvibrio japonicus Ueda107]
+	This sequence aligns to PROTSEQ with 0.651042 fraction identities, and 0.710407 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 28 of 116, which has header:
+	gi|116197274|ref|XP_001224449.1| hypothetical protein CHGG_05235 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.564767 fraction identities, and 0.164502 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 29 of 116, which has header:
+	gi|116182892|ref|XP_001221295.1| endo-beta1,4-xylanase A [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.580311 fraction identities, and 0.122727 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 30 of 116, which has header:
+	gi|169619301|ref|XP_001803063.1| hypothetical protein SNOG_12845 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.580311 fraction identities, and 0.171674 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 31 of 116, which has header:
+	gi|145231168|ref|XP_001389848.1| hypothetical protein An01g14600 [Aspergillus niger]
+	This sequence aligns to PROTSEQ with 0.549223 fraction identities, and 0.168103 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 32 of 116, which has header:
+	gi|189209652|ref|XP_001941158.1| endo-1,4-beta-xylanase A [Pyrenophora tritici-repentis Pt-1C-BFP]
+	This sequence aligns to PROTSEQ with 0.575130 fraction identities, and 0.168103 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 33 of 116, which has header:
+	gi|116205351|ref|XP_001228486.1| hypothetical protein CHGG_10559 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.564767 fraction identities, and 0.122727 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 34 of 116, which has header:
+	gi|171691240|ref|XP_001910545.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.559585 fraction identities, and 0.240157 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 35 of 116, which has header:
+	gi|171676497|ref|XP_001903201.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.538860 fraction identities, and 0.329861 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 36 of 116, which has header:
+	gi|116197072|ref|XP_001224348.1| hypothetical protein CHGG_05134 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.564767 fraction identities, and 0.175214 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 37 of 116, which has header:
+	gi|145604200|ref|XP_363013.2| hypothetical protein MGG_08424 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.546875 fraction identities, and 0.175966 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 38 of 116, which has header:
+	gi|217966677|ref|YP_002352183.1| Endo-1,4-beta-xylanase [Dictyoglomus turgidum DSM 6724]
+	This sequence aligns to PROTSEQ with 0.570681 fraction identities, and 0.467967 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 39 of 116, which has header:
+	gi|162449235|ref|YP_001611602.1| glycosy hydrolase family protein [Sorangium cellulosum 'So ce 56']
+	This sequence aligns to PROTSEQ with 0.542105 fraction identities, and 0.436202 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 40 of 116, which has header:
+	gi|206900912|ref|YP_002251776.1| endo-1,4-beta-xylanase A [Dictyoglomus thermophilum H-6-12]
+	This sequence aligns to PROTSEQ with 0.570681 fraction identities, and 0.473829 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 41 of 116, which has header:
+	gi|222528140|ref|YP_002572022.1| Endo-1,4-beta-xylanase [Anaerocellum thermophilum DSM 6725]
+	This sequence aligns to PROTSEQ with 0.549738 fraction identities, and 0.469444 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 42 of 116, which has header:
+	gi|162453827|ref|YP_001616194.1| hypothetical protein sce5551 [Sorangium cellulosum 'So ce 56']
+	This sequence aligns to PROTSEQ with 0.518519 fraction identities, and 0.534483 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 43 of 116, which has header:
+	gi|169187796|ref|ZP_02847954.1| Endo-1,4-beta-xylanase [Paenibacillus sp. JDR-2]
+	This sequence aligns to PROTSEQ with 0.596859 fraction identities, and 0.107477 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 44 of 116, which has header:
+	gi|46115564|ref|XP_383800.1| hypothetical protein FG03624.1 [Gibberella zeae PH-1]
+	This sequence aligns to PROTSEQ with 0.528497 fraction identities, and 0.157205 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 45 of 116, which has header:
+	gi|110638770|ref|YP_678979.1| xylanase, CBM9 module, glycoside hydrolase family 11 protein [Cytophaga hutchinsonii ATCC 33406]
+	This sequence aligns to PROTSEQ with 0.544041 fraction identities, and 0.833764 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 46 of 116, which has header:
+	gi|46138969|ref|XP_391175.1| hypothetical protein FG10999.1 [Gibberella zeae PH-1]
+	This sequence aligns to PROTSEQ with 0.538860 fraction identities, and 0.168103 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 47 of 116, which has header:
+	gi|169621658|ref|XP_001804239.1| hypothetical protein SNOG_14040 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.528497 fraction identities, and 0.153509 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 48 of 116, which has header:
+	gi|189205741|ref|XP_001939205.1| endo-1,4-beta-xylanase I precursor [Pyrenophora tritici-repentis Pt-1C-BFP]
+	This sequence aligns to PROTSEQ with 0.533679 fraction identities, and 0.153509 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 49 of 116, which has header:
+	gi|169624039|ref|XP_001805426.1| hypothetical protein SNOG_15270 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.553191 fraction identities, and 0.189655 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 50 of 116, which has header:
+	gi|171689822|ref|XP_001909851.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.544041 fraction identities, and 0.199170 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 51 of 116, which has header:
+	gi|196252084|ref|ZP_03150747.1| glycoside hydrolase family 11 [Clostridium thermocellum DSM 4150]
+	This sequence aligns to PROTSEQ with 0.502618 fraction identities, and 0.721574 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 52 of 116, which has header:
+	gi|125975452|ref|YP_001039362.1| glycoside hydrolase family protein [Clostridium thermocellum ATCC 27405]
+	This sequence aligns to PROTSEQ with 0.502618 fraction identities, and 0.721574 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 53 of 116, which has header:
+	gi|196252085|ref|ZP_03150748.1| glycoside hydrolase family 11 [Clostridium thermocellum DSM 4150]
+	This sequence aligns to PROTSEQ with 0.497382 fraction identities, and 0.584783 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 54 of 116, which has header:
+	gi|39946360|ref|XP_362717.1| hypothetical protein MGG_08331 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.538860 fraction identities, and 0.185654 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 55 of 116, which has header:
+	gi|171694490|ref|XP_001912169.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.529412 fraction identities, and 0.190476 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 56 of 116, which has header:
+	gi|39973321|ref|XP_368051.1| endo-1,4-beta-xylanase 22 precursor [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.487047 fraction identities, and 0.175214 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 57 of 116, which has header:
+	gi|192811048|ref|ZP_03039720.1| Endo-1,4-beta-xylanase [Geobacillus sp. Y412MC10]
+	This sequence aligns to PROTSEQ with 0.575916 fraction identities, and 0.072816 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 58 of 116, which has header:
+	gi|154687778|ref|YP_001422939.1| XynA [Bacillus amyloliquefaciens FZB42]
+	This sequence aligns to PROTSEQ with 0.601064 fraction identities, and 0.141553 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 59 of 116, which has header:
+	gi|156043978|ref|XP_001588545.1| hypothetical protein SS1G_10092 [Sclerotinia sclerotiorum 1980]
+	This sequence aligns to PROTSEQ with 0.538860 fraction identities, and 0.149780 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 60 of 116, which has header:
+	gi|16078944|ref|NP_389765.1| endo-1,4-beta-xylanase [Bacillus subtilis subsp. subtilis str. 168]
+	This sequence aligns to PROTSEQ with 0.586387 fraction identities, and 0.115741 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 61 of 116, which has header:
+	gi|116182878|ref|XP_001221288.1| hypothetical protein CHGG_02067 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.544944 fraction identities, and 0.299213 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 62 of 116, which has header:
+	gi|150017882|ref|YP_001310136.1| endo-1,4-beta-xylanase [Clostridium beijerinckii NCIMB 8052]
+	This sequence aligns to PROTSEQ with 0.581152 fraction identities, and 0.119816 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 63 of 116, which has header:
+	gi|220928199|ref|YP_002505108.1| glycoside hydrolase family 11 [Clostridium cellulolyticum H10]
+	This sequence aligns to PROTSEQ with 0.476440 fraction identities, and 0.365449 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 64 of 116, which has header:
+	gi|160880242|ref|YP_001559210.1| endo-1,4-beta-xylanase [Clostridium phytofermentans ISDg]
+	This sequence aligns to PROTSEQ with 0.560847 fraction identities, and 0.129032 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 65 of 116, which has header:
+	gi|15613462|ref|NP_241765.1| endo-1,4-beta-xylanhydrolase [Bacillus halodurans C-125]
+	This sequence aligns to PROTSEQ with 0.555556 fraction identities, and 0.120930 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 66 of 116, which has header:
+	gi|162451141|ref|YP_001613508.1| putative secreted protein [Sorangium cellulosum 'So ce 56']
+	This sequence aligns to PROTSEQ with 0.500000 fraction identities, and 0.417178 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 67 of 116, which has header:
+	gi|220929285|ref|YP_002506194.1| glycoside hydrolase family 11 [Clostridium cellulolyticum H10]
+	This sequence aligns to PROTSEQ with 0.549738 fraction identities, and 0.111628 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 68 of 116, which has header:
+	gi|194016749|ref|ZP_03055362.1| endo-1,4-beta-xylanase A (Xylanase A) (1,4-beta-D-xylan xylanohydrolase A) [Bacillus pumilus ATCC 7061]
+	This sequence aligns to PROTSEQ with 0.481481 fraction identities, and 0.255906 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 69 of 116, which has header:
+	gi|169855830|ref|XP_001834579.1| hypothetical protein CC1G_12457 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.507772 fraction identities, and 0.164502 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 70 of 116, which has header:
+	gi|116179002|ref|XP_001219350.1| hypothetical protein CHGG_00129 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.455959 fraction identities, and 0.130631 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 71 of 116, which has header:
+	gi|157692596|ref|YP_001487058.1| glycoside hydrolase [Bacillus pumilus SAFR-032]
+	This sequence aligns to PROTSEQ with 0.455026 fraction identities, and 0.188841 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 72 of 116, which has header:
+	gi|169862294|ref|XP_001837777.1| hypothetical protein CC1G_12474 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.502591 fraction identities, and 0.118721 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 73 of 116, which has header:
+	gi|116192729|ref|XP_001222177.1| hypothetical protein CHGG_06082 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.463542 fraction identities, and 0.172414 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 74 of 116, which has header:
+	gi|171680488|ref|XP_001905189.1| unnamed protein product [Podospora anserina]
+	This sequence aligns to PROTSEQ with 0.439791 fraction identities, and 0.119816 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 75 of 116, which has header:
+	gi|212544063|ref|XP_002152186.1| endo-1,4-beta-xylanase, putative [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.556250 fraction identities, and 0.285714 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 76 of 116, which has header:
+	gi|169865921|ref|XP_001839556.1| hypothetical protein CC1G_12867 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.481865 fraction identities, and 0.164502 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 77 of 116, which has header:
+	gi|212539976|ref|XP_002150143.1| endo-1,4-beta-xylanase 1 precursor, putative [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.484211 fraction identities, and 0.351536 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 78 of 116, which has header:
+	gi|154295033|ref|XP_001547954.1| hypothetical protein BC1G_13645 [Botryotinia fuckeliana B05.10]
+	This sequence aligns to PROTSEQ with 0.497354 fraction identities, and 0.167401 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 79 of 116, which has header:
+	gi|121712541|ref|XP_001273882.1| glycosyl hydrolases family 11 protein [Aspergillus clavatus NRRL 1]
+	This sequence aligns to PROTSEQ with 0.512821 fraction identities, and 0.321739 fraction gaps.
+	Retaining this sequence since it satisfies HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 80 of 116, which has header:
+	gi|156050325|ref|XP_001591124.1| hypothetical protein SS1G_07749 [Sclerotinia sclerotiorum 1980]
+	This sequence aligns to PROTSEQ with 0.463158 fraction identities, and 0.159292 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 81 of 116, which has header:
+	gi|116182700|ref|XP_001221199.1| hypothetical protein CHGG_01978 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.435233 fraction identities, and 0.122727 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 82 of 116, which has header:
+	gi|169864346|ref|XP_001838782.1| hypothetical protein CC1G_08946 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.476684 fraction identities, and 0.345763 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 83 of 116, which has header:
+	gi|39946222|ref|XP_362648.1| hypothetical protein MGG_08401 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.468750 fraction identities, and 0.168831 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 84 of 116, which has header:
+	gi|212546261|ref|XP_002153284.1| endo-1,4-beta-xylanase 1 precursor, putative [Penicillium marneffei ATCC 18224]
+	This sequence aligns to PROTSEQ with 0.465608 fraction identities, and 0.202532 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 85 of 116, which has header:
+	gi|189208412|ref|XP_001940539.1| endo-1,4-beta-xylanase B precursor [Pyrenophora tritici-repentis Pt-1C-BFP]
+	This sequence aligns to PROTSEQ with 0.434555 fraction identities, and 0.147321 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 86 of 116, which has header:
+	gi|145250953|ref|XP_001396990.1| hypothetical protein An15g04550 [Aspergillus niger]
+	This sequence aligns to PROTSEQ with 0.411458 fraction identities, and 0.255814 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 87 of 116, which has header:
+	gi|169615415|ref|XP_001801123.1| hypothetical protein SNOG_10865 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.453125 fraction identities, and 0.172414 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 88 of 116, which has header:
+	gi|169774265|ref|XP_001821600.1| hypothetical protein [Aspergillus oryzae RIB40]
+	This sequence aligns to PROTSEQ with 0.385417 fraction identities, and 0.238095 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 89 of 116, which has header:
+	gi|169613044|ref|XP_001799939.1| hypothetical protein SNOG_09650 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.452514 fraction identities, and 0.190045 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 90 of 116, which has header:
+	gi|169860458|ref|XP_001836864.1| hypothetical protein CC1G_04177 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.393782 fraction identities, and 0.178723 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 91 of 116, which has header:
+	gi|116197429|ref|XP_001224526.1| hypothetical protein CHGG_06870 [Chaetomium globosum CBS 148.51]
+	This sequence aligns to PROTSEQ with 0.427027 fraction identities, and 0.368601 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 92 of 116, which has header:
+	gi|169869092|ref|XP_001841114.1| hypothetical protein CC1G_08258 [Coprinopsis cinerea okayama7#130]
+	This sequence aligns to PROTSEQ with 0.393782 fraction identities, and 0.149780 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 93 of 116, which has header:
+	gi|119470734|ref|XP_001258072.1| glycosyl hydrolases family 11 protein [Neosartorya fischeri NRRL 181]
+	This sequence aligns to PROTSEQ with 0.380208 fraction identities, and 0.235060 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 94 of 116, which has header:
+	gi|39977381|ref|XP_370078.1| hypothetical protein MGG_06593 [Magnaporthe grisea 70-15]
+	This sequence aligns to PROTSEQ with 0.401070 fraction identities, and 0.288973 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 95 of 116, which has header:
+	gi|169610990|ref|XP_001798913.1| hypothetical protein SNOG_08604 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.400000 fraction identities, and 0.222689 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 96 of 116, which has header:
+	gi|145250044|ref|XP_001401361.1| hypothetical protein An14g07390 [Aspergillus niger]
+	This sequence aligns to PROTSEQ with 0.423280 fraction identities, and 0.125000 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 97 of 116, which has header:
+	gi|162452278|ref|YP_001614645.1| glycosy hydrolase family protein [Sorangium cellulosum 'So ce 56']
+	This sequence aligns to PROTSEQ with 0.360825 fraction identities, and 0.527981 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 98 of 116, which has header:
+	gi|169784562|ref|XP_001826742.1| hypothetical protein [Aspergillus oryzae RIB40]
+	This sequence aligns to PROTSEQ with 0.364583 fraction identities, and 0.232000 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 99 of 116, which has header:
+	gi|169615206|ref|XP_001801019.1| hypothetical protein SNOG_10759 [Phaeosphaeria nodorum SN15]
+	This sequence aligns to PROTSEQ with 0.378378 fraction identities, and 0.260000 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 100 of 116, which has header:
+	gi|182413934|ref|YP_001819000.1| glycoside hydrolase family protein [Opitutus terrae PB90-1]
+	This sequence aligns to PROTSEQ with 0.398936 fraction identities, and 0.171806 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 101 of 116, which has header:
+	gi|71024535|ref|XP_762497.1| hypothetical protein UM06350.1 [Ustilago maydis 521]
+	This sequence aligns to PROTSEQ with 0.392670 fraction identities, and 0.147321 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 102 of 116, which has header:
+	gi|162457604|ref|YP_001619971.1| no hits [Sorangium cellulosum 'So ce 56']
+	This sequence aligns to PROTSEQ with 0.345550 fraction identities, and 0.627680 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 103 of 116, which has header:
+	gi|116512302|ref|YP_809518.1| xylanase [Lactococcus lactis subsp. cremoris SK11]
+	This sequence aligns to PROTSEQ with 0.333333 fraction identities, and 0.304348 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 104 of 116, which has header:
+	gi|90020348|ref|YP_526175.1| UDP-glucose 4-epimerase [Saccharophagus degradans 2-40]
+	This sequence aligns to PROTSEQ with 0.360825 fraction identities, and 0.294545 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 105 of 116, which has header:
+	gi|189209131|ref|XP_001940898.1| endo-1,4-beta-xylanase B precursor [Pyrenophora tritici-repentis Pt-1C-BFP]
+	This sequence aligns to PROTSEQ with 0.357143 fraction identities, and 0.634783 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 106 of 116, which has header:
+	gi|169833165|ref|YP_001695062.1| sugar ABC transporter, permease protein [Streptococcus pneumoniae Hungary19A-6]
+	This sequence aligns to PROTSEQ with 0.298013 fraction identities, and 0.553254 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 107 of 116, which has header:
+	gi|221232418|ref|YP_002511571.1| putative transport system permease [Streptococcus pneumoniae ATCC 700669]
+	This sequence aligns to PROTSEQ with 0.291391 fraction identities, and 0.557185 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 108 of 116, which has header:
+	gi|168488603|ref|ZP_02712802.1| sugar ABC transporter, permease protein [Streptococcus pneumoniae SP195]
+	This sequence aligns to PROTSEQ with 0.291391 fraction identities, and 0.553254 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 109 of 116, which has header:
+	gi|149001967|ref|ZP_01826921.1| sugar ABC transporter, permease protein [Streptococcus pneumoniae SP14-BS69]
+	This sequence aligns to PROTSEQ with 0.275362 fraction identities, and 0.402597 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 110 of 116, which has header:
+	gi|116516754|ref|YP_816950.1| sugar ABC transporter, permease protein [Streptococcus pneumoniae D39]
+	This sequence aligns to PROTSEQ with 0.291391 fraction identities, and 0.553254 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 111 of 116, which has header:
+	gi|149006754|ref|ZP_01830440.1| ABC transporter membrane-spanning permease - sugar transport [Streptococcus pneumoniae SP18-BS74]
+	This sequence aligns to PROTSEQ with 0.291391 fraction identities, and 0.553254 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 112 of 116, which has header:
+	gi|15901517|ref|NP_346121.1| sugar ABC transporter, permease protein [Streptococcus pneumoniae TIGR4]
+	This sequence aligns to PROTSEQ with 0.291391 fraction identities, and 0.557185 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 113 of 116, which has header:
+	gi|152994064|ref|YP_001338899.1| alpha amylase catalytic region [Marinomonas sp. MWYL1]
+	This sequence aligns to PROTSEQ with 0.324503 fraction identities, and 0.736475 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 114 of 116, which has header:
+	gi|79563130|ref|NP_180129.2| unknown protein [Arabidopsis thaliana]
+	This sequence aligns to PROTSEQ with 0.295699 fraction identities, and 0.701445 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 115 of 116, which has header:
+	gi|145354257|ref|XP_001421407.1| predicted protein [Ostreococcus lucimarinus CCE9901]
+	This sequence aligns to PROTSEQ with 0.240223 fraction identities, and 0.602222 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+Performing pairwise alignment of PROTSEQ with sequence 116 of 116, which has header:
+	gi|148269625|ref|YP_001244085.1| extracellular solute-binding protein [Thermotoga petrophila RKU-1]
+	This sequence aligns to PROTSEQ with 0.276243 fraction identities, and 0.713608 fraction gaps.
+	Purging this sequence since it does not satisfy HOMOLOGY_THRESHOLD.
+After screening for sequences satisfying HOMOLOGY_THRESHOLD, 63 unique homologous sequences remain.
+
+We will now build a multiple sequence alignment (MSA) of all of the relevant sequences.
+The first sequence in the MSA will be PROTSEQ.
+The MSA will then include the 63 screened unique homologous sequences.
+This MSA will not include an outgroup sequence, since OUTGROUP_SEQ was set to NONE, and since no outgroup is needed since we are not using a molecular clock.
+The MSA will include a total of 64 sequences.  These sequences have all been given short names that are acceptable to PHYLIP.  A table relating these new names to the original sequence headers has been written to the OUTPUT_SEQNAMES file of seqnames.txt.
+
+Here are the contents of the OUTPUT_SEQNAMES file of seqnames.txt:
+
+******
+PROTSEQ EvXyn11: this is the sequence taken from the Genbank entry indicated at the end of this header.  The sequence shown here corresponds to the catalytic domain described in J. Biol. Chem., 283:22557 in that the N-terminal signal peptide and the C-terminal domain have been removed, and the 194 residue catalytic domain retained.  Genbank entry: gi|182406872|gb|ACB87630.1| glycosyl hydrolase family 11 precursor [uncultured bacterium]
+SEQ1 gi|72161617|ref|YP_289274.1| xylanase [Thermobifida fusca YX]
+SEQ2 gi|197786683|ref|YP_002209436.1| bifunctional xylanase/deacetylase [Streptomyces sviceus ATCC 29083]
+SEQ3 gi|115400988|ref|XP_001216082.1| endo-1,4-beta-xylanase A precursor [Aspergillus terreus NIH2624]
+SEQ4 gi|169778667|ref|XP_001823798.1| hypothetical protein [Aspergillus oryzae RIB40]
+SEQ5 gi|21220761|ref|NP_626540.1| secreted endo-1,4-beta-xylanase B (xylanase B) [Streptomyces coelicolor A3(2)]
+SEQ6 gi|70985697|ref|XP_748354.1| endo-1,4-beta-xylanase (XlnA) [Aspergillus fumigatus Af293]
+SEQ7 gi|145228427|ref|XP_001388522.1| endo-1,4-xylanase xynB-Aspergillus niger
+SEQ8 gi|119473525|ref|XP_001258638.1| endo-1,4-beta-xylanase (XlnA), putative [Neosartorya fischeri NRRL 181]
+SEQ9 gi|67526311|ref|XP_661217.1| XYN1_EMENI Endo-1,4-beta-xylanase 1 precursor (Xylanase 1) (1,4-beta-D-xylan xylanohydrolase 1) [Aspergillus nidulans FGSC A4]
+SEQ10 gi|121712323|ref|XP_001273773.1| endo-1,4-beta-xylanase (XlnA), putative [Aspergillus clavatus NRRL 1]
+SEQ11 gi|164424328|ref|XP_957450.2| endo-1,4-beta-xylanase 2 precursor [Neurospora crassa OR74A]
+SEQ12 gi|67904756|ref|XP_682634.1| XYN2_EMENI Endo-1,4-beta-xylanase 2 precursor (Xylanase 2) (1,4-beta-D-xylan xylanohydrolase 2) [Aspergillus nidulans FGSC A4]
+SEQ13 gi|169768392|ref|XP_001818666.1| hypothetical protein [Aspergillus oryzae RIB40]
+SEQ14 gi|119472529|ref|XP_001258363.1| endo-1,4-beta-xylanase (XynG1), putative [Neosartorya fischeri NRRL 181]
+SEQ15 gi|156059212|ref|XP_001595529.1| hypothetical protein SS1G_03618 [Sclerotinia sclerotiorum 1980]
+SEQ16 gi|119473557|ref|XP_001258654.1| glycosyl hydrolases family 11 protein [Neosartorya fischeri NRRL 181]
+SEQ17 gi|85111872|ref|XP_964145.1| endo-1,4-beta-xylanase A precursor [Neurospora crassa OR74A]
+SEQ18 gi|154317376|ref|XP_001558008.1| hypothetical protein BC1G_03590 [Botryotinia fuckeliana B05.10]
+SEQ19 gi|70985723|ref|XP_748367.1| endo-1,4-beta-xylanase [Aspergillus fumigatus Af293]
+SEQ20 gi|121700014|ref|XP_001268272.1| endo-1,4-beta-xylanase (XynG1), putative [Aspergillus clavatus NRRL 1]
+SEQ21 gi|70992503|ref|XP_751100.1| endo-1,4-beta-xylanase (XynG1) [Aspergillus fumigatus Af293]
+SEQ22 gi|171694656|ref|XP_001912252.1| unnamed protein product [Podospora anserina]
+SEQ23 gi|21218669|ref|NP_624448.1| endo-1,4-beta-xylanase (secreted protein) [Streptomyces coelicolor A3(2)]
+SEQ24 gi|115397059|ref|XP_001214121.1| endo-1,4-beta-xylanase B precursor [Aspergillus terreus NIH2624]
+SEQ25 gi|192361681|ref|YP_001984213.1| endo-1,4-beta-xylanase, xyn11B [Cellvibrio japonicus Ueda107]
+SEQ26 gi|116197274|ref|XP_001224449.1| hypothetical protein CHGG_05235 [Chaetomium globosum CBS 148.51]
+SEQ27 gi|116182892|ref|XP_001221295.1| endo-beta1,4-xylanase A [Chaetomium globosum CBS 148.51]
+SEQ28 gi|169619301|ref|XP_001803063.1| hypothetical protein SNOG_12845 [Phaeosphaeria nodorum SN15]
+SEQ29 gi|145231168|ref|XP_001389848.1| hypothetical protein An01g14600 [Aspergillus niger]
+SEQ30 gi|189209652|ref|XP_001941158.1| endo-1,4-beta-xylanase A [Pyrenophora tritici-repentis Pt-1C-BFP]
+SEQ31 gi|116205351|ref|XP_001228486.1| hypothetical protein CHGG_10559 [Chaetomium globosum CBS 148.51]
+SEQ32 gi|171691240|ref|XP_001910545.1| unnamed protein product [Podospora anserina]
+SEQ33 gi|171676497|ref|XP_001903201.1| unnamed protein product [Podospora anserina]
+SEQ34 gi|116197072|ref|XP_001224348.1| hypothetical protein CHGG_05134 [Chaetomium globosum CBS 148.51]
+SEQ35 gi|145604200|ref|XP_363013.2| hypothetical protein MGG_08424 [Magnaporthe grisea 70-15]
+SEQ36 gi|217966677|ref|YP_002352183.1| Endo-1,4-beta-xylanase [Dictyoglomus turgidum DSM 6724]
+SEQ37 gi|162449235|ref|YP_001611602.1| glycosy hydrolase family protein [Sorangium cellulosum 'So ce 56']
+SEQ38 gi|206900912|ref|YP_002251776.1| endo-1,4-beta-xylanase A [Dictyoglomus thermophilum H-6-12]
+SEQ39 gi|222528140|ref|YP_002572022.1| Endo-1,4-beta-xylanase [Anaerocellum thermophilum DSM 6725]
+SEQ40 gi|162453827|ref|YP_001616194.1| hypothetical protein sce5551 [Sorangium cellulosum 'So ce 56']
+SEQ41 gi|169187796|ref|ZP_02847954.1| Endo-1,4-beta-xylanase [Paenibacillus sp. JDR-2]
+SEQ42 gi|46115564|ref|XP_383800.1| hypothetical protein FG03624.1 [Gibberella zeae PH-1]
+SEQ43 gi|46138969|ref|XP_391175.1| hypothetical protein FG10999.1 [Gibberella zeae PH-1]
+SEQ44 gi|169621658|ref|XP_001804239.1| hypothetical protein SNOG_14040 [Phaeosphaeria nodorum SN15]
+SEQ45 gi|189205741|ref|XP_001939205.1| endo-1,4-beta-xylanase I precursor [Pyrenophora tritici-repentis Pt-1C-BFP]
+SEQ46 gi|169624039|ref|XP_001805426.1| hypothetical protein SNOG_15270 [Phaeosphaeria nodorum SN15]
+SEQ47 gi|171689822|ref|XP_001909851.1| unnamed protein product [Podospora anserina]
+SEQ48 gi|39946360|ref|XP_362717.1| hypothetical protein MGG_08331 [Magnaporthe grisea 70-15]
+SEQ49 gi|171694490|ref|XP_001912169.1| unnamed protein product [Podospora anserina]
+SEQ50 gi|192811048|ref|ZP_03039720.1| Endo-1,4-beta-xylanase [Geobacillus sp. Y412MC10]
+SEQ51 gi|154687778|ref|YP_001422939.1| XynA [Bacillus amyloliquefaciens FZB42]
+SEQ52 gi|156043978|ref|XP_001588545.1| hypothetical protein SS1G_10092 [Sclerotinia sclerotiorum 1980]
+SEQ53 gi|16078944|ref|NP_389765.1| endo-1,4-beta-xylanase [Bacillus subtilis subsp. subtilis str. 168]
+SEQ54 gi|116182878|ref|XP_001221288.1| hypothetical protein CHGG_02067 [Chaetomium globosum CBS 148.51]
+SEQ55 gi|150017882|ref|YP_001310136.1| endo-1,4-beta-xylanase [Clostridium beijerinckii NCIMB 8052]
+SEQ56 gi|160880242|ref|YP_001559210.1| endo-1,4-beta-xylanase [Clostridium phytofermentans ISDg]
+SEQ57 gi|15613462|ref|NP_241765.1| endo-1,4-beta-xylanhydrolase [Bacillus halodurans C-125]
+SEQ58 gi|162451141|ref|YP_001613508.1| putative secreted protein [Sorangium cellulosum 'So ce 56']
+SEQ59 gi|220929285|ref|YP_002506194.1| glycoside hydrolase family 11 [Clostridium cellulolyticum H10]
+SEQ60 gi|169855830|ref|XP_001834579.1| hypothetical protein CC1G_12457 [Coprinopsis cinerea okayama7#130]
+SEQ61 gi|169862294|ref|XP_001837777.1| hypothetical protein CC1G_12474 [Coprinopsis cinerea okayama7#130]
+SEQ62 gi|212544063|ref|XP_002152186.1| endo-1,4-beta-xylanase, putative [Penicillium marneffei ATCC 18224]
+SEQ63 gi|121712541|ref|XP_001273882.1| glycosyl hydrolases family 11 protein [Aspergillus clavatus NRRL 1]
+
+******
+
+Now constructing the MSA (this may take a while)...
+Completed aligning the sequences.  Now writing this alignment to the OUTPUT_ALIGNMENT file of renamed_alignment.fasta.
+
+Here are the contents of the OUTPUT_ALIGNMENT file of renamed_alignment.fasta:
+
+******
+>PROTSEQ
+----------------------------------------------------N-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------AQ-T-CLTSSQ-TGTNNGFYYSFWKDSPG-TVNFCLQSGGR--YTSNWS--G--INNW--VGGKG----WQTGS-R-RNITYS-GSFN--S-P---------------------GNGYLALYGWTTNPLVEYYVVDSWGSWRPPGS--DGTFLGTVNSDGGTYDIYRAQRVNAPSIIGN-ATFYQYWSVRQSKR----V-----G--G---TITTGNHFDAWASVG-LNLGT-HN-YQIMATEGYQ----SSGSSDITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------S------------------------------------------------------------------------------------------
+>SEQ1
+----------------------------------------------------MNHAPASLKSRRRFRPRLLIGK-----AFA-AAL-V--AV-VT----M--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------IPST-------------------------------------------------------AAH-A-AVTSNE-TGYHDGYFYSFWTDAPG-TVSMELGPGGN--YSTSWR--N--TGNF--VAGKG----WATGG-R-RTVTYS-ASFN--P-S---------------------GNAYLTLYGWTRNPLVEYYIVESWGTYRPT-----GTYMGTVTTDGGTYDIYKTTRYNAPSIEGT-RTFDQYWSVRQSKR----T-----S--G---TITAGNHFDAWARHG-MHLGT-HD-YMIMATEGYQ----SSGSSNVTLG-------T-------------------------------------------------------------------------------------------------------------------SGGGNPGGGNPPGGGNPPGGGGCTATLSAGQQWNDRYNLNVNVSGSNNWTVTVNVPWPARIIATWNIHASYPDSQTLVARPNGNGNNWGMTIMHNGNWTWPTVSCSA---------------------------------------------------------------------------------------------------------N------------------------------------------------------------------------------------------
+>SEQ2
+----------------------------------------------------MRGI-----------------S-----KH-------------------------------------------------------------------------------------------------------------------------------------------------------------SKHLPKLLTLDRVRPKLWGMTDTPAHPTRRSVCGLLLATGATLALPGTA------------------------------------------------------EAA-T-VITTNQ-TGTNNGYYYSFWTDAQG-TVSMTLNSGGN--YSTSWR--N--TGNF--VAGKG----WSNGS-R-RTVNYS-GSFN--P-S---------------------GNAYLALYGWTSNPLVEYYIVDNWGTYRPT-G----TYKGTVTSDGGTYDIYQTTRYNAPSVEGT-KTFNQYWSVRQSRR----T-----G--G---SITTGNHFDAWGRAG-MPMGN-FKYYMILATEGYQ----SSGSSNITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------A------------------------------------------------------------------------------------------
+>SEQ3
+----------------------------------------------------MVSF-----------------L-----RLA-VAC-FA-AVGAL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APVES-L-----E-----E-RSDELFNS-T---L-----------HE------------FAE-R--STPSS-TGWSNGYYYSFWTDGGG-SVTYTNGAAGQ--YSVQWS--N--VGNF--VGGKG----WNPGS-A-RTINYG-GSFN--P-S---------------------GNGYLAVYGWTTNPLVEYYVVESYGTYNPG-S--GGTYKGTVNSDGGTYNIYTATRYNAPSIIGT-ATFTQYWSVRTSKR----T-----G--G---TVTMANHFNAWASHG-MNLGT-HN-YQIVATEGYQ----SSGSSSITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Y------------------------------------------------------------------------------------------
+>SEQ4
+----------------------------------------------------MVSF-----------------S-----SIL-LAC-SA-AIGAL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------TPIEP-L-----A-----DHPNEAFNET-A---F-----------ND------------LVG-R--STPSS-TGYNNGYYYSFWTDGGG-DVTYTNGNGGS--YSVQWS--N--VGNF--VGGKG----WNPGS-S-RAITYS-GSFN--P-S---------------------GNGYLAVYGWTTDPLIEYYIVESYGTYNPG-S--GGTYKGQVTSDGGTYNIYTSVRTNAPSIIGT-ATFTQFWSVRTSKR----V-----G--G---TVTTGNHFNAWAKYG-LTLGT-HN-YQIVATEGYQ----SSGSSAITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Y------------------------------------------------------------------------------------------
+>SEQ5
+----------------------------------------------------MNLL-VQPRRRRRGPVTLLVRS-----AWA-VAL-A--ALAAL----M--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------LPGTA------------------------------------------------------QAD-T-VVTTNQ-EGTNNGYYYSFWTDSQG-TVSMNMGSGGQ--YSTSWR--N--TGNF--VAGKG----WANGG-R-RTVQYS-GSFN--P-S---------------------GNAYLALYGWTSNPLVEYYIVDNWGTYRPT-----GEYKGTVTSDGGTYDIYKTTRVNKPSVEGT-RTFDQYWSVRQAKR----T-----G--G---TITTGNHFDAWARAG-MPLGN-FSYYMIMATEGYQ----SSGSSSINVG-------G----------------------------------TGGGDNGGGDNGGGGGGCTATVSAGQKWGDRYNLDVSVSGASDWTVTMNVPSPAKVLSTWNVNASYPSAQTLTARSNGSGNN--------------------------------------------------------------------------------------WGATIQANGNWTWPSVSCSA---------------------------------------------------------------------------------------------------------G------------------------------------------------------------------------------------------
+>SEQ6
+----------------------------------------------------MVSF-----------------S-----YLL-LAC-S--AIGAL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APVEP-E-----T-TSFNE--------T-A---L-----------HE------------FAE-R-AGTPSS-TGWNNGYYYSFWTDGGG-DVTYTNGAGGS--YSVNWR--N--VGNF--VGGKG----WNPGS-A-RTINYG-GSFN--P-S---------------------GNGYLAVYGWTTNPLIEYYVVESYGTYNPG-S--GGTFRGTVNTDGGTYNIYTAVRYNAPSIEGT-KTFTQYWSVRTSKR----T-----G--G---TVTMANHFNAWSRLG-MNLGT-HN-YQIVATEGYQ----SSGSASITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Y------------------------------------------------------------------------------------------
+>SEQ7
+----------------------------------------------------MLTK-----------------N------LL-LCF-AA-AKAAL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------VPHDS-V-----A-----Q--------R-S--DA-----------LH------------MLS-E-RSTPSS-TGENNGFYYSFWTDGGG-DVTYTNGDAGA--YTVEWS--N--VGNF--VGGKG----WNPGS-A-QDITYS-GTFT--P-S---------------------GNGYLSVYGWTTDPLIEYYIVESYGDYNPG-S--GGTYKGTVTSDGSVYDIYTATRTNAASIQGT-ATFTQYWSVRQNKR----V-----G--G---TVTTSNHFNAWAKLG-MNLGT-HN-YQIVATEGYQ----SSGSSSITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Q------------------------------------------------------------------------------------------
+>SEQ8
+----------------------------------------------------MVSF-----------------S-----YLL-LAC-S--AIGAL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APVES-E-----D-TSFNE--------T-A---L-----------HE------------FAE-R-GGTPSS-TGWNNGYYYSFWTDGGG-DVTYTNGAGGS--YSVNWR--N--VGNF--VGGKG----WNPGS-A-RTINYG-GSFN--P-S---------------------GNGYLAVYGWTTNPLIEYYVVESYGTYNPS-S--GGTFKGTVNTDGGTYNIYTAVRYNAPSIEGT-KTFTQYWSVRTSKR----A-----G--G---TVTMANHFNAWSRLG-MNLGT-HN-YQIVATEGYQ----SSGSSSITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Y------------------------------------------------------------------------------------------
+>SEQ9
+----------------------------------------------------MVSF-----------------K-----SLL-VLC-CA-ALGAF----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------TPVGS-E-----D------------LAA-R---E-----------AS------------LLE---RSTPSS-TGWSNGYYYSFWTDGGG-DVTYTNGAGGS--YTVQWS--N--VGNF--VGGKG----WNPGS-T-RTINYG-GSFN--P-S---------------------GNGYLAVYGWTQNPLIEYYIVESYGTYNPG-S--GGQHRGTVYSDGATYDIYTATRYNAPSIEGT-ATFEQFWSVRQSKR----T-----G--G---TVTTANHFNAWAALG-MRLGT-HN-YQIVATEGYQ----SSGSASITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Y------------------------------------------------------------------------------------------
+>SEQ10
+----------------------------------------------------MVSF-----------------K-----YLF-LAA-S--ALGAL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APVEV-E-----ESSWFNE--------T-A---L-----------HE------------FAE-R-AGTPSS-TGWNNGYYYSFWTDNGG-TVNYQNGNGGS--YSVQWK--D--TGNF--VGGKG----WNPGS-A-RTINYS-GSFN--P-S---------------------GNAYLTVYGWTTNPLVEYYIVENYGTYNPG-N--GGTYRGSVYSDGANYNIYTATRYNAPSIEGD-KTFTQYWSVRQSKR----T-----G--G---TVTTANHFNAWAQLG-MSLGT-HN-YQIVATEGYQ----SSGSSSITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Y------------------------------------------------------------------------------------------
+>SEQ11
+----------------------------------------------------MVAF-----------------S-----SIL-LAA-STAISGVF----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------LPGEL-P-----------G----------Q---G-----------SL------------FKR-Q-TYTSSA-TGTHNGYYFSFWTDGQG-SVRYTNEAGGQ--YTATWS--G--NGNW--VGGKG----WMPGT-D-RTINYT-GTYS--P-N---------------------GNSYLAVYGWTRNPLIEYYVVENFGTYNPS-T--GATRLGSVTSDGGVYDIYRTQRVNQPSIDGT-ATFYQYWSVRQQKR----T-----G--G---SVNMKNHFDAWTRSG-LTLGT-HN-YQIVATEGYF----SSGSSTINVG-------A-------------------------------------------------------------------------------------------------------------------S-------------------------------------------------------------------------------GGSGGGGGGTTPENPVRVSGRLGLSRK---------------------------------------------------------------------------------------------------------W------------------------------------------------------------------------------------------
+>SEQ12
+----------------------------------------------------MVSF-----------------S-----SLL-LAC-SA--VTAF----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APSDQ-S-----------I----------A---E-----------RS------------LSE---RSTPSS-TGTSGGYYYSFWTDGGG-DVTYTNGDGGS--YTVEWT--N--VGNF--VGGKG----WNPGS-S-QTISYS-GSFN--P-S---------------------GNGYLSVYGWTQNPLIEYYIVESYGDYNPG-T--AGTHQGTLESDGSTYDIYTATRENAPSIEGT-ATFTQFWSVRQSKR----T-----S--G---SVTTQNHFDAWSQLG-MTLGT-HN-YQIVAVEGYQ----SSGSASITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------S------------------------------------------------------------------------------------------
+>SEQ13
+----------------------------------------------------MVSF-----------------S-----SLL-LAV-SA-VSGAL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APGDS------------------------T---L-----------VE------------LAK-R-AITSSE-TGTNNGYYYSFWTNGGG-DVEYTNGNGGQ--YSVKWT--N--CDNF--VAGKG----WNPGS-A-KTVTYS-GEWE--S-N---------------------SNSYVSLYGWTQNPLVEYYIVDKYGDYDPS-T--GATELGTVESDGGTYKIYKTTRENAPSIEGT-STFNQYWSVRQSGR----V-----G--G---TITAQNHFDAWANVG-LQLGT-HN-YMILATEGYK----SSGSATITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------E------------------------------------------------------------------------------------------
+>SEQ14
+----------------------------------------------------MVSF-----------------S-----SLV-LAL-ST-VAGVL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APGSE------------------------Q---Y-----------VE------------LAK-R-QLTSSQ-TGTNNGYFYSFWTDGGG-KVTYNNGNGGQ--YQVDWT--N--CGNF--VAGKG----WNPGS-E-RTVTYS-GSWE--S-S---------------------GNGYLSVYGWMTNPLVEYYIVESYGSYDPS-T--GATHLGTVESDGGTYNIYKTTRTNAPSIQGT-ATFDQYWSVRTSHR----V-----S--G---TVTTKNHFDAWKKAG-LKLGN-FD-YMIVATEGYQ----SSGSATLTV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------S------------------------------------------------------------------------------------------
+>SEQ15
+----------------------------------------------------MVSY-----------------K-----SLL-ITL-TA-FAGVL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------YPANS----------------------------T-----------FE------------LVD-R-SGTPSS-TGTSGGYYYSFWTDGGA-AVTYTNGAGGE--YNVQWS--G--SGNF--VGGKG----WNPGS-A-MAVTYS-GTYS--P-N---------------------GNSYLSLYGWTTSPLIEYYIVENFGTYNPS-T--GATLKGTVVSDGATYNIYQTQRVNEPSIVGT-ATFYQYWSVRQSKR----T-----G--G---TVTTGNHFNAWKALG-MDMGT-FN-YMIVATEGYY----SSGSSDITVG-------S-------------------------------------------------------------------------------------------------------------------S------------------------------------------------NGGGSTVPTTSAPASSPTSSPGGTCGALYSQCGGTGFTGSSCCASGTCKYANSYYSQC---------------------------------------------------------------------------------------------------------L------------------------------------------------------------------------------------------
+>SEQ16
+----------------------------------------------------MISF-----------------S-----SLS-FGL-AA-IASAY----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------LPGDK-S--------------------------------------VN------------LAE-RQTITSSQ-TGTNNGYYYSFWTNGAG-TVQYTNGAGGE--YSVTWANQN--GGDF--TCGKG----WNPGS-D-HDITFS-GNFN--P-S---------------------GNAYLSVYGWTTSPLVEYYILENYGSYNPG-S--SMTHKGTVTSDGSTYDIYEHQQVNQPSIVGT-ATFNQYWSIRQNKR----S-----S--G---TVTTANHFKAWASLG-MNLGT-HN-YQIVSTEGYE----SSGTSTITVS-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------SGGSSSGGSGGSSSTTSSGSSPTGGSGSVSLLPHGCDFIVLLCGANAVESAGLALLAALRALARLQTRTTPSACSTFLQGYIQVMDTSEYMRWISRLEILAFPLSQI------------------------------------------------------------------------------------------
+>SEQ17
+----------------------------------------------------MVSL-----------------K-----SLL-LGA-----AGAL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------MPFNA-T----------------------E---F-----------SE------------LAE-R-GGTPSS-TGFNNGFYYSFWTDNGG-NVNYANGASGS--YSVNWQ--N--AGNF--VAGKG----WNPGS-A-RTITYS-GNFR--P-S---------------------GNGYLSVYGWTRNPLVEYYVVENFGSYNPS-S--GAQRLGSVYTDGSTYDIYKTTRYNQPSIDGT-RTFNQYWSVRQQKR----T-----G--G---TVTMANHFNAWAKAG-LHLGT-HN-YQIVATEGYQ----SSGSAQITVH-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------G------------------------------------------------------------------------------------------
+>SEQ18
+----------------------------------------------------MVSY-----------------K-----AFL-ITL-AA-VTRVL----T--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------YPANS----------------------------S-----------FE------------LVD-R-SGTPSS-TGTSGGYYYSFWTDGGA-DVTYTNGAGGE--YKLQWS--G--NGNL--VGGKG----WNPGS-A-KAVTYS-GTYS--P-N---------------------GNSYLSLYGWTTSPLIEYYVVENFGTYDPS-T--GATLKGTVVSDGATYKIYQTQRVNQPSIIGT-ATFYQYWSVRQTKR----T-----G--G---TVTTGNHFNAWKALG-MNMGT-FD-YMIVATEGYF----SSGSSDITVG-------S-------------------------------------------------------------------------------------------------------------------S------------------------------------------------TGGGDSGSPTSAPTTSPTTSPGGTCGALYSQCGGTGFTGSQCCASGTCKYANSYYSQC---------------------------------------------------------------------------------------------------------L------------------------------------------------------------------------------------------
+>SEQ19
+----------------------------------------------------MISI-----------------S-----SLS-FGL-AA-IAGAY----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------LPSDK------------------------S---------------VS------------LAERQ-TITTSQ-TGTNNGYYYSFWTNGAG-SVQYTNGAGGE--YSVTWA--NQNGGDF--TCGKG----WNPGS-D-HDITFS-GSFN--P-S---------------------GNAYLSVYGWTTNPLVEYYILENYGSYNPG-S--GMTHKGTVTSDGSTYDIYEHQQVNQPSIVGT-ATFNQYWSIRQNKR----S-----S--G---TVTTANHFKAWASLG-MNLGT-HN-YQIVSTEGYE----SSGTSTITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------SSGGSSSGGSGGSSSTTSSGSSPTGGSGSVSLLPYGCGFMCILTVIVLCFVGPVRWNWLVWSYLLLFGHLPGFELVLLPVLVVPSCRVISK
+>SEQ20
+MGNDFHQLPSQTVPVPHRLNAGIFTYKRTVEVGSLAPHSFIIITIHHQSSKKMVSF-----------------S-----SLA-LAL-ST-VVGVL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APGSE------------------------K---Y-----------VE------------LAK-H-QLTHSQ-TGTKNGYYYSFWTDNRG-QVSYTNGKGGQ--YSVNWK--D--CGNF--VAGKG----WNPAS-A-KTVTYS-GNWK--P-S---------------------GNSYVSVYGWTQNPLIEFYIVESFGSYNPS-T--GATELGTVESDGGTYKIYKTKRVDAPSIEGK-KTFDQFWSVRTSHR----V-----G--G---TVTTKNHFNAWAKSG-LKLGT-FN-YMILATEGYH----SSGSATMTV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------S------------------------------------------------------------------------------------------
+>SEQ21
+----------------------------------------------------MVSF-----------------S-----SLV-LAA-ST-VAGVL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------TPGSE------------------------Q---Y-----------VE------------LAK-R-QLTSSQ-TGTNNGYYYSFWTDGGG-QVTYTNGNGGQ--YQVDWN--N--CGNF--VAGKG----WNPAS-E-KAVTYS-GSWQ--T-S---------------------GNGYLSVYGWTTSPLVEFYIVESYGSYDPS-T--GATHLGTVESDGATYNLYKTTRTNAPSIQGT-ATFDQYWSVRTSHR----Q-----S--G---TVTTKNHFDAWRNAG-LQLGN-FD-YMIVATEGYQ----SSGSATITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------S------------------------------------------------------------------------------------------
+>SEQ22
+----------------------------------------------------MVSF-----------------K-----SLL-TAT-LA--TGAA----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------VPFNA-T-----------E----------V---F-----------ES------------LQA-R-AGTPSS-TGNHNGYYYSFWTDNGG-TVNYQNGNGGS--YSVNWQ--N--CGNF--VGGKG----WNPGNSN-RVINYS-GQFN--P-Q---------------------GNGYLAIYGWTRNPLIEYYIIESFGTYDPS-S--GATRLGTFNTDGGTYTIAKSTRYNQPSIEGT-KTFDQFWSVRTSKR----V-----G--G---SVNVGNHFKAWADKG-LRLGS-HD-YQIVATEGYQ----SSGSASITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------S------------------------------------------------------------------------------------------
+>SEQ23
+----------------------------------------------------MQQD-----------------G-----T----------------------------------------------------------------------------------------------------------------------------------------------------------------------QQDRIKQSPAPLNGMSRRGFLGGAGTLALATASGLLLPGTA------------------------------------------------------HAA-T-TITTNQ-TGT-DGMYYSFWTDGGG-SVSMTLNGGGS--YSTQWT--N--CGNF--VAGKG----WSTGG-R-RTVRYN-GYFN--P-S---------------------GNGYGCLYGWTSNPLVEYYIVDNWGSYRPT-G----TYKGTVSSDGGTYDIYQTTRYNAPSVEGT-KTFQQYWSVRQSKV----T-----SGSG---TITTGNHFDAWARAG-MNMGQ-FRYYMIMATEGYQ----SSGSSNITVS-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------G------------------------------------------------------------------------------------------
+>SEQ24
+----------------------------------------------------MVSF-----------------S-----SLA-VAF-SI-ASGAL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APNGM-L---------------------------------------E------------LFKRQ-QITSSE-TGTNNGYYYSFWTDGGG-QVTYTNGDAGA--YSVEWS--N--SGNF--VAGKG----WNPGS-S-QTITYS-GEWN--P-N---------------------GNSYLSVYGWTQNPLVEYYIVESFSTYDPS-T--GAQELGTVETDDGTYKIYKTTRENAPSIEGT-ATFNQYWSVRTDHR----V-----G--G---TVTTQNHFDAWKNAG-LEMGT-AN-YMIVATEGYQ----SSGSASITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Q------------------------------------------------------------------------------------------
+>SEQ25
+----------------------------------------------------MKIF-----------------Q-----NTK-NVI-VS-IAWAA----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------LCT------------------------------------------SA------------VSA-Q-TLTSNS-TGTNNGFYYTFWKDSG--DASMTLLSGGR--YQSSWN--S-STNNW--VGGKG----WNPGSSS-RVISYS-GYYGVDS-S---------------------QNSYLALYGWTRSPLIEYYVIESYGSYNPA-SCSGGTDYGSFQSDGATYNVRRCQRVNQPSIDGN-QTFYQYFSVRNPKKGFGNI-----S--G---TITFANHANFWASKG-LNLGN-HN-YQVLATEGYQ----SRGSSDITVS-------Q----GGSSGGGNSSSSSSASGGGSKIIVVRARGTAGGESITLRVGNTNVATWTLTTTMTNYTATTSASGGSLVQYTNDSGNRDVQVDYISVNGSIRQSEDQTYNTGVYQNGSCGGG-----------------------------------------------------------------------------------------NGRSEWLHCNGAIGYGD---------------------------------------------------------------------------------------------------------I------------------------------------------------------------------------------------------
+>SEQ26
+----------------------------------------------------MVSF-----------------K-----SLL-VAA-AT-VTSVL----S--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APFDF-A-----------E-R---DNGN-S---T-----------DV------------LEK-R-QVTPNS-QGYHNGYFYSWWSDGGG-QVTYTMGEGSR--YQVSWR--N--TGNF--VGGKG----WNPGN-G-RTINYG-GAFN--P-S---------------------GNGYLAVYGWTRNPLVEYYVIESFGTYNPS-S--GAQYKGQHQTDGGTYNIYVSTRYNQPSIDGT-RTFQQYWSVRTSKR----V-----G--G---SVTMQNHFNAWARVG-LNLGQ-HD-YQIVATEGYQ----SSGSSDIYVQ-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------T---------------------------------------------------------------------------------------------------------H------------------------------------------------------------------------------------------
+>SEQ27
+----------------------------------------------------MVSF-----------------K-----AVL-LGA-----TGAL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------FPFNG-T----------------------Q---L-----------SE------------LAG-R-AGTPSG-TGTHEGFYYSFWTDNGG-TVNYENGAGGS--YSVNWQ--N--CGNF--VGGKG----WNPGA-A-RTINFE-GQFS--P-Q---------------------GNGYLAIYGWTQNPLIEYYIVESFGDYDPS-S--QATKFGTIDQDGSTYTIAKTQRVNQPSIEGT-STFDQFWSVRQNHR----S-----S--G---SVDVGAHFNAWSQAG-LQLGT-HN-YQIVATEGYQ----SSGSSSITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------S------------------------------------------------------------------------------------------
+>SEQ28
+----------------------------------------------------MVAF-----------------S-----SIL-LAL-GS-ATAAF----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------SPLNL-Y-----T--DLQK-------R--D---E-----------GA------------LNT---RSTPSG-TGTNNGFFYSFWTDGQG-SVTYNNGAAGSLQYNVQWS--N--VGNF--VAGKG----WNPGG-V-RNVTYS-GTWN--AAN---------------------VNSYISLYGWTRNPLIEYYIVETYGSYNPG-S--AAQKKGTVTTDGSTYDILQTTRTNQPSIDGT-STFQQFWSVRQQKR----V-----G--G---TINVQAHFDAWAKFG-QKLGT-HN-YQIIATEGYQ----SSGSASITVN-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------G---------------------------------------------------------------------------------------------------------P------------------------------------------------------------------------------------------
+>SEQ29
+----------------------------------------------------MVAY-----------------S-----SLL-LAL-SA-ASSAV----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------LPNGK------------------------A---L-----------LD------------MAK-R-SLTSSA-EGESNGYFYSFWTNGEG-DVTYTNGDAGE--YTVEWT--D--CGDF--VAGKG----WNPGS-A-QAVTYS-GSWE--T-D---------------------ANAYLSVYGWTTSPLVEFYIVDKYGDYDPS-S--GLTELGTVDSDDGTYKIYQTTREDADSIEGT-ATFKQYWSVRTEGR----I-----G--G---TVTTQNHFDAWENLG-LELGT-FN-YMIVATEGYE----SSGSATITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ET--------------------------------------------------------------------------------SSDSTEESC
+>SEQ30
+----------------------------------------------------MVAF-----------------S-----TIL-LAL-GS-ATAAL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------SPLGL-I-----L--DAEA-------RG-E---S-----------AN------------LTA---RSTPAG-TGMNNGFFYSFWTDGQG-QVTYNNGNGGS--YDVQWN--N--VGNF--VAGKG----WNPGS-A-RVVTYS-GTWN--AQN---------------------VNSYISLYGWTRSPLIEYYIVEAYGSYNPA-S--AAQKKGQVQSDGGTYDILQTTRYNQPSIDGT-QTFQQFWSVRTSKR----V-----G--G---TITVKNHFDAWAKYG-QQLGQ-HN-YQILATEGYQ----SSGSASITVN-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------S---------------------------------------------------------------------------------------------------------S------------------------------------------------------------------------------------------
+>SEQ31
+----------------------------------------------------MVSF-----------------T-----LLL-TAL-AA--SVAT----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------SPLE-------------------------------------------------------ALK-R--GIQPG-TGTHDGYFYSFWTDGRG-SVDYNNGPRGS--YSVSWN--N--VNNW--VGGKG----WNPGP-P-RKVAYN-GTWN--NYN---------------------VNSYLALYGWTTNPLVEYYIVEAYGTYNPS-S--GTSRLGTIEDDGGTYDIYKTRRVNQPSIQGT-STFDQYWSVRRQKR----V-----G--G---TIDTGKHFDEWKRQGNLNLGQ-WN-YMIMASEGYQ----SSGSANIEVR------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------AA---------------------------------------------------------------------------------------------------------S------------------------------------------------------------------------------------------
+>SEQ32
+----------------------------------------------------MRF------------------S-----LLL-TGL-A--ATLAA----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------IPLDE-Q----------------------LF--------------GRSLDLGSKLHSSDRRT-A-RGDPEG-NGFHSGYFYSYWSDGRG-TVDYRNQPNGT--YTATWT--N--VGNW--VGGKG----WNPGG-P-KVVQYN-GTWS--GRN---------------------VNSYLALYGWTKNALIEYYIVESYGSYNPS-S--GTSRLGTVNSDGSDYDIYRTQRVNQPSIVGR-ATFYQFWSVRRNHR----V-----G--G---TITVANHFAAWERSN-LKLGT-HD-YMILATEGYG----SSGSSAITVR-------E-------------------------------------------------------------------------------------------------------------------A-----------------------------------------------------------------------------------------GVEGVPYPNEPDSRRDN---------------------------------------------------------------------------------------------------------N------------------------------------------------------------------------------------------
+>SEQ33
+----------------------------------------------------MVTL-----------------S-----SLL-VAA-ATVATGVF----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APGEL-P---------------------------------------G------------LAKRQ-TYTTSA-TGTHNGYYFSFWTDGGP-NVRYTNEAGGQ--YSVSWS--G--NGNW--VGGKG----WNPGT-A-RTINYT-GTYQ--P-N---------------------GNSYLAIYGWTRNPLVEYYVIENFGTYNPS-S--GATRMGSVVDGGATYDIYRSTRVQQPSIEGT-RTFDQYWSVRQQKR----T-----G--G---SVNMATHFAAWERAG-LRLGT-HD-YQVVATEGYF----SSGSATINVG-------G-------------------------------------------------------------------------------------------------------------------S-------------------------------------------SGGAQPQPQPEPSPNPNPGNGGGGGGSNCAARWGQCGGQGWNGPTCCESGTTCRSSNQWYSQC---------------------------------------------------------------------------------------------------------L------------------------------------------------------------------------------------------
+>SEQ34
+----------------------------------------------------MVSF-----------------K-----SLL-VGA-LG-AVGAL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------FPLNT-T----------------------E---LTEAHARGENVTAL------------LMA-R-GGTPSQ-TGYHGGYYFSFWTDNGG-TVNYWNGDNGN--YGVNWQ--N--CGNF--VGGKG----WNPGA-S-RTINYS-GQFN--P-S---------------------GNGYLAVYGWTTNPLIEYYIVESFGTYDPS-S--QAQNLGTTYIDGSNYKIAKTTRYNQPSILGT-STFDQFWSVRQNKR----S-----S--G---SVNVGAHFSRWAQSG-LRLGQ-HN-YQIVATEGYQ----SSGSSSITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------W------------------------------------------------------------------------------------------
+>SEQ35
+----------------------------------------------------MVSF-----------------T-----TIL-VAA-TA-AL-VA----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------NPVPP-S------------IDEMREIYV-K---S-----------RD------------LHA-R-GGTPSS-TGTHDGFYYSWWTDNGA-QATYTNNAGGS--YSITWS--G--NGNL--VGGKG----WNPGS-A-RNVTYS-ANYR--P-N---------------------GNSYLSVYGWTRNPLVEYYVVENFGTYDPS-S--QASRKGTINVDGATYQVAQSTRTNQPSIDGT-RTFQQYWSVRQQKR----S-----S--G---TVDMKKHFDAWASMG-MKLGT-HD-YQIVATEGYF----SSGSSTVTIQ-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------R------------------------------------------------------------------------------------------
+>SEQ36
+----------------------------------------------------MFKV-----------------YLEKLTKLL-LIM-LL--I-AV----Y--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------TQVH------------------------------------------A------------QTS-I-TLTSNA-SGTFDGYYYELWKDSGN--TTMTVYTQGR--FSCQWS--N--INNALFRTGKKYNQSWQSLG-T-VKITYS-ATYN--P-N---------------------GNSYLCIYGWSTNPLVEFYIVESWGTWRPP----GATSLGQVTIDGGTYDIYRTTRVNQPSIVGT-ATFDQYWSVRTSKR----T-----S--G---TVTVTDHFRAWANKG-LNLGT-ID-QITLCVEGYQ----SSGSANITQN-------T-----------------------------------------------------FSTSSSSGGSTTVTRVECENMSLSGPYASRISSPFNGVALYANNDRAYYTQYFANSVHTFRLR---------------------------------------GCSSNNNTAAVDLRIGGQKVGTFYFTGTTPTVQTLSNISHATGNQTVELILTSDNGTWDVYLDYLEI---------------------------------------------------------------------------------------------------------Q------------------------------------------------------------------------------------------
+>SEQ37
+----------------------------------------------------MSLT-----------------L------LK-HFTM---VLGVVAIGCA---------------------------------------------------------------------GPDDSSGETGAGGGSSGTGGATVGSTGTTGTTGTTSTTVGPGGSTTSGTTGSTTTSGSTTSGTGGSDGSGGGSSSTTSSSTTSSSTTSSSTTSSSTTSSTTASSTTATTGAGTPTRCT------------------------------------------------------EAD-L-EVCSDR-TGMHCGLTFEYWKDRGN-GCL-VNTAD-G--FRVDWN--N--INNL--LGRKG----VRPGG-KNNVVTYE-ADYR--P-N---------------------GNSYLGVYGWTRNPLIEYYIIDSWGTWRPP-G--GEGFVGTVSSDGGTYDIYKTQRVNQPSIDGT-ATFYQFWSVRQQKR----T-----S--G---TITVGNHFDAWGKQG-LSLGT-FY-EVSLVVEGYQ----SSGNADVKVS-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------I---------------------------------------------------------------------------------------------------------E------------------------------------------------------------------------------------------
+>SEQ38
+----------------------------------------------------MFLK-----------------K---LSKLL-LVV-LL--V-AV----Y--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------TQVH------------------------------------------A------------QTS-I-TLTSNA-SGTFDGYYYELWKDSGN--TTMTVYTQGR--FSCQWS--N--INNALFRTGKKYNQNWQSLG-T-IRITYS-ATYN--P-N---------------------GNSYLCIYGWSTNPLVEFYIVESWGNWRPP----GATSLGQVTIDGGTYDIYRTTRVNQPSIVGT-ATFDQYWSVRTSKR----T-----S--G---TVTVTDHFRAWANRG-LNLGT-ID-QITLCVEGYQ----SSGSANITQNTFSQSSSS------GSSGGSSGSTTTTRIECENMSLSGPYVSRITSPFNGIALYANGDSARATVNFPASRNYNFRLRGCGNNNNLARVDLRIDGRTVGTFYYQGTYPWEAPIDNVYVSAGSHTV--------------------------------------------------------------------------------------EIVVTADNGTWDVYADYLLI---------------------------------------------------------------------------------------------------------Q------------------------------------------------------------------------------------------
+>SEQ39
+----------------------------------------------------MRFK-----------------K---FLKVL-IAV-LM-CF-ML----G--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------NPFY------------------------------------------A------------QAA-I-TLTSNA-SGTYDGYYYELWKDSGN--TTMTVDTGGR--FSCQWS--N--INNALFRTGKKFSTAWNQLG-T-VKITYS-ATYN--P-N---------------------GNSYLCIYGWSRNPLVEFYIVESWGTWRPP----GATSLGTVTIDGGTYDIYKTTRVNQPSIEGT-TTFDQYWSVRTSKR----T-----S--G---TVTVTDHFKAWAAKG-LNLGT-ID-QITLCVEGYQ----SSGSANITQN-------TFSITSASSGGTTPTTTKVECENMSLSGPYASKITSPFYGMALYANGDKATTNINFSASRNYTFKLRGCGNNNNLASVDLLIDGKKVGSFYYRGTYPWEAPIENVYVSAGSHKVEIV-----------------------------------------------------------------------------------------VSADNGTWDVYADYLLI---------------------------------------------------------------------------------------------------------Q------------------------------------------------------------------------------------------
+>SEQ40
+----------------------------------------------------MRIV-----------------P-----LLG-YLSASI-ACGLL----ACSVENIVDEDIEALEGALDSADRSMSASVAVTSDWGSGYCANVTVKNNSRSPATTGWNVVVALNGSTKPTPWNVKFTESNGQFSATNVDFNGAVGLGSSTQWGFCANGSGRPTIASVTGSGGTINGSSSASSSSSSSSSSSSSSSSSSSSSSSSSSSGGGGAGGSGGSGGSGGSGGSGGSGGGSTCT------------------------------------------------------SPN-Q-QVCANQ-TGTHCGYTFEYWKDTGS-GCQ-TNTAN-G--FNVEWS--N--INNL--LGRKG----LRPGS-KNQIVTYS-ADYR--P-N---------------------GNSYLGVYGWTKGPLIEYYIIDSWGTWRPP-G--GQGFMGTVTSDGGTYDIYRTERVNQPSIEGT-KTFYQFWSVRQQKR----T-----S--G---TISVANHFNAWDRLG-MKLGN-LY-EVSMVVEGYQ----SSGNASVNVS-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------M---------------------------------------------------------------------------------------------------------K------------------------------------------------------------------------------------------
+>SEQ41
+----------------------------------------------------MFKL-----------------K-----KKV-MTA-VL-AA-SM----S-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------I-GLF-AA-TANAATDYWQNWTDGGG-TVNAVNGSGGN--YSVNWS--N--TGNF--VVGKG----WNTGS-ASRVINYNAGVWA--P-S---------------------GNGYLTLYGWTRNSLIEYYVVDSWGTYRPT-----GTYKGTVSSDGGTYDIYTAQRVNAPSIDGT-ATFTQYWSVRQSKR----A-----T--GSNVAITFANHVNAWKSKG-MNLGSSWS-YQVLATEGYQ----SSGSSNVTV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------W------------------------------------------------------------------------------------------
+>SEQ42
+----------------------------------------------------MVSF-----------------T-----YLL-AAV-SA-VTGAV----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APNPT-K-----V--D----------AQ-P---P-----------SG------------LLE-K--RTSPT-TGVNNGFYFSFWTDTPS-AVTYTNGNGGQ--FSMNWNG-N--RGNH--VGGKG----WNPGA-A-RTIKYS-GDYR--P-N---------------------GNSYLAVYGWTRNPLVEYYIVENFGTYNPS-S--GAQKKGEINIDGSIYDIAVSTRNCAPSIEGDCKTFQQYWSVRRNKR----S-----S--G---SVNTGAHFNAWAQAG-LRLGS-HD-YQILAVEGYQ----SSGQATMTVS-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------G------------------------------------------------------------------------------------------
+>SEQ43
+----------------------------------------------------MVSF-----------------K-----SLL-VAV-SA-LTGAL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------RPFDF-L-----D-----E-R---DDGN-A---T-----------SV------------LEA-R-QVTGNS-EGYHNGYFYSWWSDGGG-YAQYRMGEGSH--YQVDWR--N--TGNF--VGGKG----WNPGT-G-RTINYG-GSFN--P-Q---------------------GNGYLCVYGWTRGPLVEYYVIESYGSYNPG-S--QAQHRGTVYTDGDTYDLYMSTRYQQPSIDGV-QTFNQYWSIRRNKR----T-----S--G---SVNMQNHFNAWRSAG-MNLGN-HY-YQILATEGYQ----SSGSSSIYVQ-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------T---------------------------------------------------------------------------------------------------------S------------------------------------------------------------------------------------------
+>SEQ44
+----------------------------------------------------MVSF-----------------T-----SIV-TAA-IA-ATGAM----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APATD-V-----A-----A--------R-S---S-----------GD------------LVA-R-QNTPSS-TGTHNGCYYSWWTDNGA-QATYTNGAGGS--YSVKWG--S--GGNL--VGGKG----WNPGS-A-RTITYS-GTYS--P-N---------------------GNSYLAIYGWTRNPLVEYYVVENFGTYDPS-S--NAQNKGTVTADGSSYKIAQTTRTNQPSIDGT-STFQQYWSVRQNKR----S-----S--G---SVNMKTHFDAWTAQG-LKLGQ-HN-YQIVATEGYF----STGSASITVN-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------C---------------------------------------------------------------------------------------------------------P------------------------------------------------------------------------------------------
+>SEQ45
+----------------------------------------------------MVSF-----------------T-----SLI-TAA-IA-ATSAF----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APATD-V-----A-----A--------R-S---S-----------GD------------LVA-R-QSTPNS-EGTHNGCFYSWWTDGGS-RVTYTNGAGGS--YSVQWG--S--GGNF--VGGKG----WNPGS-A-RTITYS-GSYN--P-N---------------------GNSYLAIYGWTRNPLVEYYVVENFGTYDPS-S--QAQNKGTVTVDGSSYKIAQSTRTNQPSIDGT-RTFQQYWSVRQNKR----S-----S--G---SVNMKTHFDAWASKG-MNLGS-HY-YQIVATEGYF----STGSASITVN-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------C---------------------------------------------------------------------------------------------------------P------------------------------------------------------------------------------------------
+>SEQ46
+----------------------------------------------------MVSF-----------------K-----SIL-LAM-TA-ATGIL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APFDF-L-----S-----E-R---DDGN-A---T-----------AA------------LER-R-QNTANS-EGYNNGYFYSWWSDGGG-SAVYTMGEGSK--YSVVWR--N--TGNF--VGGKD----R-------STINYG-GSFN--P-S---------------------GNGYLAVYGWTRNPLVEYYVIESYGTYNPS-S--GSQRKGSFQTDGGTYDVSVSTRTNQPSIDGT-RTFQQYWSVRTAKR----V-----G--G---SVNMQNHFNAWARYG-LNLGT-HY-YQIVATEGYQ----SSGNSEIYVQ-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------T---------------------------------------------------------------------------------------------------------Q------------------------------------------------------------------------------------------
+>SEQ47
+----------------------------------------------------MVSF-----------------T-----SIF-TAL-AA-AATVV----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------SPLE-------------------------------------------------------LAL-R--GIQPG-QGTHDGYFYSYWTDGQG-SVDYNNGPRGS--YKVSWR--N--VGNW--VGGKG----WNPGP-S-RTVAYN-GTWN--NYNVNSCMCLLLSDSFVLSHALTDINIDLALYGWTVNPLVEYYIVEAYGTYNPS-A--GTTKFRTLQSDGGTYDVYRTRRVNQPSIQGT-ATFDQYWSVRQVKR----V-----G--G---TISVQNHFDAWTASG-LKLGS-WN-YMIMATEGYG----STGSAEIEVR------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------EV---------------------------------------------------------------------------------------------------------R------------------------------------------------------------------------------------------
+>SEQ48
+----------------------------------------------------MQIL-----------------T-----WAL-AAL-AA-IPAVT----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APVET-VEASSMD--ELVE-------RS-P---N-----------VT------------LVA---RGTPSS-TGTHNGFYYSHWTDNAGADVTYSMGGGGQ--FSYTWR--N--SGNF--VGGKG----WNPGN-AGRVINYS-GSYS--P-Q---------------------GNSYLAVYGWTRNPLIEYYVVESFGSYNPS-S--GATNRGSFTSDGSTYDILVSTRYNQPSIDGT-KTFQQFWSVRRNKR----A-----S--G---TVTFANHVNAWRNAG-LNLGNQWN-YQILAVEGYH----SSGSASMTV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------R------------------------------------------------------------------------------------------
+>SEQ49
+----------------------------------------------------MVSF-----------------K-----SLL-LAA-TA-VTSAL----G--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------RPFDF-L-----D-------Q---DNGN-S---T-----------EA------------LER-R-QITPNS-EGTHNGYFYSWWSDGGG-QATYTMLEGSR--YQFLK------------IQHKE----TKLTC-R-STINYG-GSFN--P-Q---------------------GNGYLAVYGWTRNPLVEYYVIESYGTYNPS-S--GAQYKGSVQTDGGTYNIYVSTRYNQPSIDGT-RTFQQYWSVRTSKR----V-----G--G---SVNMQNHFNAWARYG-MNLGQ-HY-YQIVATEGYQ----SSGNSDIYVQ-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------T---------------------------------------------------------------------------------------------------------H------------------------------------------------------------------------------------------
+>SEQ50
+----------------------------------------------------M-------------------------------TL-VL-AA-SM----S-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------F-GLF-AT-TSNAATDYWQNWTDGGG-TVNAVNGSGGN--YSVTWQ--N--TGNF--VVGKG----WNTGS-PNRTINYNAGVWA--P-S---------------------GNGYLTLYGWTRNSLIEYYVVDSWGTYRPT-----GTHKGTVTSDGGTYDIYTTMRYNAPSIDGT-QTFAQYWSVRQSKR----A-----T--GVNSSITFSNHVNAWASKG-MNLGSSWS-YQVLATEGYQ----SSGSSNVTV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------W------------------------------------------------------------------------------------------
+>SEQ51
+----------------------------------------------------MFKF-----------------K-----KKF-LVG-LT-AA-FM----S-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------I-SMF-SATASAAGTDYWQNWTDGGG-TVNAVNGSGGN--YSVNWS--N--TGNF--VVGKG----WTTGS-AFRTINYNAGVWA--P-N---------------------GNGYLTLYGWTRAPLIEYYVVDSWGTYRPT-----GTYKGTVKSDGGTYDIYTTTRYNAPSIDGDNTTFTQYWSVRQSKR----P-----T--GSNAAITFSNHVNAWKSHG-MNLGSNWA-YQVLATEGYK----SSGSSNVTV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------W------------------------------------------------------------------------------------------
+>SEQ52
+----------------------------------------------------MVST-----------------K-----TLL-LAA-ST-IVSVF----S--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APAPA-P-----V--------------S-P---N-----------LN------------VLE-R-RLTTSS-TGTSGGYYYSFWTDGSG-GVTYSNGAGGN--YAVSWTG-N--KGNF--VAGKG----WAVGS-A-RSITYT-ANYK--P-S---------------------GNSYLSVYGWTTSPLIEYYIVEDFGTYDPS-S--AATEIGSVTSDGSVYKILETTRTNQPSVQGT-ATFKQYWSVRVNKR----T-----S--G---TVTTANHFAAWKKLG-LQLGSTYN-YQIVAVEGYQ----SSGSASVTV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------S------------------------------------------------------------------------------------------
+>SEQ53
+----------------------------------------------------MFKF-----------------K-----KNF-LVG-LS-AA-LM----S-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------I-SLF-SATASAASTDYWQNWTDGGG-IVNAVNGSGGN--YSVNWS--N--TGNF--VVGKG----WTTGS-PFRTINYNAGVWA--P-N---------------------GNGYLTLYGWTRSPLIEYYVVDSWGTYRPT-----GTYKGTVKSDGGTYDIYTTTRYNAPSIDGDRTTFTQYWSVRQSKR----P-----T--GSNATITFSNHVNAWKSHG-MNLGSNWA-YQVMATEGYQ----SSGSSNVTV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------W------------------------------------------------------------------------------------------
+>SEQ54
+----------------------------------------------------MLK------------------S-----LVL-S------AVLAA----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------VPLDE-Q----------------------LFGKS-----------FNLGSRINTAGQGSQGI-A-AGSPEG-NGFHSGYFYSFWSDGRG-SVTYNNLANGS--YNSQWN--N--VGNW--VGGKG----WNPGG-P-KTVHYN-GTWN--AAN---------------------VNSYLALYGWTKDPLIEYYIVESYGSYNPS-S--GAQRRGTIQSDGGTYDIYQTQRVNQPSIVGR-ATFMQFWS-----------------------------HFDAWTKSG-LKLGS-HD-YMILATEGYQ----SSGSSSITVG-------E-------------------------------------------------------------------------------------------------------------------V-----------------------------------------------------------------------------------------GVEGVPYPDEPDSVRPN---------------------------------------------------------------------------------------------------------N------------------------------------------------------------------------------------------
+>SEQ55
+----------------------------------------------------MKKR-----------------G-----LKLFLAS-LM-CC-TL----A-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------L-SVV-NVNAYAAATDYWQNWTDGGG-TVNAVNGSGGN--YSVNWS--N--CGNF--VVGKG----WNAGS-YTRVINYNAGQFA--P-S---------------------GNGYLSLYGWTRNSLIEYYVVDDWGTYRPT-----GNYKGTVTSDGGTYDIYTATRTNAPSIDGV-TTFQQFWSVRQSKR----S-----I--GTNNTITMKNHADAWGSKG-MALGSSWA-YQMIATEGYQ----SSGSANVTVW-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------E------------------------------------------------------------------------------------------
+>SEQ56
+----------------------------------------------------MFKL-----------------N-----KKV-FAL-VS-VI-AL----G-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------FSSLF-TS-TAHAATDYWQNWTDGGG-TVNATNGSGGN--YSVNWT--N--CGNF--VVGKG----WGTGN-ASRVVNYNAGVFS--P-S---------------------GNGYLTFYGWTRNSLIEYYVVDSWGTYRPT-----GTLKGTVSSDGGTYDIYTSTRTNAPSIDGT-QTFQQYWSVRQSKR----A-----T--GSNVAITFSNHVNAWKSKG-MNLGSSWA-YQALCVEGYQ----SSGSANVTV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------W------------------------------------------------------------------------------------------
+>SEQ57
+----------------------------------------------------MFKF-----------------V-----TKV-LTV-VI-AA-TI----S-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------F-CLS-A--VPASANTYWQYWTDGGG-TVNATNGPGGN--YSVTWR--D--TGNF--VVGKG----WEIGS-PNRTIHYNAGVWE--P-S---------------------GNGYLTLYGWTRNQLIEYYVVDNWGTYRPT-----GTHRGTVVSDGGTYDIYTTMRYNAPSIDGT-QTFQQFWSVRQSKR----P-----T--GNNVSITFSNHVNAWRNAG-MNLGSSWS-YQVLATEGYQ----SSGRSNVTV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------W------------------------------------------------------------------------------------------
+>SEQ58
+----------------------------------------------------MRVA-----------------P-----LLV-YVSASV-ACGLL----ACNA-------------------------------------------------------------------------------ERIVGEDLEVPDSSSSSSSSSSSSGTGGGGAGGGSSSSSSSGTGGGGTGGAGGGPSSSSSSGTGGGGTGGAGGGSSSSSSSGTGGGGAGGAAGEGGAGGAPDTCT------------------------------------------------------TSE-Q-SVCSNQ-TGDHCGFTYQLWVDQGT-GCL-TSTAD-G--FSVEWS--D--INNL--LGRKG----LRPGS-GNQIVTYE-ADFQ--P-N---------------------GNAYLGVYGWTKNPNVEYYIVDGWGTWRPP-G--GTRTMGTVTSDGGVYEIYRIDRSDVIGIDGV-NAPPQFWSVRMQKR----T-----S--G---TITVANHFDAWKSLG-MNMGT-LS-EVSMLVEGYQ----SSGRAEVSFS-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------M---------------------------------------------------------------------------------------------------------R------------------------------------------------------------------------------------------
+>SEQ59
+----------------------------------------------------MGKF-----------------N-----KKV-LAL-IF-AV-SM----S-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------VTSLF-AG-TTYAATDYWQNWTDGGG-TVNVTNGSGGN--YSVNWY--N--CGNF--VVGKG----WNYGT-ANRVCNYNAGVFS--P-S---------------------GNGYLCFYGWTRNSLIEYYIVDSWGSYRPT-----GTYKGSVSSDGGTYDIYTTQRWNAPSIDGT-QNFTQYWSVRQSKR----P-----T--GQNVQINFGNHVNAWRSKG-MNLGYNWS-YQALCVEGYQ----SSGSANVTV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------W------------------------------------------------------------------------------------------
+>SEQ60
+----------------------------------------------------M-KF-----------------S-----SLF-VAA-SA-IIGAL----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------VPATNAT-----------E----------G---L-----------SL------------LEA-R-AGTPSS-EGRHDGYFYSWWTDNQG-TAYYTNEAGGR--YSLQWS--G--NGNL--VGGKG----WNPGTNN-RVINYS-GTYQ--P-N---------------------GNSYLAVYGWTRNQLIEYYVVESYGTYNPA-S--AAQRKGQVNCNGATYDVLQTWRYNQPSIDGT-ATFQQFWSVRTPKK----NPGGQIS--G---TVDFACHANAWRNFG-MQLGSNHY-YQIVATEGYF----SSGRATITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------S------------------------------------------------------------------------------------------
+>SEQ61
+----------------------------------------------------MKLL-----------------Y-----LLA-LPL-VLLIQGAF----T--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------APTPD-N------------------------------------------------------------STTL-ERRQAASFWTNWSEGNI-GVRCTPGAGGS--YTATWGG-S--TGGF--VCGKG----WSRGG-S-RAVTYS-GTYN--A-T---------------------GPGYLALYGWTRNPLIEYYVIESYAVLAPG-E--PWTYRGVFTSPEGTYEMYESTRVNKPSIEGT-RTFQQYWSVRTEKR----V-----G--G---TISTQRHFDEWARVG-MRLGW-HD-YMVFATEGFTNGQYSSGSSSINV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------S------------------------------------------------------------------------------------------
+>SEQ62
+----------------------------------------------------MKL------------------------SLA-VAG-LC-VTSAF----A--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------FPSKL-P-----------Q--------HAG---A-----------DL------------SKR-Q-SITTSQ-TGINGGYYYSFWTNGGG-EITYTNGANGE--YSV-------------------------------KIVTYS-GEFD--P-T---------------------GNAYLAVYGWTADPLVEHYILESYGTYNQS-S--GLTSLGQVTTDGGTYDSYSIQ---------------RYWSVRTEKR----V-----G--G---TITTVNHFAAWKALG-LEMGT-YN-YMIVSTEGYE----SSGSSTITV------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------S------------------------------------------------------------------------------------------
+>SEQ63
+----------------------------------------------------MAAV-----------------S-----PLA-KVG-SW-V-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------VR-G-TLPTEK-SG-PKIFFILMFTN---------------------------------------------------SDITFS-GTFN--P-N---------------------GNAYLAVYGWTTSPMIEYSILENYGSYNPG-S--GMTHKGTVTTGRATYHIYTHQQVSQPSIAGK-ATFNQYWSIRRSKW----S-----S--G---TVTTANHFNAWAKLD-MKLGA-HD-YQIVSREGYE----SSGSSTIKVS-------S-------------------------------------------------------------------------------------------------------------------G--------------------------------------------------------------------------------------SSSGGSSSGGSSNSGKASVP---------------------------------------------------------------------------------------------------------Q------------------------------------------------------------------------------------------
+
+*****
+
+
+We will now use the PHYLIP program specified by PHYLIP_PROG to build a phylogenetic tree of the aligned sequences.
+The phylogenetic tree is a pairwise distance based tree.  First building the protein distance matrix (this may take a while)...
+Completed constructing the protein distance matrix.  The contents of this distance matrix are as follows:
+
+******
+   64
+PROTSEQ     0.000000  0.585415  0.563389  0.569681  0.607839  0.577109
+  0.655084  0.679657  0.634598  0.692019  0.682902  0.718964  0.737473
+  0.770857  0.715749  0.762113  0.740754  0.738454  0.780322  0.720122
+  0.826823  0.785444  0.854114  0.655707  0.912736  0.696789  0.942205
+  0.888962  0.888448  1.051405  0.936716  0.870347  0.908784  0.955839
+  1.004633  1.021217  0.967290  1.161261  0.971832  0.992140  1.173534
+  0.795802  1.067864  1.135183  1.053297  1.084140  1.071798  1.002564
+  0.966642  1.093467  0.911354  0.926016  0.985040  0.860898  0.958058
+  1.006739  1.013251  0.976251  1.472109  1.133109  1.242117  1.357172
+  0.910419  1.113435
+SEQ1        0.585415  0.000000  0.371787  0.749017  0.838264  0.434837
+  0.763885  0.947935  0.766289  0.812802  0.720388  1.315490  0.870034
+  0.902553  0.803908  1.569038  0.966144  0.777253  1.556318  0.922987
+  0.883601  0.907154  0.819013  0.460187  0.928349  1.503202  0.878411
+  0.948541  0.978487  1.201770  0.985360  0.967311  1.341363  1.836278
+  0.952168  1.042141  1.845418  1.361477  1.394902  1.196886  1.339142
+  0.875527  1.148442  1.072401  1.093114  1.011027  1.005946  1.094576
+  1.055242  1.223129  0.677356  0.882639  0.924154  0.839136  1.246621
+  0.999489  0.927236  0.897534  1.620914  1.002686  1.267942  1.209772
+  1.036493  1.547643
+SEQ2        0.563389  0.371787  0.000000  0.703179  0.761624  0.208045
+  0.680827  0.861928  0.665173  0.761724  0.656511  0.871716  0.791998
+  0.751865  0.723587  0.801864  0.787256  0.769909  0.897103  0.753168
+  0.785444  0.757423  0.862588  0.462269  0.832194  1.095518  0.936541
+  1.005040  0.954572  1.000708  0.887916  1.043865  1.203609  0.934046
+  1.009583  1.083028  1.233807  1.798051  1.284877  1.100380  1.719269
+  0.773641  1.020021  1.048293  0.974910  0.930217  1.073645  1.122495
+  0.924067  1.184322  0.639382  0.768188  0.886852  0.755976  1.054386
+  0.797069  0.834180  0.759026  2.169903  0.885282  1.195605  1.224268
+  0.944505  1.229327
+SEQ3        0.569681  0.749017  0.703179  0.000000  0.308929  0.784296
+  0.159615  0.436438  0.151493  0.270671  0.256096  0.753704  0.414970
+  0.641007  0.596692  0.547812  0.600705  0.485187  0.621355  0.574436
+  0.699766  0.627003  0.614602  0.763266  0.560537  1.109593  0.585428
+  0.732936  0.778089  0.770943  0.767676  0.855158  1.120525  0.695789
+  0.686995  0.868081  1.232753  1.562095  1.240233  1.244061  1.444323
+  0.723465  0.872817  0.723514  0.684623  0.641591  0.665827  0.939113
+  0.788508  0.795325  0.686053  0.758616  0.761962  0.735649  0.866195
+  0.897650  0.833436  0.881046  1.633773  0.919328  0.792007  1.368938
+  0.880262  0.980817
+SEQ4        0.607839  0.838264  0.761624  0.308929  0.000000  0.842194
+  0.251676  0.374402  0.251719  0.348014  0.360693  0.734971  0.374649
+  0.622998  0.546190  0.562606  0.639906  0.531897  0.628453  0.623085
+  0.649013  0.563686  0.542907  0.858425  0.563176  1.086364  0.625955
+  0.717933  0.643569  0.737160  0.574495  0.823126  1.029283  0.780822
+  0.683715  0.903964  1.240453  1.609749  1.269564  1.305911  1.484215
+  0.868192  0.832759  0.867689  0.680300  0.685906  0.627873  0.889615
+  0.830339  0.823449  0.813428  0.933848  0.744573  0.893518  0.797555
+  0.928488  0.912710  0.990788  1.801376  1.003366  0.823881  1.331032
+  0.843726  0.927790
+SEQ5        0.577109  0.434837  0.208045  0.784296  0.842194  0.000000
+  0.814991  0.943772  0.798592  0.843012  0.741970  1.125336  0.909833
+  0.852777  0.763594  1.144313  0.874923  0.801641  1.194741  0.846449
+  0.820261  0.847924  1.003944  0.366492  0.880554  2.412101  0.963375
+  1.042341  0.938679  1.089634  0.956560  1.004159  1.466163  1.182834
+  1.059694  1.182202  2.308149  1.418397  2.504059  2.564073  1.330276
+  0.951571  1.111024  1.102708  1.103541  0.997197  1.029084  1.048457
+  0.996102  1.245246  0.799606  1.053305  1.008306  1.005067  1.292110
+  0.974374  0.991223  0.927601  1.870046  1.104110  1.245046  1.082989
+  1.041543  1.579456
+SEQ6        0.655084  0.763885  0.680827  0.159615  0.251676  0.814991
+  0.000000  0.467146  0.031567  0.265870  0.211028  0.743071  0.364393
+  0.616734  0.599826  0.606603  0.679686  0.423251  0.673526  0.657883
+  0.646557  0.642967  0.521957  0.805625  0.607891  1.134086  0.531078
+  0.621864  0.760806  0.766487  0.761252  0.793952  1.100710  0.667815
+  0.692005  0.765004  1.359352  1.566737  1.397021  1.297254  1.313679
+  0.806500  0.789886  0.686819  0.713172  0.693213  0.626106  0.907691
+  0.758104  0.783193  0.725375  0.836484  0.740178  0.811476  0.871698
+  0.891699  0.826159  0.867616  1.607985  0.912263  0.780210  1.278443
+  0.909331  0.998757
+SEQ7        0.679657  0.947935  0.861928  0.436438  0.374402  0.943772
+  0.467146  0.000000  0.449035  0.418162  0.535066  0.903441  0.394437
+  0.725085  0.719899  0.623524  0.632607  0.606316  0.674006  0.585328
+  0.881275  0.753468  0.827883  0.873800  0.633452  1.277899  0.820472
+  0.854669  0.629318  0.679886  0.730279  0.930051  0.997879  0.903693
+  0.882575  0.922373  1.430165  1.674459  1.371463  1.389685  1.397505
+  0.878041  0.926059  0.989582  0.786879  0.778407  0.866030  1.088238
+  0.802629  1.067671  0.844472  0.968263  0.733741  0.945978  0.918512
+  0.969049  0.957063  1.079698  1.674299  1.132836  1.144081  1.381553
+  0.968218  0.931200
+SEQ8        0.634598  0.766289  0.665173  0.151493  0.251719  0.798592
+  0.031567  0.449035  0.000000  0.274870  0.226509  0.743136  0.387717
+  0.615123  0.599233  0.576891  0.676402  0.422018  0.642286  0.654562
+  0.645780  0.645065  0.528887  0.790899  0.606512  1.139767  0.498187
+  0.608642  0.786978  0.772190  0.760282  0.790753  1.060920  0.683338
+  0.656825  0.731373  1.399241  1.579471  1.437853  1.335775  1.325773
+  0.749676  0.777333  0.686748  0.704687  0.684814  0.594639  0.904130
+  0.730158  0.722056  0.671266  0.803492  0.746396  0.779118  0.867902
+  0.886150  0.808450  0.854012  1.622914  0.903626  0.785613  1.279586
+  0.883302  1.000345
+SEQ9        0.692019  0.812802  0.761724  0.270671  0.348014  0.843012
+  0.265870  0.418162  0.274870  0.000000  0.324241  0.775024  0.276418
+  0.699539  0.688484  0.562533  0.668881  0.468128  0.655907  0.628776
+  0.746910  0.678809  0.560626  0.810681  0.602657  1.161333  0.659832
+  0.701383  0.630380  0.850764  0.670096  0.870445  1.041458  0.692235
+  0.612946  0.789116  1.392016  1.512102  1.387402  1.273472  1.337472
+  0.841137  0.776986  0.729448  0.696630  0.673425  0.749898  0.929156
+  0.764609  0.874802  0.762409  0.891693  0.719925  0.851930  0.832016
+  0.919245  0.910845  0.885286  1.685299  1.051829  0.785618  1.317798
+  0.986532  1.027748
+SEQ10       0.682902  0.720388  0.656511  0.256096  0.360693  0.741970
+  0.211028  0.535066  0.226509  0.324241  0.000000  0.816194  0.456397
+  0.651879  0.678217  0.603306  0.685278  0.420314  0.717256  0.674132
+  0.688945  0.692728  0.557887  0.807627  0.702219  1.161973  0.663104
+  0.650741  0.907312  0.843234  0.865321  0.927491  1.197849  0.733354
+  0.615391  0.792663  1.561384  1.778522  1.536577  1.429317  1.529370
+  0.829667  0.770893  0.757113  0.775230  0.762368  0.778121  1.000024
+  0.848901  0.914910  0.759335  0.808093  0.780429  0.792678  1.019892
+  0.974470  0.969457  0.901155  1.798816  1.020278  0.850370  1.443381
+  1.055713  0.981007
+SEQ11       0.718964  1.315490  0.871716  0.753704  0.734971  1.125336
+  0.743071  0.903441  0.743136  0.775024  0.816194  0.000000  0.747480
+  0.785621  0.773868  0.885010  0.775549  0.685631  0.913189  0.735072
+  0.785422  0.798313  0.853843  1.073119  0.769790  1.356063  0.862591
+  0.781978  0.781195  1.006711  0.921427  0.885192  1.201483  0.466257
+  0.926104  0.726811  1.976957  1.495354  1.920688  1.713285  1.379597
+  1.098894  0.902188  1.005213  0.720872  0.817027  0.841859  0.864225
+  0.904262  1.034521  1.054023  1.118571  0.800173  1.113367  1.160364
+  1.190961  1.249545  1.140829  1.869239  1.330914  0.761158  1.428237
+  0.927350  1.383881
+SEQ12       0.737473  0.870034  0.791998  0.414970  0.374649  0.909833
+  0.364393  0.394437  0.387717  0.276418  0.456397  0.747480  0.000000
+  0.553639  0.551246  0.621983  0.593070  0.596572  0.719570  0.572666
+  0.658295  0.576031  0.662048  0.815202  0.521716  1.186540  0.751570
+  0.657982  0.598071  0.674429  0.674783  0.868310  1.086064  0.776054
+  0.732064  0.806381  1.409977  1.565790  1.387462  1.308159  1.369804
+  0.902835  0.807886  0.780610  0.733513  0.688484  0.796430  0.878858
+  0.810308  0.943079  0.822182  0.933689  0.599210  0.922888  0.866842
+  0.883321  0.898166  0.927274  1.704259  1.007181  0.951754  1.302780
+  1.007096  1.082942
+SEQ13       0.770857  0.902553  0.751865  0.641007  0.622998  0.852777
+  0.616734  0.725085  0.615123  0.699539  0.651879  0.785621  0.553639
+  0.000000  0.377492  0.669847  0.700074  0.608954  0.722172  0.718854
+  0.398244  0.407323  0.730029  0.829302  0.340896  1.239494  0.897257
+  0.720146  0.688060  0.406805  0.665791  0.754258  1.065454  0.735462
+  0.929042  0.932485  1.418472  1.569344  1.391440  1.278095  1.487235
+  1.129073  0.846468  1.048040  0.783147  0.847851  0.975896  0.811922
+  1.019118  1.133867  1.024020  1.085815  0.821312  1.106036  0.996257
+  1.094229  1.139465  1.104199  1.779131  1.316716  1.143438  1.493746
+  0.910813  1.365529
+SEQ14       0.715749  0.803908  0.723587  0.596692  0.546190  0.763594
+  0.599826  0.719899  0.599233  0.688484  0.678217  0.773868  0.551246
+  0.377492  0.000000  0.642684  0.686519  0.604593  0.710892  0.689306
+  0.282048  0.103170  0.700497  0.775319  0.367129  1.263607  0.737008
+  0.762431  0.736005  0.529622  0.658814  0.716594  1.051082  0.753616
+  0.869856  0.924331  1.353757  1.507731  1.357398  1.264420  1.402496
+  1.050166  0.871945  0.893617  0.764369  0.788341  0.886926  0.769566
+  0.906803  1.027097  0.977016  1.081296  0.624987  1.039588  0.930450
+  1.092904  1.022775  1.052513  1.792532  1.215600  1.103658  1.392940
+  0.906608  1.152875
+SEQ15       0.762113  1.569038  0.801864  0.547812  0.562606  1.144313
+  0.606603  0.623524  0.576891  0.562533  0.603306  0.885010  0.621983
+  0.669847  0.642684  0.000000  0.638330  0.631413  0.130553  0.633908
+  0.682798  0.619568  0.812827  0.848424  0.630293  1.440139  0.896927
+  0.732391  0.807806  0.748192  0.852237  0.837437  1.290004  1.093556
+  0.872309  0.702741  2.078838  1.466574  1.548195  1.419327  1.358146
+  0.933940  0.983661  1.063060  0.650623  0.701353  1.008757  0.885355
+  0.870561  1.146814  0.947421  0.992015  0.676054  0.995727  1.139675
+  1.156477  1.045747  1.080441  1.739243  1.189684  0.882602  1.530557
+  0.849925  1.301859
+SEQ16       0.740754  0.966144  0.787256  0.600705  0.639906  0.874923
+  0.679686  0.632607  0.676402  0.668881  0.685278  0.775549  0.593070
+  0.700074  0.686519  0.638330  0.000000  0.658584  0.730721  0.050971
+  0.798254  0.687077  0.888426  0.872526  0.824200  1.163655  1.012508
+  0.838437  0.841193  0.771854  0.945034  1.045494  1.146275  0.849166
+  0.930083  0.908850  1.545417  1.750412  1.549535  1.537340  1.533533
+  1.117854  1.012700  0.966094  0.856019  0.801801  1.063762  1.099495
+  0.933167  1.210916  1.025182  1.241774  0.766698  1.220938  1.137571
+  1.276990  1.210268  1.217216  1.928690  1.337406  1.028820  1.487018
+  0.762049  0.581800
+SEQ17       0.738454  0.777253  0.769909  0.485187  0.531897  0.801641
+  0.423251  0.606316  0.422018  0.468128  0.420314  0.685631  0.596572
+  0.608954  0.604593  0.631413  0.658584  0.000000  0.716568  0.630913
+  0.616535  0.606172  0.449790  0.833300  0.597846  1.073403  0.596126
+  0.452233  0.605607  0.859519  0.631441  0.833135  1.011379  0.579750
+  0.467262  0.608326  1.405521  1.405250  1.350338  1.216494  1.411085
+  0.900509  0.687539  0.670009  0.601947  0.641286  0.663489  0.912898
+  0.699741  0.860811  0.799657  0.976206  0.659009  0.949450  0.935308
+  0.996801  1.002386  0.952706  1.691147  1.091258  0.795598  1.502133
+  0.977276  1.184259
+SEQ18       0.780322  1.556318  0.897103  0.621355  0.628453  1.194741
+  0.673526  0.674006  0.642286  0.655907  0.717256  0.913189  0.719570
+  0.722172  0.710892  0.130553  0.730721  0.716568  0.000000  0.735879
+  0.772802  0.684761  0.886485  0.935641  0.720316  1.442791  0.913936
+  0.789956  0.885370  0.801258  0.916797  0.910591  1.296284  1.088859
+  0.942324  0.637814  2.109187  1.498758  1.646183  1.492461  1.444845
+  1.016003  1.053848  1.141423  0.628831  0.690586  1.110272  0.924855
+  0.894421  1.183484  1.023943  1.069624  0.695134  1.063952  1.156149
+  1.289942  1.107479  1.169834  1.842433  1.324816  0.883606  1.532218
+  0.926478  1.354762
+SEQ19       0.720122  0.922987  0.753168  0.574436  0.623085  0.846449
+  0.657883  0.585328  0.654562  0.628776  0.674132  0.735072  0.572666
+  0.718854  0.689306  0.633908  0.050971  0.630913  0.735879  0.000000
+  0.796693  0.706326  0.862784  0.842126  0.778091  1.181295  0.978322
+  0.842096  0.807166  0.890837  0.970898  0.989337  1.102886  0.775181
+  0.950053  0.957222  1.464057  1.675584  1.473692  1.444170  1.437467
+  1.112652  0.980820  0.919147  0.833775  0.792145  0.975058  1.061191
+  0.886855  1.150755  1.017077  1.286208  0.767737  1.264571  1.086820
+  1.243388  1.186172  1.231511  1.809087  1.336647  1.023748  1.374081
+  0.692071  0.559234
+SEQ20       0.826823  0.883601  0.785444  0.699766  0.649013  0.820261
+  0.646557  0.881275  0.645780  0.746910  0.688945  0.785422  0.658295
+  0.398244  0.282048  0.682798  0.798254  0.616535  0.772802  0.796693
+  0.000000  0.298928  0.725246  0.890759  0.412341  1.292014  0.888145
+  0.754999  0.810514  0.653340  0.691075  0.867724  1.060369  0.775805
+  0.930834  0.927483  1.425399  1.567869  1.423477  1.267272  1.400757
+  1.190159  0.861585  1.164730  0.829754  0.914384  1.019745  0.897663
+  0.879306  1.186822  1.038606  1.229650  0.759179  1.217501  0.976536
+  1.264796  1.152730  1.127461  1.852928  1.277218  1.134767  1.482747
+  0.953740  1.247950
+SEQ21       0.785444  0.907154  0.757423  0.627003  0.563686  0.847924
+  0.642967  0.753468  0.645065  0.678809  0.692728  0.798313  0.576031
+  0.407323  0.103170  0.619568  0.687077  0.606172  0.684761  0.706326
+  0.298928  0.000000  0.737120  0.840630  0.394881  1.228291  0.802069
+  0.762946  0.851860  0.537607  0.705634  0.838946  1.175932  0.760873
+  0.883981  0.876652  1.306418  1.520780  1.289889  1.229870  1.461706
+  1.087487  0.893515  0.890520  0.766295  0.811796  0.975413  0.897677
+  0.954714  1.057673  1.070841  1.107322  0.645222  1.059825  1.019733
+  1.110128  1.116585  1.085683  1.838663  1.242425  1.026995  1.518174
+  0.899205  1.146910
+SEQ22       0.854114  0.819013  0.862588  0.614602  0.542907  1.003944
+  0.521957  0.827883  0.528887  0.560626  0.557887  0.853843  0.662048
+  0.730029  0.700497  0.812827  0.888426  0.449790  0.886485  0.862784
+  0.725246  0.737120  0.000000  1.004454  0.715519  1.060318  0.588353
+  0.385873  0.797717  1.026959  0.723614  0.792056  0.977614  0.700880
+  0.398234  0.723908  1.403746  1.671701  1.413259  1.173390  1.592835
+  1.026939  0.707008  0.733830  0.625263  0.627926  0.676231  0.888523
+  0.676492  0.837336  0.889175  1.102966  0.873548  1.084015  0.910573
+  1.017952  0.992103  1.165037  2.159595  1.154735  0.741669  1.453082
+  1.036870  1.394967
+SEQ23       0.655707  0.460187  0.462269  0.763266  0.858425  0.366492
+  0.805625  0.873800  0.790899  0.810681  0.807627  1.073119  0.815202
+  0.829302  0.775319  0.848424  0.872526  0.833300  0.935641  0.842126
+  0.890759  0.840630  1.004454  0.000000  0.964731  1.196880  1.049444
+  1.068969  0.965016  1.106358  0.918896  1.143346  1.347076  1.150953
+  1.081881  1.076095  1.242436  1.685906  1.237306  1.108188  1.778309
+  0.839226  1.151548  1.177698  1.033897  0.964793  1.225973  1.307550
+  1.033309  1.234686  0.711937  0.835151  0.987406  0.796968  1.033776
+  0.807400  0.805372  0.791274  2.019484  0.882333  1.334726  1.312090
+  1.073963  1.327974
+SEQ24       0.912736  0.928349  0.832194  0.560537  0.563176  0.880554
+  0.607891  0.633452  0.606512  0.602657  0.702219  0.769790  0.521716
+  0.340896  0.367129  0.630293  0.824200  0.597846  0.720316  0.778091
+  0.412341  0.394881  0.715519  0.964731  0.000000  1.417566  0.740007
+  0.789252  0.679654  0.457514  0.692361  0.794630  1.137539  0.751278
+  0.830524  0.886968  1.329978  1.614524  1.361112  1.233489  1.298378
+  1.132571  0.827342  0.933813  0.666008  0.720216  0.841357  0.900797
+  0.969064  1.010753  1.075730  1.183448  0.745641  1.145110  0.970565
+  1.175000  1.256226  1.163894  1.533006  1.404104  1.112991  1.463584
+  0.729749  1.382866
+SEQ25       0.696789  1.503202  1.095518  1.109593  1.086364  2.412101
+  1.134086  1.277899  1.139767  1.161333  1.161973  1.356063  1.186540
+  1.239494  1.263607  1.440139  1.163655  1.073403  1.442791  1.181295
+  1.292014  1.228291  1.060318  1.196880  1.417566  0.000000  1.187380
+  1.287092  1.312534  1.625420  1.117655  1.394428  1.667776  1.448960
+  1.522041  1.232273  2.796070  1.612939  3.119603  2.952149  1.636786
+  1.172849  1.331472  1.304506  1.224567  1.259435  1.260278  1.443320
+  0.927926  1.382766  1.096102  1.368175  1.396003  1.282269  1.557618
+  1.569584  1.338820  1.394820  2.251255  1.454688  1.207333  1.723255
+  1.554483  1.792682
+SEQ26       0.942205  0.878411  0.936541  0.585428  0.625955  0.963375
+  0.531078  0.820472  0.498187  0.659832  0.663104  0.862591  0.751570
+  0.897257  0.737008  0.896927  1.012508  0.596126  0.913936  0.978322
+  0.888145  0.802069  0.588353  1.049444  0.740007  1.187380  0.000000
+  0.900988  0.922135  1.159010  0.797084  1.005206  1.290863  0.725979
+  0.794697  0.905858  1.622282  1.866965  1.604227  1.401910  1.770213
+  1.125724  0.929650  0.378334  0.743770  0.653472  0.269921  0.958462
+  0.764967  0.245599  0.986553  1.117127  0.969808  1.105237  1.097939
+  1.240562  1.127532  1.140224  2.175095  1.358646  0.911771  1.306704
+  1.073530  1.289501
+SEQ27       0.888962  0.948541  1.005040  0.732936  0.717933  1.042341
+  0.621864  0.854669  0.608642  0.701383  0.650741  0.781978  0.657982
+  0.720146  0.762431  0.732391  0.838437  0.452233  0.789956  0.842096
+  0.754999  0.762946  0.385873  1.068969  0.789252  1.287092  0.900988
+  0.000000  0.752001  1.127270  0.857241  0.838854  1.039145  0.776127
+  0.342101  0.727100  1.730374  1.691819  1.666636  1.416140  1.735320
+  1.060174  0.788019  0.871316  0.605301  0.695931  0.964610  0.938783
+  0.869346  1.178213  1.024723  1.162902  0.870046  1.169963  0.902884
+  1.161806  1.219715  1.161260  2.243544  1.194637  0.882523  1.756489
+  1.276680  1.387959
+SEQ28       0.888448  0.978487  0.954572  0.778089  0.643569  0.938679
+  0.760806  0.629318  0.786978  0.630380  0.907312  0.781195  0.598071
+  0.688060  0.736005  0.807806  0.841193  0.605607  0.885370  0.807166
+  0.810514  0.851860  0.797717  0.965016  0.679654  1.312534  0.922135
+  0.752001  0.000000  0.860132  0.263411  0.702284  0.878300  0.819468
+  0.843495  0.744569  1.466008  1.730153  1.488143  1.378498  1.558832
+  1.222735  0.933628  1.036203  0.633412  0.627381  0.831226  0.721427
+  0.904847  1.093301  1.069420  1.249814  0.861881  1.189193  0.642481
+  1.181127  1.194038  1.202435  2.051170  1.346362  0.873209  1.314667
+  1.165351  1.283136
+SEQ29       1.051405  1.201770  1.000708  0.770943  0.737160  1.089634
+  0.766487  0.679886  0.772190  0.850764  0.843234  1.006711  0.674429
+  0.406805  0.529622  0.748192  0.771854  0.859519  0.801258  0.890837
+  0.653340  0.537607  1.026959  1.106358  0.457514  1.625420  1.159010
+  1.127270  0.860132  0.000000  0.825398  0.977964  1.243645  1.012735
+  1.265973  1.139897  1.647216  1.981241  1.621914  1.661985  1.823856
+  1.449384  1.162074  1.286869  1.075309  1.015757  1.160440  0.977523
+  1.281605  1.371298  1.367460  1.418908  0.832464  1.372362  1.151995
+  1.393252  1.462798  1.418174  1.825654  1.666285  1.266483  1.608882
+  0.881043  1.317442
+SEQ30       0.936716  0.985360  0.887916  0.767676  0.574495  0.956560
+  0.761252  0.730279  0.760282  0.670096  0.865321  0.921427  0.674783
+  0.665791  0.658814  0.852237  0.945034  0.631441  0.916797  0.970898
+  0.691075  0.705634  0.723614  0.918896  0.692361  1.117655  0.797084
+  0.857241  0.263411  0.825398  0.000000  0.735822  0.926298  1.001110
+  0.883460  0.859710  1.523770  1.734556  1.534233  1.450767  1.692173
+  1.133151  0.934729  1.006092  0.705652  0.727203  0.883920  0.770360
+  0.852991  1.005514  0.949611  1.136382  0.847620  1.092327  0.655666
+  1.185754  1.086099  1.080778  2.161972  1.166117  0.822585  1.413934
+  1.248774  1.416603
+SEQ31       0.870347  0.967311  1.043865  0.855158  0.823126  1.004159
+  0.793952  0.930051  0.790753  0.870445  0.927491  0.885192  0.868310
+  0.754258  0.716594  0.837437  1.045494  0.833135  0.910591  0.989337
+  0.867724  0.838946  0.792056  1.143346  0.794630  1.394428  1.005206
+  0.838854  0.702284  0.977964  0.735822  0.000000  0.687213  0.859578
+  0.949566  0.947300  1.616157  1.643235  1.667311  1.521005  1.575195
+  1.251143  1.044809  1.193199  0.917154  0.993725  1.074570  0.354650
+  1.004122  1.283763  1.156092  1.374723  0.992040  1.300951  0.656196
+  1.453600  1.383381  1.363618  2.062740  1.437768  1.199793  1.555129
+  1.100813  1.530364
+SEQ32       0.908784  1.341363  1.203609  1.120525  1.029283  1.466163
+  1.100710  0.997879  1.060920  1.041458  1.197849  1.201483  1.086064
+  1.065454  1.051082  1.290004  1.146275  1.011379  1.296284  1.102886
+  1.060369  1.175932  0.977614  1.347076  1.137539  1.667776  1.290863
+  1.039145  0.878300  1.243645  0.926298  0.687213  0.000000  1.289721
+  1.117955  1.310424  2.191191  1.689878  2.126709  2.087827  1.588802
+  1.335886  1.395024  1.418402  1.290943  1.310722  1.380405  0.768033
+  1.120829  1.684486  1.268613  1.604195  1.391038  1.561024  0.455353
+  1.553661  1.555072  1.502568  2.335044  1.632615  1.306117  1.616719
+  1.283277  1.625743
+SEQ33       0.955839  1.836278  0.934046  0.695789  0.780822  1.182834
+  0.667815  0.903693  0.683338  0.692235  0.733354  0.466257  0.776054
+  0.735462  0.753616  1.093556  0.849166  0.579750  1.088859  0.775181
+  0.775805  0.760873  0.700880  1.150953  0.751278  1.448960  0.725979
+  0.776127  0.819468  1.012735  1.001110  0.859578  1.289721  0.000000
+  0.907549  0.640683  2.493172  1.666319  1.823773  1.578918  1.330655
+  1.170658  0.726248  0.921966  0.620136  0.621269  0.822871  0.968666
+  0.842778  1.027444  1.150759  1.239646  0.793518  1.244729  1.298400
+  1.332598  1.259912  1.215307  1.923747  1.469911  0.794507  1.377791
+  0.963917  1.371364
+SEQ34       1.004633  0.952168  1.009583  0.686995  0.683715  1.059694
+  0.692005  0.882575  0.656825  0.612946  0.615391  0.926104  0.732064
+  0.929042  0.869856  0.872309  0.930083  0.467262  0.942324  0.950053
+  0.930834  0.883981  0.398234  1.081881  0.830524  1.522041  0.794697
+  0.342101  0.843495  1.265973  0.883460  0.949566  1.117955  0.907549
+  0.000000  0.819020  1.725571  1.856412  1.685609  1.624730  1.740145
+  1.175169  0.769612  0.838680  0.639721  0.701626  0.963580  1.066669
+  0.970269  1.176988  1.008387  1.187825  0.883180  1.183162  1.026896
+  1.241808  1.286862  1.237749  2.327957  1.288062  0.913386  1.896206
+  1.167140  1.464431
+SEQ35       1.021217  1.042141  1.083028  0.868081  0.903964  1.182202
+  0.765004  0.922373  0.731373  0.789116  0.792663  0.726811  0.806381
+  0.932485  0.924331  0.702741  0.908850  0.608326  0.637814  0.957222
+  0.927483  0.876652  0.723908  1.076095  0.886968  1.232273  0.905858
+  0.727100  0.744569  1.139897  0.859710  0.947300  1.310424  0.640683
+  0.819020  0.000000  1.551461  1.669420  1.575867  1.329734  1.474149
+  1.233417  0.766142  1.053487  0.397425  0.426112  0.931411  1.028026
+  0.825738  1.098761  1.132849  1.264424  0.807027  1.252643  1.100748
+  1.239349  1.254774  1.268651  1.784932  1.525077  0.674473  1.498091
+  1.443606  1.355217
+SEQ36       0.967290  1.845418  1.233807  1.232753  1.240453  2.308149
+  1.359352  1.430165  1.399241  1.392016  1.561384  1.976957  1.409977
+  1.418472  1.353757  2.078838  1.545417  1.405521  2.109187  1.464057
+  1.425399  1.306418  1.403746  1.242436  1.329978  2.796070  1.622282
+  1.730374  1.466008  1.647216  1.523770  1.616157  2.191191  2.493172
+  1.725571  1.551461  0.000000  1.249371  0.404849  0.688152  1.351735
+  1.461756  1.657214  1.956233  1.542953  1.495156  1.657945  1.827012
+  1.505296  1.690416  1.481550  1.567960  1.397089  1.515515  1.877636
+  1.775469  1.442471  1.718342  1.721592  1.658940  1.732279  2.286149
+  1.563464  1.888410
+SEQ37       1.161261  1.361477  1.798051  1.562095  1.609749  1.418397
+  1.566737  1.674459  1.579471  1.512102  1.778522  1.495354  1.565790
+  1.569344  1.507731  1.466574  1.750412  1.405250  1.498758  1.675584
+  1.567869  1.520780  1.671701  1.685906  1.614524  1.612939  1.866965
+  1.691819  1.730153  1.981241  1.734556  1.643235  1.689878  1.666319
+  1.856412  1.669420  1.249371  0.000000  1.241113  1.212267  0.921473
+  1.470676  1.661893  2.017163  1.754094  1.798842  1.892420  1.874974
+  1.698117  1.993464  1.479036  1.768107  1.564745  1.721348  1.616519
+  1.547924  1.545630  1.728702  1.181159  1.678286  1.912856  2.298495
+  1.799225  1.761209
+SEQ38       0.971832  1.394902  1.284877  1.240233  1.269564  2.504059
+  1.397021  1.371463  1.437853  1.387402  1.536577  1.920688  1.387462
+  1.391440  1.357398  1.548195  1.549535  1.350338  1.646183  1.473692
+  1.423477  1.289889  1.413259  1.237306  1.361112  3.119603  1.604227
+  1.666636  1.488143  1.621914  1.534233  1.667311  2.126709  1.823773
+  1.685609  1.575867  0.404849  1.241113  0.000000  0.994716  1.380356
+  1.495384  1.664030  1.894492  1.559808  1.527232  1.673921  1.902048
+  1.481270  1.667433  1.524399  1.567365  1.338418  1.514470  1.801862
+  1.802663  1.540086  1.788997  1.708836  1.713673  1.813741  2.334944
+  1.517271  1.867728
+SEQ39       0.992140  1.196886  1.100380  1.244061  1.305911  2.564073
+  1.297254  1.389685  1.335775  1.273472  1.429317  1.713285  1.308159
+  1.278095  1.264420  1.419327  1.537340  1.216494  1.492461  1.444170
+  1.267272  1.229870  1.173390  1.108188  1.233489  2.952149  1.401910
+  1.416140  1.378498  1.661985  1.450767  1.521005  2.087827  1.578918
+  1.624730  1.329734  0.688152  1.212267  0.994716  0.000000  1.249319
+  1.415043  1.543762  1.611600  1.319120  1.324401  1.431522  1.723130
+  1.314982  1.485889  1.363283  1.484893  1.366937  1.437748  1.856296
+  1.453232  1.402758  1.760845  1.590353  1.576193  1.714481  2.166090
+  1.496910  1.933640
+SEQ40       1.173534  1.339142  1.719269  1.444323  1.484215  1.330276
+  1.313679  1.397505  1.325773  1.337472  1.529370  1.379597  1.369804
+  1.487235  1.402496  1.358146  1.533533  1.411085  1.444845  1.437467
+  1.400757  1.461706  1.592835  1.778309  1.298378  1.636786  1.770213
+  1.735320  1.558832  1.823856  1.692173  1.575195  1.588802  1.330655
+  1.740145  1.474149  1.351735  0.921473  1.380356  1.249319  0.000000
+  1.573135  1.601611  1.737090  1.536767  1.545705  1.778909  1.774275
+  1.540217  1.854101  1.474964  1.704449  1.447663  1.629378  1.596592
+  1.549423  1.609149  1.720782  0.906857  1.751792  1.654226  1.962422
+  1.514274  1.692830
+SEQ41       0.795802  0.875527  0.773641  0.723465  0.868192  0.951571
+  0.806500  0.878041  0.749676  0.841137  0.829667  1.098894  0.902835
+  1.129073  1.050166  0.933940  1.117854  0.900509  1.016003  1.112652
+  1.190159  1.087487  1.026939  0.839226  1.132571  1.172849  1.125724
+  1.060174  1.222735  1.449384  1.133151  1.251143  1.335886  1.170658
+  1.175169  1.233417  1.461756  1.470676  1.495384  1.415043  1.573135
+  0.000000  1.386299  1.253473  1.117508  1.113351  1.309213  1.307182
+  1.011846  1.556850  0.118603  0.200404  1.088592  0.215155  1.192070
+  0.408193  0.213372  0.319699  1.866595  0.282255  1.255368  1.474426
+  1.483465  1.575910
+SEQ42       1.067864  1.148442  1.020021  0.872817  0.832759  1.111024
+  0.789886  0.926059  0.777333  0.776986  0.770893  0.902188  0.807886
+  0.846468  0.871945  0.983661  1.012700  0.687539  1.053848  0.980820
+  0.861585  0.893515  0.707008  1.151548  0.827342  1.331472  0.929650
+  0.788019  0.933628  1.162074  0.934729  1.044809  1.395024  0.726248
+  0.769612  0.766142  1.657214  1.661893  1.664030  1.543762  1.601611
+  1.386299  0.000000  1.046584  0.683746  0.691546  1.004776  1.290115
+  0.737517  1.282661  1.196306  1.344299  0.843985  1.338839  1.174054
+  1.420164  1.268437  1.291538  1.963813  1.464867  0.936261  1.755147
+  1.373460  1.331605
+SEQ43       1.135183  1.072401  1.048293  0.723514  0.867689  1.102708
+  0.686819  0.989582  0.686748  0.729448  0.757113  1.005213  0.780610
+  1.048040  0.893617  1.063060  0.966094  0.670009  1.141423  0.919147
+  1.164730  0.890520  0.733830  1.177698  0.933813  1.304506  0.378334
+  0.871316  1.036203  1.286869  1.006092  1.193199  1.418402  0.921966
+  0.838680  1.053487  1.956233  2.017163  1.894492  1.611600  1.737090
+  1.253473  1.046584  0.000000  0.907936  0.741577  0.410056  1.217242
+  0.842411  0.477544  1.100407  1.206164  1.225892  1.199161  1.234511
+  1.356719  1.260105  1.207864  2.238565  1.325668  0.891003  1.637840
+  1.450477  1.371573
+SEQ44       1.053297  1.093114  0.974910  0.684623  0.680300  1.103541
+  0.713172  0.786879  0.704687  0.696630  0.775230  0.720872  0.733513
+  0.783147  0.764369  0.650623  0.856019  0.601947  0.628831  0.833775
+  0.829754  0.766295  0.625263  1.033897  0.666008  1.224567  0.743770
+  0.605301  0.633412  1.075309  0.705652  0.917154  1.290943  0.620136
+  0.639721  0.397425  1.542953  1.754094  1.559808  1.319120  1.536767
+  1.117508  0.683746  0.907936  0.000000  0.130183  0.802740  0.921263
+  0.724833  0.908178  1.031967  1.162113  0.782159  1.155530  1.025741
+  1.173223  1.163509  1.181043  1.924958  1.317001  0.707558  1.423639
+  1.273981  1.343579
+SEQ45       1.084140  1.011027  0.930217  0.641591  0.685906  0.997197
+  0.693213  0.778407  0.684814  0.673425  0.762368  0.817027  0.688484
+  0.847851  0.788341  0.701353  0.801801  0.641286  0.690586  0.792145
+  0.914384  0.811796  0.627926  0.964793  0.720216  1.259435  0.653472
+  0.695931  0.627381  1.015757  0.727203  0.993725  1.310722  0.621269
+  0.701626  0.426112  1.495156  1.798842  1.527232  1.324401  1.545705
+  1.113351  0.691546  0.741577  0.130183  0.000000  0.711995  0.968056
+  0.764907  0.768209  0.989026  1.175416  0.768919  1.164819  1.024672
+  1.083319  1.095999  1.130892  1.967343  1.333396  0.695156  1.248150
+  1.338002  1.337202
+SEQ46       1.071798  1.005946  1.073645  0.665827  0.627873  1.029084
+  0.626106  0.866030  0.594639  0.749898  0.778121  0.841859  0.796430
+  0.975896  0.886926  1.008757  1.063762  0.663489  1.110272  0.975058
+  1.019745  0.975413  0.676231  1.225973  0.841357  1.260278  0.269921
+  0.964610  0.831226  1.160440  0.883920  1.074570  1.380405  0.822871
+  0.963580  0.931411  1.657945  1.892420  1.673921  1.431522  1.778909
+  1.309213  1.004776  0.410056  0.802740  0.711995  0.000000  0.964644
+  0.910849  0.266146  1.108343  1.279867  1.131094  1.240074  1.152078
+  1.342893  1.231693  1.223558  2.217371  1.455692  0.939171  1.415367
+  1.246265  1.405532
+SEQ47       1.002564  1.094576  1.122495  0.939113  0.889615  1.048457
+  0.907691  1.088238  0.904130  0.929156  1.000024  0.864225  0.878858
+  0.811922  0.769566  0.885355  1.099495  0.912898  0.924855  1.061191
+  0.897663  0.897677  0.888523  1.307550  0.900797  1.443320  0.958462
+  0.938783  0.721427  0.977523  0.770360  0.354650  0.768033  0.968666
+  1.066669  1.028026  1.827012  1.874974  1.902048  1.723130  1.774275
+  1.307182  1.290115  1.217242  0.921263  0.968056  0.964644  0.000000
+  1.047012  1.341287  1.186294  1.351103  1.184134  1.314803  0.753266
+  1.575170  1.506555  1.347684  2.364445  1.599190  1.203672  1.670397
+  1.296060  1.792191
+SEQ48       0.966642  1.055242  0.924067  0.788508  0.830339  0.996102
+  0.758104  0.802629  0.730158  0.764609  0.848901  0.904262  0.810308
+  1.019118  0.906803  0.870561  0.933167  0.699741  0.894421  0.886855
+  0.879306  0.954714  0.676492  1.033309  0.969064  0.927926  0.764967
+  0.869346  0.904847  1.281605  0.852991  1.004122  1.120829  0.842778
+  0.970269  0.825738  1.505296  1.698117  1.481270  1.314982  1.540217
+  1.011846  0.737517  0.842411  0.724833  0.764907  0.910849  1.047012
+  0.000000  1.082788  0.865389  1.120341  0.816691  1.107157  1.099630
+  1.179069  0.927655  1.003420  1.986962  1.114947  0.850963  1.540564
+  1.472024  1.423463
+SEQ49       1.093467  1.223129  1.184322  0.795325  0.823449  1.245246
+  0.783193  1.067671  0.722056  0.874802  0.914910  1.034521  0.943079
+  1.133867  1.027097  1.146814  1.210916  0.860811  1.183484  1.150755
+  1.186822  1.057673  0.837336  1.234686  1.010753  1.382766  0.245599
+  1.178213  1.093301  1.371298  1.005514  1.283763  1.684486  1.027444
+  1.176988  1.098761  1.690416  1.993464  1.667433  1.485889  1.854101
+  1.556850  1.282661  0.477544  0.908178  0.768209  0.266146  1.341287
+  1.082788  0.000000  1.367668  1.476715  1.328681  1.430408  1.349299
+  1.609392  1.506743  1.471249  2.508918  1.745953  1.056963  1.740456
+  1.229648  1.238347
+SEQ50       0.911354  0.677356  0.639382  0.686053  0.813428  0.799606
+  0.725375  0.844472  0.671266  0.762409  0.759335  1.054023  0.822182
+  1.024020  0.977016  0.947421  1.025182  0.799657  1.023943  1.017077
+  1.038606  1.070841  0.889175  0.711937  1.075730  1.096102  0.986553
+  1.024723  1.069420  1.367460  0.949611  1.156092  1.268613  1.150759
+  1.008387  1.132849  1.481550  1.479036  1.524399  1.363283  1.474964
+  0.118603  1.196306  1.100407  1.031967  0.989026  1.108343  1.186294
+  0.865389  1.367668  0.000000  0.232623  1.092262  0.219619  1.150473
+  0.391719  0.252446  0.215690  1.787479  0.305101  1.277304  1.269108
+  1.444735  1.489114
+SEQ51       0.926016  0.882639  0.768188  0.758616  0.933848  1.053305
+  0.836484  0.968263  0.803492  0.891693  0.808093  1.118571  0.933689
+  1.085815  1.081296  0.992015  1.241774  0.976206  1.069624  1.286208
+  1.229650  1.107322  1.102966  0.835151  1.183448  1.368175  1.117127
+  1.162902  1.249814  1.418908  1.136382  1.374723  1.604195  1.239646
+  1.187825  1.264424  1.567960  1.768107  1.567365  1.484893  1.704449
+  0.200404  1.344299  1.206164  1.162113  1.175416  1.279867  1.351103
+  1.120341  1.476715  0.232623  0.000000  1.106589  0.058844  1.276506
+  0.452643  0.348045  0.372694  1.994313  0.421055  1.264371  1.710075
+  1.511861  1.710863
+SEQ52       0.985040  0.924154  0.886852  0.761962  0.744573  1.008306
+  0.740178  0.733741  0.746396  0.719925  0.780429  0.800173  0.599210
+  0.821312  0.624987  0.676054  0.766698  0.659009  0.695134  0.767737
+  0.759179  0.645222  0.873548  0.987406  0.745641  1.396003  0.969808
+  0.870046  0.861881  0.832464  0.847620  0.992040  1.391038  0.793518
+  0.883180  0.807027  1.397089  1.564745  1.338418  1.366937  1.447663
+  1.088592  0.843985  1.225892  0.782159  0.768919  1.131094  1.184134
+  0.816691  1.328681  1.092262  1.106589  0.000000  1.094019  1.249784
+  1.174718  1.093615  1.142764  1.756204  1.355306  1.073009  1.501214
+  1.008217  1.192692
+SEQ53       0.860898  0.839136  0.755976  0.735649  0.893518  1.005067
+  0.811476  0.945978  0.779118  0.851930  0.792678  1.113367  0.922888
+  1.106036  1.039588  0.995727  1.220938  0.949450  1.063952  1.264571
+  1.217501  1.059825  1.084015  0.796968  1.145110  1.282269  1.105237
+  1.169963  1.189193  1.372362  1.092327  1.300951  1.561024  1.244729
+  1.183162  1.252643  1.515515  1.721348  1.514470  1.437748  1.629378
+  0.215155  1.338839  1.199161  1.155530  1.164819  1.240074  1.314803
+  1.107157  1.430408  0.219619  0.058844  1.094019  0.000000  1.237742
+  0.449359  0.357200  0.368386  1.897922  0.428942  1.256597  1.688792
+  1.500748  1.602538
+SEQ54       0.958058  1.246621  1.054386  0.866195  0.797555  1.292110
+  0.871698  0.918512  0.867902  0.832016  1.019892  1.160364  0.866842
+  0.996257  0.930450  1.139675  1.137571  0.935308  1.156149  1.086820
+  0.976536  1.019733  0.910573  1.033776  0.970565  1.557618  1.097939
+  0.902884  0.642481  1.151995  0.655666  0.656196  0.455353  1.298400
+  1.026896  1.100748  1.877636  1.616519  1.801862  1.856296  1.596592
+  1.192070  1.174054  1.234511  1.025741  1.024672  1.152078  0.753266
+  1.099630  1.349299  1.150473  1.276506  1.249784  1.237742  0.000000
+  1.414245  1.427223  1.244329  2.350125  1.413085  1.020721  1.473359
+  1.362169  1.524939
+SEQ55       1.006739  0.999489  0.797069  0.897650  0.928488  0.974374
+  0.891699  0.969049  0.886150  0.919245  0.974470  1.190961  0.883321
+  1.094229  1.092904  1.156477  1.276990  0.996801  1.289942  1.243388
+  1.264796  1.110128  1.017952  0.807400  1.175000  1.569584  1.240562
+  1.161806  1.181127  1.393252  1.185754  1.453600  1.553661  1.332598
+  1.241808  1.239349  1.775469  1.547924  1.802663  1.453232  1.549423
+  0.408193  1.420164  1.356719  1.173223  1.083319  1.342893  1.575170
+  1.179069  1.609392  0.391719  0.452643  1.174718  0.449359  1.414245
+  0.000000  0.436752  0.587027  1.726839  0.571318  1.309803  1.545820
+  1.509715  1.880179
+SEQ56       1.013251  0.927236  0.834180  0.833436  0.912710  0.991223
+  0.826159  0.957063  0.808450  0.910845  0.969457  1.249545  0.898166
+  1.139465  1.022775  1.045747  1.210268  1.002386  1.107479  1.186172
+  1.152730  1.116585  0.992103  0.805372  1.256226  1.338820  1.127532
+  1.219715  1.194038  1.462798  1.086099  1.383381  1.555072  1.259912
+  1.286862  1.254774  1.442471  1.545630  1.540086  1.402758  1.609149
+  0.213372  1.268437  1.260105  1.163509  1.095999  1.231693  1.506555
+  0.927655  1.506743  0.252446  0.348045  1.093615  0.357200  1.427223
+  0.436752  0.000000  0.410190  1.805542  0.258519  1.277655  1.475860
+  1.493240  1.801589
+SEQ57       0.976251  0.897534  0.759026  0.881046  0.990788  0.927601
+  0.867616  1.079698  0.854012  0.885286  0.901155  1.140829  0.927274
+  1.104199  1.052513  1.080441  1.217216  0.952706  1.169834  1.231511
+  1.127461  1.085683  1.165037  0.791274  1.163894  1.394820  1.140224
+  1.161260  1.202435  1.418174  1.080778  1.363618  1.502568  1.215307
+  1.237749  1.268651  1.718342  1.728702  1.788997  1.760845  1.720782
+  0.319699  1.291538  1.207864  1.181043  1.130892  1.223558  1.347684
+  1.003420  1.471249  0.215690  0.372694  1.142764  0.368386  1.244329
+  0.587027  0.410190  0.000000  1.928457  0.482790  1.198872  1.517430
+  1.592031  1.854816
+SEQ58       1.472109  1.620914  2.169903  1.633773  1.801376  1.870046
+  1.607985  1.674299  1.622914  1.685299  1.798816  1.869239  1.704259
+  1.779131  1.792532  1.739243  1.928690  1.691147  1.842433  1.809087
+  1.852928  1.838663  2.159595  2.019484  1.533006  2.251255  2.175095
+  2.243544  2.051170  1.825654  2.161972  2.062740  2.335044  1.923747
+  2.327957  1.784932  1.721592  1.181159  1.708836  1.590353  0.906857
+  1.866595  1.963813  2.238565  1.924958  1.967343  2.217371  2.364445
+  1.986962  2.508918  1.787479  1.994313  1.756204  1.897922  2.350125
+  1.726839  1.805542  1.928457  0.000000  2.041469  2.047447  2.966218
+  1.517021  2.252577
+SEQ59       1.133109  1.002686  0.885282  0.919328  1.003366  1.104110
+  0.912263  1.132836  0.903626  1.051829  1.020278  1.330914  1.007181
+  1.316716  1.215600  1.189684  1.337406  1.091258  1.324816  1.336647
+  1.277218  1.242425  1.154735  0.882333  1.404104  1.454688  1.358646
+  1.194637  1.346362  1.666285  1.166117  1.437768  1.632615  1.469911
+  1.288062  1.525077  1.658940  1.678286  1.713673  1.576193  1.751792
+  0.282255  1.464867  1.325668  1.317001  1.333396  1.455692  1.599190
+  1.114947  1.745953  0.305101  0.421055  1.355306  0.428942  1.413085
+  0.571318  0.258519  0.482790  2.041469  0.000000  1.441312  1.776996
+  1.654055  1.912814
+SEQ60       1.242117  1.267942  1.195605  0.792007  0.823881  1.245046
+  0.780210  1.144081  0.785613  0.785618  0.850370  0.761158  0.951754
+  1.143438  1.103658  0.882602  1.028820  0.795598  0.883606  1.023748
+  1.134767  1.026995  0.741669  1.334726  1.112991  1.207333  0.911771
+  0.882523  0.873209  1.266483  0.822585  1.199793  1.306117  0.794507
+  0.913386  0.674473  1.732279  1.912856  1.813741  1.714481  1.654226
+  1.255368  0.936261  0.891003  0.707558  0.695156  0.939171  1.203672
+  0.850963  1.056963  1.277304  1.264371  1.073009  1.256597  1.020721
+  1.309803  1.277655  1.198872  2.047447  1.441312  0.000000  1.639354
+  1.351486  1.460536
+SEQ61       1.357172  1.209772  1.224268  1.368938  1.331032  1.082989
+  1.278443  1.381553  1.279586  1.317798  1.443381  1.428237  1.302780
+  1.493746  1.392940  1.530557  1.487018  1.502133  1.532218  1.374081
+  1.482747  1.518174  1.453082  1.312090  1.463584  1.723255  1.306704
+  1.756489  1.314667  1.608882  1.413934  1.555129  1.616719  1.377791
+  1.896206  1.498091  2.286149  2.298495  2.334944  2.166090  1.962422
+  1.474426  1.755147  1.637840  1.423639  1.248150  1.415367  1.670397
+  1.540564  1.740456  1.269108  1.710075  1.501214  1.688792  1.473359
+  1.545820  1.475860  1.517430  2.966218  1.776996  1.639354  0.000000
+  1.584034  1.727113
+SEQ62       0.910419  1.036493  0.944505  0.880262  0.843726  1.041543
+  0.909331  0.968218  0.883302  0.986532  1.055713  0.927350  1.007096
+  0.910813  0.906608  0.849925  0.762049  0.977276  0.926478  0.692071
+  0.953740  0.899205  1.036870  1.073963  0.729749  1.554483  1.073530
+  1.276680  1.165351  0.881043  1.248774  1.100813  1.283277  0.963917
+  1.167140  1.443606  1.563464  1.799225  1.517271  1.496910  1.514274
+  1.483465  1.373460  1.450477  1.273981  1.338002  1.246265  1.296060
+  1.472024  1.229648  1.444735  1.511861  1.008217  1.500748  1.362169
+  1.509715  1.493240  1.592031  1.517021  1.654055  1.351486  1.584034
+  0.000000  1.125377
+SEQ63       1.113435  1.547643  1.229327  0.980817  0.927790  1.579456
+  0.998757  0.931200  1.000345  1.027748  0.981007  1.383881  1.082942
+  1.365529  1.152875  1.301859  0.581800  1.184259  1.354762  0.559234
+  1.247950  1.146910  1.394967  1.327974  1.382866  1.792682  1.289501
+  1.387959  1.283136  1.317442  1.416603  1.530364  1.625743  1.371364
+  1.464431  1.355217  1.888410  1.761209  1.867728  1.933640  1.692830
+  1.575910  1.331605  1.371573  1.343579  1.337202  1.405532  1.792191
+  1.423463  1.238347  1.489114  1.710863  1.192692  1.602538  1.524939
+  1.880179  1.801589  1.854816  2.252577  1.912814  1.460536  1.727113
+  1.125377  0.000000
+
+*******
+
+Now using the protein distance matrix to construct the phylogenetic tree. This tree will be constructed assuming a molecular clock. No neighbor joining or the UPGMA will be used.
+
+Beginning construction of the phylogenetic tree (this may take a while)...
+Completed construction of the phylogenetic tree.  This tree is given in Newick format below:
+
+******
+((((((((((((SEQ48:0.36876,SEQ42:0.36876):0.05056,((((SEQ49:0.12280,SEQ26:0.12280):0.01120,SEQ46:0.13400):0.07317,SEQ43:0.20717):0.20437,((((SEQ45:0.06509,SEQ44:0.06509):0.14029,SEQ35:0.20539):0.13341,(SEQ33:0.23313,SEQ11:0.23313):0.10567):0.03835,((((SEQ19:0.02549,SEQ16:0.02549):0.31881,((((SEQ24:0.17045,SEQ13:0.17045):0.02534,((SEQ21:0.05158,SEQ14:0.05158):0.09341,SEQ20:0.14500):0.05079):0.04997,SEQ29:0.24576):0.09120,((((SEQ34:0.17105,SEQ27:0.17105):0.02488,SEQ22:0.19593):0.10533,((((((((SEQ8:0.01578,SEQ6:0.01578):0.06189,SEQ3:0.07767):0.03649,SEQ10:0.11416):0.02609,SEQ9:0.14025):0.00485,SEQ4:0.14510):0.03501,SEQ12:0.18011):0.03452,SEQ7:0.21463):0.02310,SEQ17:0.23773):0.06353):0.02710,(SEQ18:0.06528,SEQ15:0.06528):0.26308):0.00861):0.00734):0.02153,SEQ52:0.36583):0.00391,(SEQ30:0.13171,SEQ28:0.13171):0.23803):0.00742):0.03440):0.00777):0.01768,((((SEQ5:0.10402,SEQ2:0.10402):0.09518,SEQ1:0.19921):0.01047,SEQ23:0.20968):0.08606,PROTSEQ:0.29574):0.14126):0.00990,SEQ60:0.44691):0.04017,((SEQ54:0.22768,SEQ32:0.22768):0.12741,(SEQ47:0.17733,SEQ31:0.17733):0.17777):0.13198):0.01071,SEQ62:0.49778):0.02304,((((((SEQ53:0.02942,SEQ51:0.02942):0.07844,(SEQ50:0.05930,SEQ41:0.05930):0.04856):0.02536,SEQ56:0.13322):0.01739,SEQ57:0.15060):0.01226,SEQ59:0.16286):0.06331,SEQ55:0.22617):0.29465):0.05884,SEQ63:0.57967):0.03660,SEQ25:0.61627):0.10572,SEQ61:0.72199):0.03138,((SEQ40:0.46074,SEQ37:0.46074):0.17673,((SEQ38:0.20242,SEQ36:0.20242):0.19127,SEQ39:0.39369):0.24377):0.11591):0.13564,SEQ58:0.88901);
+*****
+
+The phylogenetic tree in Newick format is being written to the OUTPUT_TREE file of tree.newick.
+
+Completed execution of pips_build_tree_and_alignment.py at Sat Apr  4 13:41:25 2009.

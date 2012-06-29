@@ -1,0 +1,10 @@
+# This file lists the stabilizing mutations described in:
+#   "Discovery of pectin-degrading enzymes and directed evolution of a novel pectate
+#   lyase for processing cotton fabric." AI Solbak, et al. Journal of Biological Chemistry,
+#   280:9431-9438 (2005)
+#
+# The paper reports finding 36 stabilizing mutations, 12 of which performed better than
+# wildtype.  UNFORTUNATELY, I AM ENTIRELY UNABLE TO FIGURE OUT WHAT SORT OF NUMBERING
+# SCHEME IS USED TO DESCRIBE THESE MUTATIONS, SINCE THE APPARENT SEQUENCE OF THE PECTATE
+# LYASE RETURNED BY GENBANK BD9904 DOES NOT HAVE AMINO ACID MUTATIONS IN ANY SEQUENTIAL
+# NUMBERING SCHEME THAT CORRESPOND TO THE RESIDUE NUMBERS FOR THE MUTATIONS.

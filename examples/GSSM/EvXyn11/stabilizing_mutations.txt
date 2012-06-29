@@ -1,0 +1,23 @@
+# This file lists the stabilizing mutations from:
+#   "Engineering hyperthermostability into a GH11 xylanase is mediated by subtle changes
+#   to protein structure." C Dumon et al, J Biol Chem, 283:22557-22564 (2008).
+#
+# These mutations were isolated by gene site saturation mutagenesis, and are for
+# sequential numbering of the EvXyn11 (the catalytic domain of the full protein)
+# beginning with 1 at the N-terminal Asn (NAQTL...).  These are the 15 most stabilizing mutations,
+# as listed on page 22560.
+T4L
+S9P
+Q10S
+T13F
+T13Y
+N14H
+Y18F
+S25E
+N30V
+Q34C
+Q34H
+Q34L
+S35E
+S71T
+S194H

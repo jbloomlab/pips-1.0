@@ -1,0 +1,37 @@
+# This file lists the stabilizing mutations described Table 1 of:
+#   "Improving activity and stability of cutinase towards the anionic detergent AOT by
+#   complete saturation mutagenesis." V Brissos, T Eggert, JMS Cabral, and KE Jaeger.
+#   Prot Eng Des Sel, 21:387-393, 2008.
+#
+# These mutations increase the protein's stability in an anionic detergent.
+#
+# Table 1 of this reference gives the mutations in a numbering scheme that matches
+# that of the 1AGY PDB file, and also sequential numbering of the protein sequence
+# with the first Ala (APTSN...) having the number one.
+#
+# The comments after the pound sign are the data given in Table 1: 
+# mutation codon_change activity stability
+R17S  #  AGA-AGC 0.69 ± 0.08 5.15 ± 0.06
+T18D  #  ACA-GAC 0.65 ± 0.11 2.26 ± 0.10
+G26P  #  GGC-CCC 0.68 ± 0.15 3.21 ± 0.19
+G41A  #  GGT-GCC 0.76 ± 0.11 2.03 ± 0.07
+T45D  #  ACG-GAC 0.54 ± 0.17 2.48 ± 0.09
+S54D  #  AGC-GAC 0.79 ± 0.16 8.78 ± 0.15
+S54E  #  AGC-GAG 0.83 ± 0.23 3.49 ± 0.07
+S57D  #  TCC-GAC 0.61 ± 0.06 3.14 ± 0.04
+S61D  #  TCC-GAC 0.83 ± 0.21 3.92 ± 0.07
+K65P  #  AAG-CCC 0.99 ± 0.17 2.52 ± 0.10
+K140D #  AAG-GAC 0.39 ± 0.12 2.02 ± 0.20
+K151M #  AAG-ATG 0.22 ± 0.10 2.97 ± 0.11
+L153Q #  CTA-CAG 1.45 ± 0.14 2.97 ± 0.11
+L153A #  CTA-GCG 1.11 ± 0.17 2.30 ± 0.26
+R156K #  CGT-AAG 1.51 ± 0.21 2.53 ± 0.12
+R156N #  CGT-AAC 0.89 ± 0.12 4.80 ± 0.11
+R158L #  CGA-CTC 0.75 ± 0.28 3.05 ± 0.30
+A164E #  GCC-GAG 0.74 ± 0.09 3.92 ± 0.15
+T179N #  ACT-AAC 1.19 ± 0.22 3.07 ± 0.16
+T179C #  ACT-TGC 0.90 ± 0.20 6.83 ± 0.05
+T179E #  ACT-GAG 0.10 ± 0.25 11.51 ± 0.16
+A185T #  CGT-ACG 1.42 ± 0.07 3.31 ± 0.06
+R196A #  CGG-GCG 0.75 ± 0.16 7.15 ± 0.11
+R196E #  CGG-GAG 0.21 ± 0.53 8.25 ± 0.08

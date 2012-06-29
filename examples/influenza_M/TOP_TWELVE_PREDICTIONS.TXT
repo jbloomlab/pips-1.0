@@ -1,0 +1,30 @@
+1. N369K	-10.083     
+V81N	-8.207      not in 3BEQ PDB
+2. T289M	-7.791    
+I46T	-7.353      not in 3BEQ PDB
+V81K	-7.334      not in 3BEQ PDB
+3. V166A	-7.036     
+4. S366K	-6.741
+V81H	-6.718      not in 3BEQ PDB
+5. P126N	-6.505   
+A75Y	-6.496      not in 3BEQ PDB
+6. N386E	-6.450   
+7. V83M	-6.145
+8. I389S	-6.010
+S366I	-5.947      second S366 mutation
+V81D	-5.848      not in 3BEQ PDB
+I389M	-5.685      second I389 mutation
+I46H	-5.571      not in 3BEQ PDB
+P126Q	-5.432      second P126 mutation
+V81P	-5.327      not in 3BEQ PDB
+F74V	-5.309      not in 3BEQ PDB
+I389K	-5.237      third I389 mutation
+P126H	-5.214      third P126 mutation
+T48M	-5.196      not in 3BEQ PDB
+V81T	-5.106      not in 3BEQ PDB
+I389L	-5.063      fourth I389 mutation
+9. G454N	-4.971
+10. V106I	-4.954     
+G41M	-4.946      not in 3BEQ PDB
+11. R257K	-4.893    
+12. N221K	-4.870   

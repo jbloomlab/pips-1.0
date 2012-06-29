@@ -1,0 +1,106 @@
+# Anything coming after a pound sign is a comment.
+# Typically there may be one or more comment lines explaining the
+# subject matter of the input file.
+#
+# Each line in this file follows a key-value format.  The first word
+# in the line gives the parameter that is being specified, and the subsequent
+# words give the value of this parameter. 
+#
+# The PROTSEQ key specifies the sequence of the protein to be analyzed.  Typically, this
+# will be a FASTA file in which the sequence of interest is the first entry, as shown below.
+PROTSEQ EvXyn11.fasta
+#
+# The ALIGNMENT key specifies the multiple sequence alignment of the homologous proteins.
+# This alignment should be given by a FASTA file.
+# The first protein sequence in this alignment must match that specified by PROTSEQ, with
+# the possible addition of some gap characters.  Once the alignment has been read, positions
+# corresponding to gaps in this sequence are stripped away from all sequences.  In addition,
+# the names of the sequences must match those contained in the phylogenetic tree specified
+# by the tree parameter.  The name of a sequence is considered to consist of all characters
+# from the beginning of the header until the first colon.  For example, if the sequences are
+# named "SEQ1" and "SEQ2", the file might look like this:
+# >SEQ1: this sequence matches that given by PROTSEQ
+# MT-DYST-FFT
+# >SEQ2: second sequence
+# MTFEFSTN-FS
+ALIGNMENT renamed_alignment.fasta
+#
+# The TREE key specifies the phylogenetic tree giving the evolutionary relationships of
+# the sequences in the multiple sequence alignment.  Typically, this tree is specified
+# in a text file in the Newick format (http://evolution.gs.washington.edu/phylip/newick_doc.html).
+# Branch lengths must be specified for all branches; the tree must be rooted; the sequence
+# names must match those of the multiple sequence alignment specified by ALIGNMENT; there must
+# be no spaces or quotations in the sequence names.
+TREE tree.newick
+#
+# The PRIORS key specifies the centers for the prior probability distributions over the ddG
+# values.  Each PIPS analysis can be performed with multiple different choices for the prior
+# centers, and a different output file with the different predictions is output for each choice
+# of the priors.  The priors themselves are beta distributions with the sum of the shape parameters
+# specified by PRIORS_BETA_SUM.  The general format for a specification of the prior centers is
+#    PRIORS prior_name prior_type
+# Here prior_name indicates a string (no spaces allowed!) giving a short description of
+# the prior centers.  The output file will have the name PIPS_PREDICTIONS_PRIORS-prior_name.TXT.
+# So for example, if prior_name is set to REGULARIZING then the output file for these predictions
+# will be PIPS_PREDICTIONS_PRIORS-REGULARIZING.TXT.
+# The entry at prior_type indicates how the prior centers are chosen.  If you want all of the 
+# priors to be centered at the same value, then prior_type should simply be that number.  A typical
+# value would be 5, which specifies regularizing priors peaked at 5.
+# If you want the priors to be proportional to the magnitude of the difference in the
+# amino acid hydrophobicities (as determined by the Kyte-Doolittle scale), then the value
+# of prior_type should be: KYTE_DOOLITTLE_HYDROPHOBICITY 1 0
+# where the last two numbers specify respectively a scaling factor by which the magnitude of 
+# the hydrophobicity difference is multiplied, and a factor that is then added to this
+# rescaled value.  Typically values would simply be 1 and 0 as shown above.
+# If you want to specify a specific prior estimate for each ddG value (for example, these estimates
+# might be derived from some physicochemical modeling program), then you need to specify a file
+# containing these prior estimates, as in:
+#  FILE ddg_priors.txt rescale
+# where rescale specifies how (if at all) the specified ddG values are rescaled.  If rescale
+# is equal to the string NO_RESCALE then no rescaling is done.  Otherwise, rescale
+# should be a set of four numbers:
+#   10TH_TO_90TH RECENTER MIN MAX DEFAULT
+# The ddG values are rescaled so that the difference between the 10th and 90th percentile
+# values is equal to 10TH_T0_90TH, the mean value is equal to RECENTER, the minimum ddG value
+# is equal to MIN, and the maximum ddG value is equal to MAX.  The ddG values are first rescaled
+# according to 10TH_TO_90TH, then recentered according to RECENTER, and then have the extreme
+# values adjusted according to MIN and MAX.  Finally, any mutations for which no ddG value is
+# specified are set to the value of DEFAULT
+# The file (ddg_priors.txt) itself should be a text file of the format that is output by this script
+# as well as pips_run_foldx.py and pips_run_cupsat.py.  
+PRIORS REGULARIZING 5
+PRIORS HYDROPHOBICITY KYTE_DOOLITTLE_HYDROPHOBICITY 1 0
+PRIORS CUPSAT FILE CUPSAT_PREDICTIONS.TXT 10 5 -5 15 5
+PRIORS FOLDX FILE FOLDX_PREDICTIONS.TXT 10 5 -5 15 5
+#
+# PRIORS_BETA_SUM is a number > 2 specifying the sum of the beta distribution parameters.  The
+# typical value is 3, as in:
+PRIORS_BETA_SUM 3
+# Larger values lead to "tighter" priors while smaller values lead to "looser" priors.
+#
+# The MUTPROBS key specifies how the mutation probabilities are set.  If you want it to be
+# equally probable for any amino acid to mutate to any other, use the value ALL_EQUAL, as in
+# MUTPROBS ALL_EQUAL
+# If you want to assume that each amino acid is equally likely to be in any of its codons,
+# and that these codons are equally likely to mutate to any other one-mutation neighbor codon,
+# the use the value CODON_EQUAL, as in
+# MUTPROBS CODON_EQUAL
+# If you want to assume that each amino acid is equally likely to be in any of its codons,
+# and that these codons mutate to adjacent codons according to a particular nucleotide
+# transition-transversion bias, then use the value TRANSITION_TRANSVERSION_RATIO r (where r
+# is the ratio), as in
+MUTPROBS TRANSITION_TRANSVERSION_RATIO 4
+#
+# The MUTRATE key specifies the "mutation rate," which is meaningful with respect to the branch
+# lengths of the phylogenetic tree.  Essentially, it gives the number of actual mutations that
+# are assumed to have occurred for each unit change along the phylogenetic tree.  You might
+# think of this as the number of mutations that occur before the occurrence of an evolutionarily
+# "acceptable" one.  Reasonable values would probably be in the range from 5 to 20.
+MUTRATE 5
+#
+# The NRANDOMSTARTS key specifies how many times we perform the likelihood maximization for each
+# residue (we take the best value).  Typically, just one is adequate since the ddG values usually
+# converge to essentially the same maximum, but you can try values larger than one just to be
+# safe and increase the chances of hitting the global maximum.  Increasing the value will of course
+# increase the programs runtime.
+NRANDOMSTARTS 5
