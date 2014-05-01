@@ -11,7 +11,10 @@ except ImportError:
 try:
     import transcendental
 except ImportError:
-    raise ImportError, "This package requires transcendental.  Currently, transcendental cannot be imported."
+    try:
+        import scipy
+    except ImportError:
+        raise ImportError, "This package requires either scipy or transcendental.  Currently, neither of these packages can be imported."
 
 # list of C extensions
 clog_likelihood = Extension('pips.clog_likelihood', sources = ['src/clog_likelihood.c'], include_dirs = [numpy.get_include()])

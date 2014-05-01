@@ -8,7 +8,14 @@ import math
 import os
 import string
 import random
-import transcendental
+try:
+    import transcendental
+    BetaFunc = transcendental.beta
+    IncBet = transcendental.incbet
+except ImportError:
+    import scipy
+    BetaFunc = scipy.special.beta
+    IncBet = scipy.special.betainc
 
 
 def AllNone(xlist):
@@ -192,7 +199,7 @@ def BetaDistribution(x, alpha, beta, a=0.0, b=1.0):
     'b' specifies the upper limit of the range of the beta distribution (1 by default).
     """
     assert alpha >= 0 and beta >= 0
-    betafunc = transcendental.beta(alpha, beta)
+    betafunc = BetaFunc(alpha, beta)
     return (x - a)**(alpha - 1) * (b - x)**(beta - 1) / (betafunc * (b - a)**(alpha + beta - 1))
 
 
@@ -228,7 +235,7 @@ def DerivativeBetaDistribution(x, alpha, beta, a=0.0, b=1.0):
     """
     assert a <= x <= b and a < b
     assert alpha >= 0 and beta >= 0
-    betafunc = transcendental.beta(alpha, beta)
+    betafunc = BetaFunc(alpha, beta)
     return ((alpha - 1) * (x - a)**(alpha - 2) * (b - x)**(beta - 1) - (beta - 1) * (b - x)**(beta - 2) * (x - a)**(alpha - 1)) / (betafunc * (b - a)**(alpha + beta - 1))
 
 
@@ -340,7 +347,7 @@ def TTest(x1, x2):
     t = (x1avg - x2avg) / math.sqrt(x1var / n1 + x2var / n2)
     df = (x1var / n1 + x2var / n2)**2 / ((x1var / n1)**2 / (n1 - 1) + ((x2var / n2)**2 / (n2 - 1)))
     # evaluate the incomplete beta function
-    p = transcendental.incbet(0.5 * df, 0.5, df / (df + t**2))
+    p = IncBet(0.5 * df, 0.5, df / (df + t**2))
     return (t, p)
 
 
