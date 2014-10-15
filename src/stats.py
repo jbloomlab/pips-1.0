@@ -13,7 +13,7 @@ try:
     BetaFunc = transcendental.beta
     IncBet = transcendental.incbet
 except ImportError:
-    import scipy
+    import scipy.special
     BetaFunc = scipy.special.beta
     IncBet = scipy.special.betainc
 

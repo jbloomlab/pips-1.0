@@ -102,7 +102,7 @@ def Align(headers_seqs, progpath, program='PROBCONS', musclegapopen=None):
         aligned_headers_seqs.append((head, alignedseq))
     return aligned_headers_seqs # return the aligned sequences
 #-------------------------------------------------------------------------------
-def PairwiseStatistics(aligned_headers_seqs):
+def PairwiseStatistics(aligned_headers_seqs, allowdoublegaps=False):
     """Computes the number of gaps and identities in a pairwise alignment.
 
     This method is designed to compute statistics about an alignment of two
@@ -112,6 +112,10 @@ def PairwiseStatistics(aligned_headers_seqs):
             '[(head1, alignedseq1), (head2, alignedseq2)]'
         'alignedseq1' and 'alignedseq2' should be of the same length, since they are 
         aligned.
+
+    *allowdoublegaps* specifies that we allow the alignment to have gaps
+    at both positions without raising an exception. False by default.
+
     The method returns the 2-tuple '(identities, gaps)'.  'identities' is a number
         between zero and one.  It is the fraction of residues in one
         sequence that are aligned with identical residues in the other sequence, gaps
@@ -141,7 +145,10 @@ def PairwiseStatistics(aligned_headers_seqs):
     ngaps = nidentities = 0
     for (r1, r2) in zip(alignedseq1.upper(), alignedseq2.upper()):
         if r1 == '-' == r2:
-            raise ValueError, "In a proper pairwise alignment, both residues should not be gaps."
+            if allowdoublegaps:
+                ngaps += 1
+            else:
+                raise ValueError, "In a proper pairwise alignment, both residues should not be gaps."
         elif r1 == '-' or r2 == '-':
             ngaps += 1
         elif r1 == r2:
